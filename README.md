@@ -1,6 +1,6 @@
 # dotfiles-macos
 
-- Secrets go in `.secrets` which are `.gitignore`
+- Secrets go in `.secrets.env` which are `.gitignore`
 
 ## Project history
 

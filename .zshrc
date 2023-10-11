@@ -9,7 +9,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/zen/.oh-my-zsh"
+export ZSH="/$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -109,10 +109,14 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # rbenv
-eval "$(rbenv init - zsh)"
+if command -v rbenv &> /dev/null
+then eval "$(rbenv init - zsh)"
+fi
 
 export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+if command -v jenv &> /dev/null
+then eval "$(jenv init -)"
+fi
 
 # Mongo
 export PATH=$PATH:/opt/mongo/bin
@@ -171,9 +175,6 @@ export FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=xngh-swkt-bliw-bfbl
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# secrets
-source .secrets
-
 #nvm, auto set by https://github.com/nvm-sh/nvm#install--update-script
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -215,7 +216,10 @@ export MIKI_XR="00008020-001C14C10AF2002E"
 export BEN_S21="R5CR60AR3PE"
 # fnm
 export PATH="/Users/zen/Library/Application Support/fnm:$PATH"
+if command -v fnm &> /dev/null
+then
 eval "`fnm env`"
+fi
 
 # dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
@@ -233,3 +237,7 @@ export PATH="$PATH:/opt/google-cloud-sdk/bin"
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+# Secrets
+source .secrets.env
+# WARNING: ADD SECRETS TO .secrets, not here.
