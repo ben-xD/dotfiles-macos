@@ -241,4 +241,4 @@ eval "$(pyenv init -)"
 
 # Secrets
 source "$HOME/.secrets.env"
-# WARNING: ADD SECRETS TO .secrets, not here.
+# WARNING: ADD SECRETS TO .secrets.env, not here.
