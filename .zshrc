@@ -240,5 +240,5 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 # Secrets
-source .secrets.env
+source "$HOME/.secrets.env"
 # WARNING: ADD SECRETS TO .secrets, not here.
