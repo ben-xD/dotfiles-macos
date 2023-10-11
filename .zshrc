@@ -174,6 +174,7 @@ export FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=xngh-swkt-bliw-bfbl
 # secrets
 source .secrets
 
+#nvm, auto set by https://github.com/nvm-sh/nvm#install--update-script
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -187,12 +188,12 @@ export PATH="/Library/PostgreSQL/15/bin:$PATH"
 
 # Neovim
 export PATH="$PATH:/opt/nvim/bin"
+alias vim=nvim
+alias vi=vim
+alias v=vi
 
 # mysql
 export PATH="$PATH:/usr/local/mysql/bin"
-
-# rbenv
-eval "$(rbenv init - zsh)"
 
 # Python PDM
 export PATH="/Users/zen/.local/bin:$PATH"
@@ -216,10 +217,19 @@ export BEN_S21="R5CR60AR3PE"
 export PATH="/Users/zen/Library/Application Support/fnm:$PATH"
 eval "`fnm env`"
 
-# nvim
-alias vim=nvim
-
 # dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
 alias cfg=config
 alias cf=cfg
+
+# Volta/node
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# gcloud 
+export PATH="$PATH:/opt/google-cloud-sdk/bin"
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
