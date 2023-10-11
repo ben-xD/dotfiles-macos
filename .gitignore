@@ -1,0 +1,3 @@
+# avoid recursive directories in git
+.cfg
+.secrets
