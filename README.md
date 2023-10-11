@@ -11,7 +11,8 @@
 - Move more nvim config to this repo
 - Automate machine setup
   - app install
-  - zsh install
+  - zsh Install
+- consider [pass](https://www.passwordstore.org/)
 
 - Try chezmoi https://www.chezmoi.io/
 

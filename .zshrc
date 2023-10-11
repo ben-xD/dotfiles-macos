@@ -1,3 +1,9 @@
+# dotfiles
+alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
+alias cfg=config
+alias cf=cfg
+setopt completealiases
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -221,16 +227,11 @@ then
 eval "`fnm env`"
 fi
 
-# dotfiles
-alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
-alias cfg=config
-alias cf=cfg
-
 # Volta/node
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
-# gcloud 
+# gcloud
 export PATH="$PATH:/opt/google-cloud-sdk/bin"
 
 # pyenv
