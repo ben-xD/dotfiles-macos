@@ -35,6 +35,12 @@ brew install neovim
 echo "setting up symlink for custom neovim configuration"
 ln -s "$HOME/.config/dotfiles/nvim-custom/" "$HOME/.config/nvim/lua/custom"
 
+## pyenv
+brew install pyenv
+
+## nvm
+brew install nvm
+
 echo "Install apps via brew. Find more casks on https://formulae.brew.sh/cask/"
 brew install --cask rectangle
 brew install --cask itsycal
