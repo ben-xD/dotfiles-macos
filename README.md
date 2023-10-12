@@ -12,7 +12,8 @@
 - Move more nvim config to this repo
 - Automate machine setup
   - app install
-  - zsh Install
+  - zsh install
+- consider [mackup](https://github.com/lra/mackup/tree/master)
 - consider [pass](https://www.passwordstore.org/)
 
 - Try chezmoi https://www.chezmoi.io/
