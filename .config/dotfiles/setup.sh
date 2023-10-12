@@ -10,3 +10,6 @@
 # Set up symlinks configs
 ## nvim
 
+
+# Install apps via brew
+brew install itsycal --cask
