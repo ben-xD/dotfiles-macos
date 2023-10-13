@@ -101,9 +101,6 @@ fi
 killall Dock
 killall Finder
 
-echo "install: Xcode Command Line Tools. Why? It's commonly needed for development."
-xcode-select --install || true
-
 echo "install: brew. Why? It helps us install more apps and developer tools without manually downloading files."
 if test ! $(which brew); then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
