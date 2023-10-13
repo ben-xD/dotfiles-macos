@@ -15,8 +15,9 @@ xcode-select --install
 ```bash
 echo "Clone the repo into ~/.cfg"
 git clone --bare https://github.com/ben-xD/dotfiles-macos.git $HOME/.cfg
-echo "Set temporary alias"
-alias cf='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
+cf() {
+    /usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME "$@"
+}
 echo "Hide untracked files"
 cf config --local status.showUntrackedFiles no
 echo "Getting files"
