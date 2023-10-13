@@ -34,9 +34,9 @@ cf checkout
 - push to github: run `cf push`
 - [on other machines] pull changes: `cf pull`
 
-## Warnings
+## Limitations
 
-- Don't use [mackup](https://github.com/lra/mackup), it causes data loss. See https://github.com/lra/mackup/issues/1944 and https://github.com/lra/mackup/issues/1913.
+- Unfortunately, this doesn’t currently automate all macOS settings or app configuration (and licenses/activation).
 
 ## Project history
 
