@@ -100,4 +100,4 @@ Primary key fingerprint: 6A4B E50A 13CE 50C1 4E31  8795 5FC8 0BAF 2B00 A4F9
     - Select `4`: `z(4) RSA (sign only)` and enter `4096`
     - Save it: run `save`
 - and configure Git to use it: `git config --global user.signingkey $sub_key_id`
-- TODO Do i need to export the public key, and update GitHub with the new public key.
+- Export the public key, and update GitHub with the new public key. GitHub needs to know about the newly added subkey.
