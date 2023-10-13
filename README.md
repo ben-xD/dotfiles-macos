@@ -21,14 +21,6 @@
   - If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles
 - Run `./setup.sh`
 
-## Manual setup
-
-### Install nerd fonts
-
-- Download them from the GitHub. Install them using Font Book
-
-### Install Google Meet PWA and add to dock
-
 ## Warnings
 
 - Don't use [mackup](https://github.com/lra/mackup), it causes data loss. See https://github.com/lra/mackup/issues/1944 and https://github.com/lra/mackup/issues/1913.

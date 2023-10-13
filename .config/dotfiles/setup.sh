@@ -55,6 +55,7 @@ brew install git-extras
 brew install tree
 brew install wget
 brew install trash
+brew install ollama
 
 ## TODO Consider more tools?
 # brew install coreutils curl git openssl readline sqlite3 xz zlib tcl-tk # needed for asdf and asdf-python
@@ -76,7 +77,13 @@ read -p "Press [Enter] to continue..."
 echo "Login to browsers and browser extensions"
 read -p "Press [Enter] to continue..."
 
-echo "Manually install apps: Eagle.cool"
+echo "Save Google Meet as PWA"
+open -a "google chrome" https://meet.google.com
+read -p "Press [Enter] to continue..."
+
+echo "Manually install apps:"
+open "https://eagle.cool/"
+open "https://www.blackmagicdesign.com/products/davinciresolve"
 read -p "Press [Enter] to continue..."
 
 echo "Set up .secrets.env containing machine or organisation specific secrets, e.g. Artifactory credentials, Cloudflare credentials or device identifiers."
@@ -85,33 +92,59 @@ touch "$HOME/.secrets.env"
 echo "install: apps via brew. Find more casks on https://formulae.brew.sh/cask/"
 # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
 apps=(
+  iterm2
   rectangle
   itsycal
   alfred
   visual-studio-code
+  jetbrains-toolbox
   cleanshot
   firefox
+  google-chrome
+  microsoft-edge
   docker
   figma
   obsidian
   fork
-  google-chrome
   qlmarkdown
   qlstephen
   yubico-yubikey-manager
-  iterm2
   logi-options-plus
   typora
   trailer
   slack
   bartender
   vlc
+  monitorcontrol
 )
 # Install apps to /Applications
 # Default is: /Users/$user/Applications
 brew install --cask --appdir="/Applications" ${apps[@]}
 
-# More apps to try:
+extra_apps=(
+  obs
+  discord
+  netnewswire
+  little-snitch
+  istats-menus
+  wireshark
+  bartender
+  zotero
+  pdf-expert
+  qbittorrent
+  calibre
+  blender
+  postico
+  db-browser-for-sqlite
+  dbeaver-community
+  cloudflare-warp
+)
+# TODO make it optional
+brew install --cask --appdir="/Applications" ${apps[@]}
+
+# More apps to consider:
+  # openbb terminal
+  # raycast
   # bettertouchtool
   # cleanmymac
   # cloud
@@ -129,6 +162,11 @@ brew install --cask --appdir="/Applications" ${apps[@]}
   # sequel-pro
   # chromecast
   # suspicious-package
+
+# AI apps:
+# DiffusionBee
+# Draw Things
+# GodMode
 
 brew cask alfred link
 
