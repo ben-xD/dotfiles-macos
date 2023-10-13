@@ -4,9 +4,6 @@
 # Exit immediately if any command errors (e), error if variables undefined (u), error on pipeline error (-o pipefail). Why? See https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
 set -euo pipefail
 
-echo "Set up .secrets.env containing machine or organisation specific secrets, e.g. Artifactory credentials, Cloudflare credentials or device identifiers."
-touch "$HOME/.secrets.env"
-
 SCRIPT_PATH="${0:A:h}"
 ."$SCRIPT_PATH/setup_macos_settings.sh"
 
@@ -25,9 +22,8 @@ brew install htop
 brew install legit
 # brew install git-flow
 brew install git-extras
-brew install tree
-brew install wget
-brew install trash
+brew install wget trash tree
+brew install gnupg pinentry-mac
 brew install ollama
 brew install pyenv
 
@@ -187,7 +183,6 @@ mas install 1140313689 # snippose
 
 brew cleanup
 
-brew install gnupg pinentry-mac
 echo "Setting up GPG key. Why? It's needed for signing commits or encrypting files."
 read -p "Press [Enter] to continue..."
 
@@ -239,3 +234,6 @@ umask 000
 chmod +r /etc/pam.d/sudo_local
 read -p "Uncomment the line in the next file to set up sudo with touch id. Press [Enter] to continue..."
 vim /etc/pam.d/sudo_local
+
+echo "Set up .secrets.env containing machine or organisation specific secrets, e.g. Artifactory credentials, Cloudflare credentials or device identifiers."
+touch "$HOME/.secrets.env"
