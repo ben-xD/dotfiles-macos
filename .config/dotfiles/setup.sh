@@ -317,35 +317,9 @@ else
   read -p "Press [Enter] to continue..."
 fi
 
-echo "Set up touch ID in command line"
-# Taken from https://apple.stackexchange.com/a/345205/335980
-touchid_sudo(){
-  sudo bash -eu <<'EOF'
-  file=/etc/pam.d/sudo
-  # A backup file will be created with the pattern /etc/pam.d/.sudo.1
-  # (where 1 is the number of backups, so that rerunning this doesn't make you lose your original)
-  file_dir="$(dirname "$file")"
-  file_name="$(basename "$file")"
-  mapfile -t backup_list < <( ls -A "$file_dir"/{,.}"$file_name"* 2>/dev/null )
-  backup_count="${#backup_list[@]}"
-  backup_ext="$backup_count"
-  backup="$file_dir/.$file_name.$backup_ext"
-  cp "$file" "$backup" 2>/dev/null || touch "$file" "$backup"
-
-  awk -v is_done='pam_tid' -v rule='auth       sufficient     pam_tid.so' '
-  {
-    # $1 is the first field
-    # !~ means "does not match pattern"
-    if($1 !~ /^#.*/){
-      line_number_not_counting_comments++
-    }
-    # $0 is the whole line
-    if(line_number_not_counting_comments==1 && $0 !~ is_done){
-      print rule
-    }
-    print
-  }' > $file < $backup
-EOF
-}
-
-touchid_sudo
+# Set up sudo with touch id
+sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
+umask 000
+chmod +r /etc/pam.d/sudo_local
+read -p "Uncomment the line in the next file to set up sudo with touch id. Press [Enter] to continue..."
+vim /etc/pam.d/sudo_local
