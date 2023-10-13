@@ -1,7 +1,7 @@
 #!/bin/bash
 # First time machine setup script. See https://github.com/ben-xD/dotfiles-macos for more information.
 
-# Set error immediately if any command errors (e), error if variables undefined (u), error on pipeline error (-o pipefail). Why? See https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
+# Exit immediately if any command errors (e), error if variables undefined (u), error on pipeline error (-o pipefail). Why? See https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
 set -euo pipefail
 
 echo "Setting macOS settings..."
@@ -116,16 +116,20 @@ fi
 
 echo "install: oh-my-zsh, as per https://ohmyz.sh/#install. Why? It makes using command line more comfortable."
 echo "More plugins available on https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins"
-# Prevent oh-my-zsh starting a new shell, which will block the script. See https://github.com/ohmyzsh/ohmyzsh/issues/4261
-NO_INTERACTIVE=true sh -c "$(curl -fsSL https://raw.githubusercontent.com/subtlepseudonym/oh-my-zsh/feature/install-noninteractive/tools/install.sh)"
-mv $HOME/.zshrc.pre-oh-my-zsh $HOME/.zshrc
+if test -f "$HOME/.oh-my-zsh"; then
+  echo "skip: oh-my-zsh is already installed"
+else
+  # Prevent oh-my-zsh starting a new shell, which will block the script. See https://github.com/ohmyzsh/ohmyzsh/issues/4261
+  NO_INTERACTIVE=true sh -c "$(curl -fsSL https://raw.githubusercontent.com/subtlepseudonym/oh-my-zsh/feature/install-noninteractive/tools/install.sh)"
+  mv $HOME/.zshrc.pre-oh-my-zsh $HOME/.zshrc
 
-echo "install: zsh plugins. Why?: check the docs for each plugin."
-# as per https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-# TODO Consider zoxide?: https://github.com/ajeetdsouza/zoxide
-git clone https://github.com/agkozak/zsh-z ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-z
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+  echo "install: zsh plugins. Why?: check the docs for each plugin."
+  # as per https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  # TODO Consider zoxide?: https://github.com/ajeetdsouza/zoxide
+  git clone https://github.com/agkozak/zsh-z ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-z
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+fi
 
 echo "install: apps via brew. Find more casks on https://formulae.brew.sh/cask/"
 # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
@@ -157,7 +161,7 @@ apps=(
 )
 # Install apps to /Applications
 # Default is: /Users/$user/Applications
-brew install --cask --appdir="/Applications" ${apps[@]}
+brew install --cask --appdir="/Applications" ${apps[@]} || true
 
 extra_apps=(
   obs
@@ -177,8 +181,12 @@ extra_apps=(
   dbeaver-community
   cloudflare-warp
 )
-# TODO make it optional
-brew install --cask --appdir="/Applications" ${apps[@]}
+
+read -p "Do you want to install optional apps? (yes/no): " toInstallExtraApps
+toInstallExtraApps=$(echo "$toInstallExtraApps" | tr '[:upper:]' '[:lower:]')
+if [ "$answer" == "yes" ]; then
+  brew install --cask --appdir="/Applications" ${extra_apps[@]} || true
+fi
 
 # More apps to consider:
   # openbb terminal
@@ -200,11 +208,10 @@ brew install --cask --appdir="/Applications" ${apps[@]}
   # sequel-pro
   # chromecast
   # suspicious-package
-
-# AI apps:
-# DiffusionBee
-# Draw Things
-# GodMode
+  # AI apps:
+  # DiffusionBee
+  # Draw Things
+  # GodMode
 
 brew cleanup
 
@@ -237,14 +244,16 @@ brew install wget
 brew install trash
 brew install ollama
 
-## TODO Consider more tools?
+## TODO More tools needed:
 # brew install coreutils curl git openssl readline sqlite3 xz zlib tcl-tk # needed for asdf and asdf-python
 
-# GPG set up
-# prompt for smartcard to be added
+echo "Setting up GPG key. Why? It's needed for signing commits or encrypting files."
 GPG_PUBLIC_KEY_ID="0x5FC80BAF2B00A4F9 2023-10-06"
 brew install gnupg pinentry-mac
-# Create subkey from GPG key on yubikey/smartcard
+# TODO
+echo "manual: create subkey from GPG key on yubikey/smartcard"
+read -p "Insert smartcard/yubikey. Press [Enter] to continue..."
+
 echo "manual(GitHub): Delete existing GPG public key and add new public key, containing subkey used by this machine."
 read -p "Press [Enter] to continue..."
 
