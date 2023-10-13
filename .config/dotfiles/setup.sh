@@ -188,16 +188,6 @@ echo "Setting up GPG key. Why? It's needed for signing commits or encrypting fil
 echo "Press [Enter] to continue..."
 read
 
-# TODO check it works
-echo "manual: create subkey from GPG key on yubikey/smartcard"
-GPG_PUBLIC_KEY_ID="0x5FC80BAF2B00A4F9 2023-10-06"
-echo "Insert smartcard/yubikey. Press [Enter] to continue..."
-read
-
-echo "manual(GitHub): Delete existing GPG public key and add new public key, containing subkey used by this machine."
-echo "Press [Enter] to continue..."
-read
-
 echo "Add licenses to apps: alfred, cleanshot, fork"
 echo "Press [Enter] to continue..."
 read
