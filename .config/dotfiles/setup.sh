@@ -103,6 +103,7 @@ removeExistingDockIcons=${removeExistingDockIcons:l}
 if [[ "$removeExistingDockIcons" == "yes" ]] || [[ -z "$removeExistingDockIcons" ]]; then
   echo "Removing existing dock icons..."
   defaults write com.apple.dock persistent-apps -array
+  sleep 1 # sometimes it doesn't work without this sleep, especially when you run a lot of changes at once.
 fi
 
 killall Dock
@@ -141,9 +142,9 @@ if [[ ! -d "$HOME/.config/nvim" ]]; then
 fi
 
 source $HOME/.zshrc || true
-# TODO only install if it doesn't exist
-pyenv install 3.11
-pyenv global 3.11
+PYTHON_VERSION=3.11
+pyenv install $PYTHON_VERSION || true
+pyenv global $PYTHON_VERSION || true
 
 # Fonts
 echo "Do you want to download and install the Jetbrains font? (yes/no): "
