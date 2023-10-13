@@ -15,7 +15,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/$HOME/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Disable homebrew analytics, as per https://docs.brew.sh/Analytics#opting-out
 export HOMEBREW_NO_ANALYTICS=1

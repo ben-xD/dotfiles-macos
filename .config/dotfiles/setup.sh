@@ -1,7 +1,12 @@
+#!/bin/bash
+# Why? See https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
+set -euxo pipefail
+
 # First time machine setup script. See https://github.com/ben-xD/dotfiles-macos for more information.
-echo "install: macOS developer dependencies (Xcode)"
+echo "install: Xcode Command Line Tools. Why? It's commonly needed for development."
 xcode-select --install
 
+echo "install: brew. Why? It helps us install more apps and developer tools without manually downloading files."
 if test ! $(which brew); then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   exec $SHELL # so we can use brew
@@ -10,34 +15,35 @@ else
   brew update
 fi
 
-echo "install: oh-my-zsh, as per https://ohmyz.sh/#install"
+echo "install: oh-my-zsh, as per https://ohmyz.sh/#install. Why? It makes using command line more comfortable."
 echo "More plugins available on https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins"
 # Prevent oh-my-zsh starting a new shell, which will block the script. See https://github.com/ohmyzsh/ohmyzsh/issues/4261
 NO_INTERACTIVE=true sh -c "$(curl -fsSL https://raw.githubusercontent.com/subtlepseudonym/oh-my-zsh/feature/install-noninteractive/tools/install.sh)"
 
-echo "install: zsh plugins"
+echo "install: zsh plugins. Why?: check the docs for each plugin."
 # as per https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 # TODO Consider zoxide?: https://github.com/ajeetdsouza/zoxide
 git clone https://github.com/agkozak/zsh-z ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-z
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 
-echo "install powerlevel10k, as per https://github.com/romkatv/powerlevel10k#installation"
+echo "install powerlevel10k, as per https://github.com/romkatv/powerlevel10k#installation. Why? It makes the command line tidy."
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 ## nvim
-echo "install: neovim, as per https://github.com/neovim/neovim/wiki/Installing-Neovim#macos--os-x"
+echo "install: neovim, as per https://github.com/neovim/neovim/wiki/Installing-Neovim#macos--os-x. Why? It avoids Microsoft (corporate, behemoth, buggy software) and Jetbrains IDEs (JDK, slow)"
 brew install neovim
 echo "setting up symlink for custom neovim configuration"
 ln -s "$HOME/.config/dotfiles/nvim-custom/" "$HOME/.config/nvim/lua/custom"
 
-## pyenv
+echo "install: pyenv. Why? Manage python versions so you don't suffer with python setup and version management."
 brew install pyenv
 exec $SHELL # so we can use pyenv
 pyenv install 3.11
 pyenv global 3.11
 
 ## nvm
+echo "install: nvm. Why? Manage node versions so you can have multiple versions easily."
 brew install nvm
 
 ## More dev tools
