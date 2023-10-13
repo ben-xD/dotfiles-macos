@@ -1,6 +1,6 @@
 #!/bin/bash
-# Set error immediately if any command errors (e), error if variables undefined (u), verbose (x), error on pipeline error (-o pipefail). Why? See https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
-set -euxo pipefail
+# Set error immediately if any command errors (e), error if variables undefined (u), error on pipeline error (-o pipefail). Why? See https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
+set -euo pipefail
 
 # First time machine setup script. See https://github.com/ben-xD/dotfiles-macos for more information.
 echo "install: Xcode Command Line Tools. Why? It's commonly needed for development."
