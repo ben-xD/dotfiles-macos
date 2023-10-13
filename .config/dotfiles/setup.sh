@@ -70,10 +70,6 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
-#"Speeding up Mission Control animations and grouping windows by application"
-defaults write com.apple.dock expose-animation-duration -float 0.1
-defaults write com.apple.dock "expose-group-by-app" -bool true
-
 #"Setting email addresses to copy as 'foo@example.com' instead of 'Foo Bar <foo@example.com>' in Mail.app"
 defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 
@@ -82,13 +78,16 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 # Set  dock to left
 read -p "Configuring dock. Press [Enter] to continue..."
-defaults write com.apple.dock orientation -string leftkillall
+defaults write com.apple.dock orientation -string left
 #"Setting Dock to auto-hide and removing the auto-hiding delay"
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock autohide-delay -float 0
 defaults write com.apple.dock autohide-time-modifier -float 0
 #"Setting the icon size of Dock items in pixels (large)
 defaults write com.apple.dock tilesize -int 90
+#"Speeding up Mission Control animations and grouping windows by application"
+defaults write com.apple.dock expose-animation-duration -float 0.1
+defaults write com.apple.dock "expose-group-by-app" -bool true
 
 killall Dock
 killall Finder
@@ -107,7 +106,7 @@ fi
 
 echo "install: oh-my-zsh, as per https://ohmyz.sh/#install. Why? It makes using command line more comfortable."
 echo "More plugins available on https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins"
-if test -f "$HOME/.oh-my-zsh"; then
+if test -d "$HOME/.oh-my-zsh"; then
   echo "skip: oh-my-zsh is already installed"
 else
   # Prevent oh-my-zsh starting a new shell, which will block the script. See https://github.com/ohmyzsh/ohmyzsh/issues/4261
