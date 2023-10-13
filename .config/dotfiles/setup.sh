@@ -245,6 +245,17 @@ for app in "${extra_apps[@]}"; do
     brew install --cask --appdir="/Applications" "$app" || echo "Failed to install $app"
 done
 
+# Login with Apple Account
+echo "login: macOS Apple Account"
+open "/System/Library/PreferencePanes/AppleIDPrefPane.prefPane"
+read -p "Press [Enter] after logging in..."
+
+# Install Mac App Store apps
+mas install 1352778147 # bitwarden
+mas install 937984704 # amphetamine
+mas install 899247664 # TestFlight
+mas install 1140313689 # snippose
+
 # More apps to consider:
   # openbb terminal
   # raycast
@@ -272,13 +283,13 @@ done
 
 brew cleanup
 
+brew install gnupg pinentry-mac
 echo "Setting up GPG key. Why? It's needed for signing commits or encrypting files."
 read -p "Press [Enter] to continue..."
 
-GPG_PUBLIC_KEY_ID="0x5FC80BAF2B00A4F9 2023-10-06"
-brew install gnupg pinentry-mac
 # TODO check it works
 echo "manual: create subkey from GPG key on yubikey/smartcard"
+GPG_PUBLIC_KEY_ID="0x5FC80BAF2B00A4F9 2023-10-06"
 read -p "Insert smartcard/yubikey. Press [Enter] to continue..."
 
 echo "manual(GitHub): Delete existing GPG public key and add new public key, containing subkey used by this machine."
@@ -297,25 +308,10 @@ echo "Save Google Meet as PWA"
 open -a "google chrome" https://meet.google.com
 read -p "Press [Enter] to continue..."
 
-echo "Manually install apps:"
-open "https://eagle.cool/"
-open "https://www.blackmagicdesign.com/products/davinciresolve"
-read -p "Press [Enter] to continue..."
-
-# Login with Apple Account
-echo "login: macOS Apple Account"
-open "/System/Library/PreferencePanes/AppleIDPrefPane.prefPane"
-read -p "Press [Enter] after logging in..."
-
-# Install Mac App Store apps
-mas install 1352778147 # bitwarden
-mas install 937984704 # amphetamine
-mas install 899247664 # TestFlight
-mas install 1140313689 # snippose
-
-echo "install powerlevel10k, as per https://github.com/romkatv/powerlevel10k#installation. Why? It makes the command line tidy."
+echo "install: powerlevel10k, as per https://github.com/romkatv/powerlevel10k#installation. Why? It makes the command line tidy."
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
+echo "set up: GitHub SSH key"
 GITHUB_SSH_KEY="$HOME/.ssh/github"
 if test -f $GITHUB_SSH_KEY; then
   echo "skip: github ssh key already exists"
@@ -328,7 +324,12 @@ else
   read -p "Press [Enter] to continue..."
 fi
 
-# Set up sudo with touch id
+echo "manual: install apps"
+open "https://eagle.cool/"
+open "https://www.blackmagicdesign.com/products/davinciresolve"
+read -p "Press [Enter] to continue..."
+
+echo "Set up sudo with touch id"
 sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
 umask 000
 chmod +r /etc/pam.d/sudo_local
