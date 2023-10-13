@@ -18,7 +18,6 @@ cf config --local status.showUntrackedFiles no
 cf checkout
 echo "If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles"
 echo Run `.config/dotfiles/setup.sh` and follow its instructions. For more info, read the script.
-echo "Add secrets to `.secrets.env` which is `.gitignore`'d."
 ```
 
 ### Making changes
