@@ -4,6 +4,9 @@
 # Exit immediately if any command errors (e), error if variables undefined (u), error on pipeline error (-o pipefail). Why? See https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
 set -euo pipefail
 
+echo "Set up .secrets.env containing machine or organisation specific secrets, e.g. Artifactory credentials, Cloudflare credentials or device identifiers."
+touch "$HOME/.secrets.env"
+
 echo "Setting macOS settings..."
 
 #"Disabling system-wide resume"
@@ -92,9 +95,10 @@ defaults write com.apple.dock "expose-group-by-app" -bool true
 defaults write com.apple.dock showhidden -bool TRUE; killall Dock
 defaults write com.apple.dock show-recents -bool false
 
-read -p "Do you want to remove all existing dock icons?" removeExistingDockIcons
+read -p "Do you want to remove all existing dock icons? [yes/no, default: yes]: " removeExistingDockIcons
 removeExistingDockIcons=$(echo "$removeExistingDockIcons" | tr '[:upper:]' '[:lower:]')
-if [ "$removeExistingDockIcons" == "yes" ]; then
+if [ "$removeExistingDockIcons" == "yes" ] || [ -z "$removeExistingDockIcons" ]; then
+  echo "Removing existing dock icons..."
   defaults write com.apple.dock persistent-apps -array
 fi
 
@@ -120,28 +124,22 @@ brew install tree
 brew install wget
 brew install trash
 brew install ollama
-
-## TODO More tools needed:
-# brew install coreutils curl git openssl readline sqlite3 xz zlib tcl-tk # needed for asdf and asdf-python
+brew install pyenv
+brew install nvm
 
 ## nvim
 echo "install: neovim, as per https://github.com/neovim/neovim/wiki/Installing-Neovim#macos--os-x. Why? It avoids Microsoft (corporate, behemoth, buggy software) and Jetbrains IDEs (JDK, slow)"
 brew install neovim
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
-exec $SHELL
+source $HOME/.zshrc
+
 echo "setting up symlink for custom neovim configuration"
 ln -s "$HOME/.config/dotfiles/nvim-custom/" "$HOME/.config/nvim/lua/custom"
 
-echo "install: pyenv. Why? Manage python versions so you don't suffer with python setup and version management."
-brew install pyenv
-exec $SHELL # so we can use pyenv
 pyenv install 3.11
 pyenv global 3.11
 
-## nvm
-echo "install: nvm. Why? Manage node versions so you can have multiple versions easily."
-brew install nvm
-
+# Fonts
 read -p "Do you want to download and install the Jetbrains font? (yes/no): " willDownloadJetbrainsFont
 willDownloadJetbrainsFont=$(echo "$willDownloadJetbrainsFont" | tr '[:upper:]' '[:lower:]')
 if [ "$willDownloadJetbrainsFont" == "yes" ]; then
@@ -292,9 +290,6 @@ echo "Manually install apps:"
 open "https://eagle.cool/"
 open "https://www.blackmagicdesign.com/products/davinciresolve"
 read -p "Press [Enter] to continue..."
-
-echo "Set up .secrets.env containing machine or organisation specific secrets, e.g. Artifactory credentials, Cloudflare credentials or device identifiers."
-touch "$HOME/.secrets.env"
 
 # Login with Apple Account
 echo "login: macOS Apple Account"
