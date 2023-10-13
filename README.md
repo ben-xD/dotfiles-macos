@@ -87,7 +87,7 @@ Primary key fingerprint: 6A4B E50A 13CE 50C1 4E31  8795 5FC8 0BAF 2B00 A4F9
 - install `GnuPG` and `pinentry-mac`: run `brew install gnupg pinentry-mac`
 - Import the public key into the machine: `gpg --import $file`
 - List available keys to get the key id: `gpg --list-keys`
-- Edit the key: run `gpg --edit-key 6A4BE50A13CE50C14E3187955FC80BAF2B00A4F9`
+- Edit the key: run `gpg --edit-key $key_id`
     - enter `trust`, and select `5` (Ultimate trust - you created this key).
 
 ### Adding a machine subkey
