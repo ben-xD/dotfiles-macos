@@ -1,6 +1,6 @@
 # dotfiles-macos
 
-Reproducible set up for my macOS machines. Using a bare git repo (files are not inside the cloned folder), we set the working tree to be the home folder instead. Then we install tools using zsh, brew and macOS commands.
+Reproducible set up for my macOS machines. Using a bare git repo (files are not inside the cloned folder), we set the working tree to be the home folder instead. Then we install tools using zsh, brew and macOS commands. Consider forking the repo and modifying the files to customise your setup.
 
 ## Usage
 
