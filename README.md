@@ -9,7 +9,7 @@ Reproducible set up for my macOS machines. Using a bare git repo (files are not 
 - Run the following script:
 ```bash
 # Clone the repo into ~/.cfg
-git clone --bare git@github.com/ben-xD/dotfiles-macos.git $HOME/.cfg
+git clone --bare https://github.com/ben-xD/dotfiles-macos.git $HOME/.cfg
 # Set temporary alias
 alias cf='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
 # Hide untracked files
