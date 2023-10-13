@@ -5,7 +5,7 @@
 set -euo pipefail
 
 SCRIPT_PATH="${0:A:h}"
-."$SCRIPT_PATH/setup_macos_settings.sh"
+source "$SCRIPT_PATH/setup_macos_settings.sh"
 
 echo "install: brew. Why? It helps us install more apps and developer tools without manually downloading files."
 if which brew &>/dev/null; then
