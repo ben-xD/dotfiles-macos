@@ -148,7 +148,8 @@ done
 # Login with Apple Account
 echo "login: macOS Apple Account"
 open "/System/Library/PreferencePanes/AppleIDPrefPane.prefPane"
-read -p "Press [Enter] after logging in..."
+echo "Press [Enter] after logging in..."
+read
 
 # Install Mac App Store apps
 mas install 1352778147 # bitwarden
@@ -184,28 +185,35 @@ mas install 1140313689 # snippose
 brew cleanup
 
 echo "Setting up GPG key. Why? It's needed for signing commits or encrypting files."
-read -p "Press [Enter] to continue..."
+echo "Press [Enter] to continue..."
+read
 
 # TODO check it works
 echo "manual: create subkey from GPG key on yubikey/smartcard"
 GPG_PUBLIC_KEY_ID="0x5FC80BAF2B00A4F9 2023-10-06"
-read -p "Insert smartcard/yubikey. Press [Enter] to continue..."
+echo "Insert smartcard/yubikey. Press [Enter] to continue..."
+read
 
 echo "manual(GitHub): Delete existing GPG public key and add new public key, containing subkey used by this machine."
-read -p "Press [Enter] to continue..."
+echo "Press [Enter] to continue..."
+read
 
 echo "Add licenses to apps: alfred, cleanshot, fork"
-read -p "Press [Enter] to continue..."
+echo "Press [Enter] to continue..."
+read
 
 echo "Copy configuration of Alfred"
-read -p "Press [Enter] to continue..."
+echo "Press [Enter] to continue..."
+read
 
 echo "Login to browsers and browser extensions"
-read -p "Press [Enter] to continue..."
+echo "Press [Enter] to continue..."
+read
 
 echo "Save Google Meet as PWA"
 open -a "google chrome" https://meet.google.com
-read -p "Press [Enter] to continue..."
+echo "Press [Enter] to continue..."
+read
 
 echo "install: powerlevel10k, as per https://github.com/romkatv/powerlevel10k#installation. Why? It makes the command line tidy."
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
@@ -220,19 +228,22 @@ else
   echo "Add a new SSH key to GitHub. The public key is in your clipboard."
   open -a "firefox" https://github.com/settings/keys
   cat "${GITHUB_SSH_KEY}.pub" | pbcopy
-  read -p "Press [Enter] to continue..."
+  echo "Press [Enter] to continue..."
+  read
 fi
 
 echo "manual: install apps"
 open "https://eagle.cool/"
 open "https://www.blackmagicdesign.com/products/davinciresolve"
-read -p "Press [Enter] to continue..."
+echo "Press [Enter] to continue..."
+read
 
 echo "Set up sudo with touch id"
 sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
 umask 000
 chmod +r /etc/pam.d/sudo_local
-read -p "Uncomment the line in the next file to set up sudo with touch id. Press [Enter] to continue..."
+echo "Uncomment the line in the next file to set up sudo with touch id. Press [Enter] to continue..."
+read
 vim /etc/pam.d/sudo_local
 
 echo "Set up .secrets.env containing machine or organisation specific secrets, e.g. Artifactory credentials, Cloudflare credentials or device identifiers."
