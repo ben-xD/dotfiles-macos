@@ -94,7 +94,7 @@ defaults write com.apple.dock show-recents -bool false
 
 read -p "Do you want to remove all existing dock icons?" removeExistingDockIcons
 removeExistingDockIcons=$(echo "$removeExistingDockIcons" | tr '[:upper:]' '[:lower:]')
-if [ "removeExistingDockIcons" == "yes" ]; then
+if [ "$removeExistingDockIcons" == "yes" ]; then
   defaults write com.apple.dock persistent-apps -array
 fi
 
