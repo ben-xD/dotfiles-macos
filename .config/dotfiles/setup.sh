@@ -1,10 +1,10 @@
 #!/bin/bash
-# Why? See https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
+# Set error immediately if any command errors (e), error if variables undefined (u), verbose (x), error on pipeline error (-o pipefail). Why? See https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
 set -euxo pipefail
 
 # First time machine setup script. See https://github.com/ben-xD/dotfiles-macos for more information.
 echo "install: Xcode Command Line Tools. Why? It's commonly needed for development."
-xcode-select --install
+xcode-select --install || true
 
 echo "install: brew. Why? It helps us install more apps and developer tools without manually downloading files."
 if test ! $(which brew); then
