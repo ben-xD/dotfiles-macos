@@ -109,12 +109,12 @@ killall Dock
 killall Finder
 
 echo "install: brew. Why? It helps us install more apps and developer tools without manually downloading files."
-if test ! $(which brew); then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-else
+if which brew &>/dev/null; then
   echo "skip: brew is already installed, updating instead."
   brew update
+else
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 ## More dev tools
