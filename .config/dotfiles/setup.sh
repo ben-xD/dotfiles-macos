@@ -244,7 +244,7 @@ umask 000
 chmod +r /etc/pam.d/sudo_local
 echo "Uncomment the line in the next file to set up sudo with touch id. Press [Enter] to continue..."
 read
-vim /etc/pam.d/sudo_local
+sudo vim /etc/pam.d/sudo_local
 
 echo "Set up .secrets.env containing machine or organisation specific secrets, e.g. Artifactory credentials, Cloudflare credentials or device identifiers."
 touch "$HOME/.secrets.env"
