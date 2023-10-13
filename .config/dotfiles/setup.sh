@@ -80,7 +80,8 @@ defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 # Set dock to left
-read -p "Configuring dock. Press [Enter] to continue..."
+echo "Configuring dock. Press [Enter] to continue..."
+read
 defaults write com.apple.dock orientation -string left
 #"Setting Dock to auto-hide and removing the auto-hiding delay"
 defaults write com.apple.dock autohide -bool true
@@ -95,7 +96,8 @@ defaults write com.apple.dock "expose-group-by-app" -bool true
 defaults write com.apple.dock showhidden -bool TRUE; killall Dock
 defaults write com.apple.dock show-recents -bool false
 
-read -p "Do you want to remove all existing dock icons? [yes/no, default: yes]: " removeExistingDockIcons
+echo "Do you want to remove all existing dock icons? [yes/no, default: yes]: "
+read removeExistingDockIcons
 removeExistingDockIcons=$(echo "$removeExistingDockIcons" | tr '[:upper:]' '[:lower:]')
 if [ "$removeExistingDockIcons" == "yes" ] || [ -z "$removeExistingDockIcons" ]; then
   echo "Removing existing dock icons..."
@@ -143,14 +145,16 @@ pyenv install 3.11
 pyenv global 3.11
 
 # Fonts
-read -p "Do you want to download and install the Jetbrains font? (yes/no): " willDownloadJetbrainsFont
+echo "Do you want to download and install the Jetbrains font? (yes/no): "
+read willDownloadJetbrainsFont
 willDownloadJetbrainsFont=$(echo "$willDownloadJetbrainsFont" | tr '[:upper:]' '[:lower:]')
 if [ "$willDownloadJetbrainsFont" == "yes" ]; then
   wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip"
   unzip "JetbrainsMono.zip" -d JetbrainsMono
   open -b com.apple.FontBook JetBrainsMono/*.ttf
+  echo "manual: manually install in FontBook. Press [Enter] after that's done..."
+  read
   trash "JetBrainsMono.zip" JetBrainsMono
-  read -p "Unzi"
 else
   echo "install(fonts): Download your preferred font and open the ttf files (with FontBook)"
   open "https://github.com/ryanoasis/nerd-fonts/releases"
@@ -174,7 +178,8 @@ else
 fi
 
 echo "install: apps via brew. Find more casks on https://formulae.brew.sh/cask/"
-read -p "Do you want to install optional apps? (yes/no): " toInstallExtraApps
+echo "Do you want to install optional apps? (yes/no): "
+read toInstallExtraApps
 toInstallExtraApps=$(echo "$toInstallExtraApps" | tr '[:upper:]' '[:lower:]')
 # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
 apps=(
