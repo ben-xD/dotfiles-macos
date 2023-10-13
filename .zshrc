@@ -217,9 +217,6 @@ fpath=(~/.zsh $fpath)
 autoload -Uz compinit
 compinit -u
 
-# Device IDs
-export MIKI_XR="00008020-001C14C10AF2002E"
-export BEN_S21="R5CR60AR3PE"
 # fnm
 export PATH="/Users/zen/Library/Application Support/fnm:$PATH"
 if command -v fnm &> /dev/null
