@@ -140,7 +140,6 @@ if [[ ! -d "$HOME/.config/nvim" ]]; then
   ln -s "$HOME/.config/dotfiles/nvim-custom/" "$HOME/.config/nvim/lua/custom"
 fi
 
-## TODO fix all of the below
 source $HOME/.zshrc || true
 pyenv install 3.11
 pyenv global 3.11
@@ -149,7 +148,7 @@ pyenv global 3.11
 echo "Do you want to download and install the Jetbrains font? (yes/no): "
 read willDownloadJetbrainsFont
 willDownloadJetbrainsFont=$(echo "$willDownloadJetbrainsFont" | tr '[:upper:]' '[:lower:]')
-if [ "$willDownloadJetbrainsFont" == "yes" ]; then
+if [[ "$willDownloadJetbrainsFont" == "yes" ]]; then
   wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip"
   unzip "JetbrainsMono.zip" -d JetbrainsMono
   open -b com.apple.FontBook JetBrainsMono/*.ttf
