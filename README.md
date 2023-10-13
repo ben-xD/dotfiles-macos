@@ -6,9 +6,10 @@ Reproducible set up for my macOS machines. Using a bare git repo (files are not 
 
 ### Setting up a new machine
 
+- Open Terminal.app
+- Run `xcode-select --install`, and click "Install". Wait for it to finish.
 - Run the following script:
 ```bash
-xcode-select --install
 echo "Clone the repo into ~/.cfg"
 git clone --bare https://github.com/ben-xD/dotfiles-macos.git $HOME/.cfg
 echo "Set temporary alias"
