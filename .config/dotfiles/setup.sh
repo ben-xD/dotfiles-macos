@@ -76,7 +76,7 @@ defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 #"Preventing Time Machine from prompting to use new hard drives as backup volume"
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
-# Set  dock to left
+# Set dock to left
 read -p "Configuring dock. Press [Enter] to continue..."
 defaults write com.apple.dock orientation -string left
 #"Setting Dock to auto-hide and removing the auto-hiding delay"
@@ -88,6 +88,15 @@ defaults write com.apple.dock tilesize -int 90
 #"Speeding up Mission Control animations and grouping windows by application"
 defaults write com.apple.dock expose-animation-duration -float 0.1
 defaults write com.apple.dock "expose-group-by-app" -bool true
+# Grey out apps that have been hidden (Command + H)
+defaults write com.apple.dock showhidden -bool TRUE; killall Dock
+defaults write com.apple.dock show-recents -bool false
+
+read -p "Do you want to remove all existing dock icons?" removeExistingDockIcons
+removeExistingDockIcons =$(echo "$removeExistingDockIcons" | tr '[:upper:]' '[:lower:]')
+if [ "removeExistingDockIcons" == "yes" ]; then
+  defaults write com.apple.dock persistent-apps -array
+fi
 
 killall Dock
 killall Finder
@@ -102,6 +111,19 @@ if test ! $(which brew); then
 else
   echo "skip: brew is already installed, updating instead."
   brew update
+fi
+
+read -p "Do you want to download and install the Jetbrains font? (yes/no): " willDownloadJetbrainsFont
+willDownloadJetbrainsFont=$(echo "$willDownloadJetbrainsFont" | tr '[:upper:]' '[:lower:]')
+if [ "$answer" == "yes" ]; then
+  wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip"
+  unzip "JetbrainsMono.zip" -d JetbrainsMono
+  open -b com.apple.FontBook JetBrainsMono/*.ttf
+  trash "JetBrainsMono.zip" JetBrainsMono
+  read -p "Unzi"
+else
+  echo "install(fonts): Download your preferred font and open the ttf files (with FontBook)"
+  open "https://github.com/ryanoasis/nerd-fonts/releases"
 fi
 
 echo "install: oh-my-zsh, as per https://ohmyz.sh/#install. Why? It makes using command line more comfortable."
@@ -122,6 +144,8 @@ else
 fi
 
 echo "install: apps via brew. Find more casks on https://formulae.brew.sh/cask/"
+read -p "Do you want to install optional apps? (yes/no): " toInstallExtraApps
+toInstallExtraApps=$(echo "$toInstallExtraApps" | tr '[:upper:]' '[:lower:]')
 # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
 apps=(
   iterm2
@@ -156,6 +180,9 @@ for app in "${apps[@]}"; do
     brew install --cask --appdir="/Applications" "$app" || echo "Failed to install $app"
 done
 
+echo "manual: feel free to open browsers to login "
+open -a "firefox" https://gmail.com
+open -a "google chrome" https://gmail.com
 
 extra_apps=(
   obs
@@ -176,11 +203,9 @@ extra_apps=(
   cloudflare-warp
 )
 
-read -p "Do you want to install optional apps? (yes/no): " toInstallExtraApps
-toInstallExtraApps=$(echo "$toInstallExtraApps" | tr '[:upper:]' '[:lower:]')
-if [ "$toInstallExtraApps" == "yes" ]; then
-  brew install --cask --appdir="/Applications" ${extra_apps[@]} || true
-fi
+for app in "${extra_apps[@]}"; do
+    brew install --cask --appdir="/Applications" "$app" || echo "Failed to install $app"
+done
 
 # More apps to consider:
   # openbb terminal
@@ -208,6 +233,8 @@ fi
   # GodMode
 
 brew cleanup
+
+read -p "Press [Enter] to continue..."
 
 ## nvim
 echo "install: neovim, as per https://github.com/neovim/neovim/wiki/Installing-Neovim#macos--os-x. Why? It avoids Microsoft (corporate, behemoth, buggy software) and Jetbrains IDEs (JDK, slow)"
@@ -282,19 +309,6 @@ mas install 1352778147 # bitwarden
 mas install 937984704 # amphetamine
 mas install 899247664 # TestFlight
 mas install 1140313689 # snippose
-
-read -p "Do you want to download the file? (yes/no): " willDownloadJetbrainsFont
-willDownloadJetbrainsFont=$(echo "$willDownloadJetbrainsFont" | tr '[:upper:]' '[:lower:]')
-if [ "$answer" == "yes" ]; then
-  wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip"
-  unzip "JetbrainsMono.zip" -d JetbrainsMono
-  open -b com.apple.FontBook JetBrainsMono/*.ttf
-  trash "JetBrainsMono.zip" JetBrainsMono
-  read -p "Unzi"
-else
-  echo "install(fonts): Download your preferred font and open the ttf files (with FontBook)"
-  open "https://github.com/ryanoasis/nerd-fonts/releases"
-fi
 
 echo "install powerlevel10k, as per https://github.com/romkatv/powerlevel10k#installation. Why? It makes the command line tidy."
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
