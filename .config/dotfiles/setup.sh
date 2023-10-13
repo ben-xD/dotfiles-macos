@@ -100,10 +100,10 @@ echo "Do you want to remove all existing dock icons? [yes/no, default: yes]: "
 read removeExistingDockIcons
 removeExistingDockIcons=${removeExistingDockIcons:l}
 
+killall Dock # kill dock because the next command doesn't work without it
 if [[ "$removeExistingDockIcons" == "yes" ]] || [[ -z "$removeExistingDockIcons" ]]; then
   echo "Removing existing dock icons..."
   defaults write com.apple.dock persistent-apps -array
-  sleep 1 # sometimes it doesn't work without this sleep, especially when you run a lot of changes at once.
 fi
 
 killall Dock
