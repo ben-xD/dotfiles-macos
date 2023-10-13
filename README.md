@@ -18,9 +18,9 @@ echo "Hide untracked files"
 cf config --local status.showUntrackedFiles no
 echo "Getting files"
 cf checkout
-echo "If you get an errors (like \`files would be overwritten by checkout\`), see https://www.atlassian.com/git/tutorials/dotfiles"
-echo "Run \`.config/dotfiles/setup.sh\` and follow its instructions. For more info, read the script."
 ```
+- If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles"
+- "Run `.config/dotfiles/setup.sh` and follow its instructions. For more info, read the script.
 
 ### Making changes
 - Make changes to any config
