@@ -13,6 +13,7 @@ echo "install: macOS developer dependencies (Xcode)"
 xcode-select --install
 
 if test ! $(which brew); then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
   echo "skip: brew is already installed, updating instead."
   brew update
