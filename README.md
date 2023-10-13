@@ -25,6 +25,7 @@ echo "Run \`.config/dotfiles/setup.sh\` and follow its instructions. For more in
 - Add the file to the git staging area: run `cf add $filename`
 - Commit: run `cf commit -m "example commit message"`
 - push to github: run `cf push`
+- [on other machines] pull changes: `cf pull`
 
 ## Warnings
 
