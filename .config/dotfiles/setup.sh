@@ -1,12 +1,12 @@
 # First time machine setup script. See https://github.com/ben-xD/dotfiles-macos for more information.
 
 if test -f "/$HOME/.ssh/github"; then
+  echo "skip: github ssh key already exists"
+else
   echo "create: creating GitHub ssh key with no passphrase."
   ssh-keygen -f "$HOME/.ssh/github" -N ""
   echo "Add the key to GitHub: https://github.com/settings/keys"
   read -p "Press [Enter] to continue..."
-else
-  echo "skip: github ssh key already exists"
 fi
 
 echo "install: macOS developer dependencies (Xcode)"
