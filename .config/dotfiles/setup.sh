@@ -112,7 +112,7 @@ fi
 
 read -p "Do you want to download and install the Jetbrains font? (yes/no): " willDownloadJetbrainsFont
 willDownloadJetbrainsFont=$(echo "$willDownloadJetbrainsFont" | tr '[:upper:]' '[:lower:]')
-if [ "$answer" == "yes" ]; then
+if [ "$willDownloadJetbrainsFont" == "yes" ]; then
   wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip"
   unzip "JetbrainsMono.zip" -d JetbrainsMono
   open -b com.apple.FontBook JetBrainsMono/*.ttf
