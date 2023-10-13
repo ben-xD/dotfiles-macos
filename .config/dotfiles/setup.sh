@@ -110,6 +110,38 @@ else
   brew update
 fi
 
+## More dev tools
+brew install mas # https://github.com/mas-cli/mas
+brew install htop
+brew install legit
+# brew install git-flow
+brew install git-extras
+brew install tree
+brew install wget
+brew install trash
+brew install ollama
+
+## TODO More tools needed:
+# brew install coreutils curl git openssl readline sqlite3 xz zlib tcl-tk # needed for asdf and asdf-python
+
+## nvim
+echo "install: neovim, as per https://github.com/neovim/neovim/wiki/Installing-Neovim#macos--os-x. Why? It avoids Microsoft (corporate, behemoth, buggy software) and Jetbrains IDEs (JDK, slow)"
+brew install neovim
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+exec $SHELL
+echo "setting up symlink for custom neovim configuration"
+ln -s "$HOME/.config/dotfiles/nvim-custom/" "$HOME/.config/nvim/lua/custom"
+
+echo "install: pyenv. Why? Manage python versions so you don't suffer with python setup and version management."
+brew install pyenv
+exec $SHELL # so we can use pyenv
+pyenv install 3.11
+pyenv global 3.11
+
+## nvm
+echo "install: nvm. Why? Manage node versions so you can have multiple versions easily."
+brew install nvm
+
 read -p "Do you want to download and install the Jetbrains font? (yes/no): " willDownloadJetbrainsFont
 willDownloadJetbrainsFont=$(echo "$willDownloadJetbrainsFont" | tr '[:upper:]' '[:lower:]')
 if [ "$willDownloadJetbrainsFont" == "yes" ]; then
@@ -232,38 +264,6 @@ done
 brew cleanup
 
 read -p "Press [Enter] to continue..."
-
-## nvim
-echo "install: neovim, as per https://github.com/neovim/neovim/wiki/Installing-Neovim#macos--os-x. Why? It avoids Microsoft (corporate, behemoth, buggy software) and Jetbrains IDEs (JDK, slow)"
-brew install neovim
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
-exec $SHELL
-echo "setting up symlink for custom neovim configuration"
-ln -s "$HOME/.config/dotfiles/nvim-custom/" "$HOME/.config/nvim/lua/custom"
-
-echo "install: pyenv. Why? Manage python versions so you don't suffer with python setup and version management."
-brew install pyenv
-exec $SHELL # so we can use pyenv
-pyenv install 3.11
-pyenv global 3.11
-
-## nvm
-echo "install: nvm. Why? Manage node versions so you can have multiple versions easily."
-brew install nvm
-
-## More dev tools
-brew install mas # https://github.com/mas-cli/mas
-brew install htop
-brew install legit
-# brew install git-flow
-brew install git-extras
-brew install tree
-brew install wget
-brew install trash
-brew install ollama
-
-## TODO More tools needed:
-# brew install coreutils curl git openssl readline sqlite3 xz zlib tcl-tk # needed for asdf and asdf-python
 
 echo "Setting up GPG key. Why? It's needed for signing commits or encrypting files."
 GPG_PUBLIC_KEY_ID="0x5FC80BAF2B00A4F9 2023-10-06"
