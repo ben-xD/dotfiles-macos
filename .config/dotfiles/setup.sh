@@ -134,14 +134,14 @@ brew install nvm
 echo "install: neovim, as per https://github.com/neovim/neovim/wiki/Installing-Neovim#macos--os-x. Why? It avoids Microsoft (corporate, behemoth, buggy software) and Jetbrains IDEs (JDK, slow)"
 brew install neovim
 
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
-source $HOME/.zshrc
-
 echo "setting up symlink for custom neovim configuration"
 if [[ ! -d "$HOME/.config/nvim" ]]; then
+  git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
   ln -s "$HOME/.config/dotfiles/nvim-custom/" "$HOME/.config/nvim/lua/custom"
 fi
 
+## TODO fix all of the below
+source $HOME/.zshrc || true
 pyenv install 3.11
 pyenv global 3.11
 
