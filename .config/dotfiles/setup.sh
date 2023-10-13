@@ -14,6 +14,7 @@ xcode-select --install
 
 if test ! $(which brew); then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  exec $SHELL # so we can use brew
 else
   echo "skip: brew is already installed, updating instead."
   brew update
@@ -21,7 +22,8 @@ fi
 
 echo "install: oh-my-zsh, as per https://ohmyz.sh/#install"
 echo "More plugins available on https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# Prevent oh-my-zsh starting a new shell, which will block the script. See https://github.com/ohmyzsh/ohmyzsh/issues/4261
+NO_INTERACTIVE=true sh -c "$(curl -fsSL https://raw.githubusercontent.com/subtlepseudonym/oh-my-zsh/feature/install-noninteractive/tools/install.sh)"
 
 echo "install: zsh plugins"
 # as per https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
@@ -41,6 +43,7 @@ ln -s "$HOME/.config/dotfiles/nvim-custom/" "$HOME/.config/nvim/lua/custom"
 
 ## pyenv
 brew install pyenv
+exec $SHELL # so we can use pyenv
 pyenv install 3.11
 pyenv global 3.11
 
