@@ -1,0 +1,41 @@
+[user]
+	name = Ben Butterworth
+	email = 24711048+ben-xD@users.noreply.github.com
+	signingkey = 677808CE214836DD
+[core]
+	excludesfile = /Users/zen/.gitignore_global
+	filemode = false
+	autocrlf = false
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[commit]
+	template = /Users/zen/.stCommitMsg
+	gpgsign = true
+[init]
+	defaultBranch = main
+[color]
+	ui = true
+
+# Aliases adapted from https://snyk.io/blog/10-git-aliases-for-faster-and-productive-git-workflow/ and http://blog.kfish.org/2010/04/git-lola.html
+[alias]
+	# Logging
+    s = status
+	l = log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit -30
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	new = log origin/main@{1}..origin/main@{0}
+	newd = log origin/develop@{1}..origin/develop@{0}
+
+    c = commit -v
+	co = checkout
+	cod = checkout develop
+	com = checkout main
+	cob = checkout -b
+	del = branch -D
+	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+	p = push origin HEAD
+
+
+[gpg]
+	program = /usr/local/bin/gpg

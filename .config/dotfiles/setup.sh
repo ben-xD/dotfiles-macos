@@ -47,6 +47,7 @@ pyenv global 3.11
 brew install nvm
 
 ## More dev tools
+brew install mas # https://github.com/mas-cli/mas
 brew install htop
 brew install legit
 # brew install git-flow
@@ -134,6 +135,17 @@ brew cask alfred link
 
 brew cask cleanup
 brew cleanup
+
+# Login with Apple Account
+echo "login: macOS Apple Account"
+read -p "Press [Enter] to continue..."
+
+# Install Mac App Store apps
+mas install 1352778147 # bitwarden
+mas install 937984704 # amphetamine
+mas install 899247664 # TestFlight
+mas install 1140313689 # snippose
+
 
 echo "[DISABLED] Restoring setup from Mackup..."
 #mackup restore @TODO uncomment
