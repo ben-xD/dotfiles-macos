@@ -1,26 +1,30 @@
 # dotfiles-macos
 
-- Secrets go in `.secrets.env` which are `.gitignore`'d.
+Reproducible set up for my macOS machines. Using a bare git repo (files are not inside the cloned folder), we set the working tree to be the home folder instead. Then we install tools using zsh, brew and macOS commands.
+
+## Usage
+
+### Setting up a new machine
+
+- Clone the repo: run `git clone --bare git@github.com/ben-xD/dotfiles-macos.git .cfg`
+- Set temporary alias: run `alias cf='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'`
+- Hide untracked files: run `cf config --local status.showUntrackedFiles no`
+- Get files: run `cf checkout`
+  - If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles
+- Run `./setup.sh` and follow instructions. Read it for more information.
+- Add secrets to `.secrets.env` which is `.gitignore`'d.
+
+### Making changes
+- Make changes to any config
+- Add the file to the git staging area: run `cf add $filename`
+- Commit: run `cf commit -m "example commit message"`
+- push to github: run `cf push`
+
+## Warnings
+
+- Don't use [mackup](https://github.com/lra/mackup), it causes data loss. See https://github.com/lra/mackup/issues/1944 and https://github.com/lra/mackup/issues/1913.
 
 ## Project history
 
 - Inspired by https://www.atlassian.com/git/tutorials/dotfiles
 - Inspired by https://gist.githubusercontent.com/eknowles/71ed8b770cd66adb96d5fbe8241e01e8/raw/532392d60d4973421e29b040a2867c224eb5f0c8/mac-setup.md
-
-## TODOs
-
-- consider [pass](https://www.passwordstore.org/)
-- Try chezmoi https://www.chezmoi.io/
-
-## Setting up a new machine
-
-- Clone the repo: run `git clone --bare git@github.com/ben-xD/dotfiles-macos.git .cfg`
-- Set temporary alias: run `alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'`
-- Hide untracked files: run `config config --local status.showUntrackedFiles no`
-- Get files: run `config checkout`
-  - If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles
-- Run `./setup.sh`
-
-## Warnings
-
-- Don't use [mackup](https://github.com/lra/mackup), it causes data loss. See https://github.com/lra/mackup/issues/1944 and https://github.com/lra/mackup/issues/1913.
