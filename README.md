@@ -36,7 +36,7 @@ cf checkout
 
 ## Limitations
 
-- Unfortunately, this doesn’t currently automate all macOS settings or app configuration (and licenses/activation).
+- Unfortunately, this doesn’t currently automate all macOS settings or app configuration (and licenses/activation). Consider using https://macos-defaults.com/
 
 ## Project history
 
