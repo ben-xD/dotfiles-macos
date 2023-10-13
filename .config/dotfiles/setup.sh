@@ -141,6 +141,7 @@ if [[ ! -d "$HOME/.config/nvim" ]]; then
 fi
 
 source $HOME/.zshrc || true
+# TODO only install if it doesn't exist
 pyenv install 3.11
 pyenv global 3.11
 
@@ -269,12 +270,12 @@ done
 
 brew cleanup
 
+echo "Setting up GPG key. Why? It's needed for signing commits or encrypting files."
 read -p "Press [Enter] to continue..."
 
-echo "Setting up GPG key. Why? It's needed for signing commits or encrypting files."
 GPG_PUBLIC_KEY_ID="0x5FC80BAF2B00A4F9 2023-10-06"
 brew install gnupg pinentry-mac
-# TODO
+# TODO check it works
 echo "manual: create subkey from GPG key on yubikey/smartcard"
 read -p "Insert smartcard/yubikey. Press [Enter] to continue..."
 

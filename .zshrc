@@ -1,7 +1,5 @@
 # dotfiles
-alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
-alias cfg=config
-alias cf=cfg
+alias cf='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
 setopt completealiases
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.

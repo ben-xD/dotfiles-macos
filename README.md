@@ -6,9 +6,12 @@ Reproducible set up for my macOS machines. Using a bare git repo (files are not 
 
 ### Setting up a new machine
 
-- Open Terminal.app
-- Run `xcode-select --install`, and click "Install". Wait for it to finish.
-- Run the following script:
+- Open Terminal.app and run
+```bash
+xcode-select --install
+```
+- Click "Install" and wait for it to finish
+- Run
 ```bash
 echo "Clone the repo into ~/.cfg"
 git clone --bare https://github.com/ben-xD/dotfiles-macos.git $HOME/.cfg
@@ -19,8 +22,8 @@ cf config --local status.showUntrackedFiles no
 echo "Getting files"
 cf checkout
 ```
-- If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles"
-- "Run `.config/dotfiles/setup.sh` and follow its instructions. For more info, read the script.
+- If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles
+- Run `.config/dotfiles/setup.sh` and follow its instructions. For more info, read the script.
 
 ### Making changes
 - Make changes to any config
