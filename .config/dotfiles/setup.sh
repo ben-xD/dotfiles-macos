@@ -151,7 +151,11 @@ apps=(
 )
 # Install apps to /Applications
 # Default is: /Users/$user/Applications
-brew install --cask --appdir="/Applications" ${apps[@]} || true
+# brew install --cask --appdir="/Applications" ${apps[@]} || true
+for app in "${apps[@]}"; do
+    brew install --cask --appdir="/Applications" "$app" || echo "Failed to install $app"
+done
+
 
 extra_apps=(
   obs
@@ -174,7 +178,7 @@ extra_apps=(
 
 read -p "Do you want to install optional apps? (yes/no): " toInstallExtraApps
 toInstallExtraApps=$(echo "$toInstallExtraApps" | tr '[:upper:]' '[:lower:]')
-if [ "$answer" == "yes" ]; then
+if [ "$toInstallExtraApps" == "yes" ]; then
   brew install --cask --appdir="/Applications" ${extra_apps[@]} || true
 fi
 
