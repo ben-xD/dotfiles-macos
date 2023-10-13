@@ -6,13 +6,20 @@ Reproducible set up for my macOS machines. Using a bare git repo (files are not 
 
 ### Setting up a new machine
 
-- Clone the repo: run `git clone --bare git@github.com/ben-xD/dotfiles-macos.git .cfg`
-- Set temporary alias: run `alias cf='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'`
-- Hide untracked files: run `cf config --local status.showUntrackedFiles no`
-- Get files: run `cf checkout`
-  - If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles
-- Run `./setup.sh` and follow instructions. Read it for more information.
-- Add secrets to `.secrets.env` which is `.gitignore`'d.
+- Run the following script:
+```bash
+# Clone the repo into ~/.cfg
+git clone --bare git@github.com/ben-xD/dotfiles-macos.git $HOME/.cfg
+# Set temporary alias
+alias cf='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
+# Hide untracked files
+cf config --local status.showUntrackedFiles no
+# Get files:
+cf checkout
+echo "If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles"
+echo Run `.config/dotfiles/setup.sh` and follow its instructions. For more info, read the script.
+echo "Add secrets to `.secrets.env` which is `.gitignore`'d."
+```
 
 ### Making changes
 - Make changes to any config
