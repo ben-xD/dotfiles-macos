@@ -1,17 +1,4 @@
 # First time machine setup script. See https://github.com/ben-xD/dotfiles-macos for more information.
-
-GITHUB_SSH_KEY="$HOME/.ssh/github"
-if test -f $GITHUB_SSH_KEY; then
-  echo "skip: github ssh key already exists"
-else
-  echo "create: creating GitHub ssh key with no passphrase."
-  ssh-keygen -f $GITHUB_SSH_KEY -N ""
-  echo "Add a new SSH key to GitHub. The public key is in your clipboard."
-  open -a "firefox" https://github.com/settings/keys
-  cat "${GITHUB_SSH_KEY}.pub" | pbcopy
-  read -p "Press [Enter] to continue..."
-fi
-
 echo "install: macOS developer dependencies (Xcode)"
 xcode-select --install
 
@@ -202,6 +189,18 @@ if [ "$answer" == "yes" ]; then
 else
   echo "install(fonts): Download your preferred font and open the ttf files (with FontBook)"
   open "https://github.com/ryanoasis/nerd-fonts/releases"
+fi
+
+GITHUB_SSH_KEY="$HOME/.ssh/github"
+if test -f $GITHUB_SSH_KEY; then
+  echo "skip: github ssh key already exists"
+else
+  echo "create: creating GitHub ssh key with no passphrase."
+  ssh-keygen -f $GITHUB_SSH_KEY -N ""
+  echo "Add a new SSH key to GitHub. The public key is in your clipboard."
+  open -a "firefox" https://github.com/settings/keys
+  cat "${GITHUB_SSH_KEY}.pub" | pbcopy
+  read -p "Press [Enter] to continue..."
 fi
 
 echo "Setting some macOS settings..."
