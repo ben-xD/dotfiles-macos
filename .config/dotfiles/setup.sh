@@ -101,6 +101,7 @@ read removeExistingDockIcons
 removeExistingDockIcons=${removeExistingDockIcons:l}
 
 killall Dock # kill dock because the next command doesn't work without it
+sleep 2 # wait for dock to restart to avoid next `killall Dock` from error'ing.
 if [[ "$removeExistingDockIcons" == "yes" ]] || [[ -z "$removeExistingDockIcons" ]]; then
   echo "Removing existing dock icons..."
   defaults write com.apple.dock persistent-apps -array
