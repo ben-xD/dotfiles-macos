@@ -9,13 +9,7 @@
 
 ## TODOs
 
-- Move more nvim config to this repo
-- Automate machine setup
-  - app install
-  - zsh install
-- consider [mackup](https://github.com/lra/mackup/tree/master)
 - consider [pass](https://www.passwordstore.org/)
-
 - Try chezmoi https://www.chezmoi.io/
 
 ## Setting up a new machine
@@ -34,3 +28,7 @@
 - Download them from the GitHub. Install them using Font Book
 
 ### Install Google Meet PWA and add to dock
+
+## Warnings
+
+- Don't use [mackup](https://github.com/lra/mackup), it causes data loss. See https://github.com/lra/mackup/issues/1944 and https://github.com/lra/mackup/issues/1913.
