@@ -55,7 +55,6 @@ brew install git-extras
 brew install tree
 brew install wget
 brew install trash
-brew install mackup
 
 ## TODO Consider more tools?
 # brew install coreutils curl git openssl readline sqlite3 xz zlib tcl-tk # needed for asdf and asdf-python
