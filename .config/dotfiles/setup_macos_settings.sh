@@ -1,24 +1,25 @@
 echo "Setting macOS settings..."
+echo "There are many settings that can't (easily) be configured automatically. This just does the bare minimum."
 
 #"Disabling system-wide resume"
-defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
-
-#"Disabling automatic termination of inactive apps"
-defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
-
-#"Allow text selection in Quick Look"
-defaults write com.apple.finder QLEnableTextSelection -bool TRUE
+defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool true
 
 #"Disabling OS X Gate Keeper"
 #"(You'll be able to install any app you want from here on, not just Mac App Store apps)"
-sudo spctl --master-disable
-sudo defaults write /var/db/SystemPolicy-prefs.plist enabled -string no
-defaults write com.apple.LaunchServices LSQuarantine -bool false
+#sudo spctl --master-disable
+#sudo defaults write /var/db/SystemPolicy-prefs.plist enabled -string no
+#defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 #"Expanding the save panel by default"
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+
+#"Activity monitor updates every second"
+defaults write com.apple.ActivityMonitor "UpdatePeriod" -int "1" && killall Activity\ Monitor
+
+#"F1, F2, etc. behave as standard function keys"
+defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
 
 #"Automatically quit printer app once the print jobs complete"
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
@@ -36,11 +37,8 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 #"Enabling full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
-#"Disabling press-and-hold for keys in favor of a key repeat"
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
-
 #"Setting trackpad & mouse speed to a reasonable number"
-defaults write -g com.apple.trackpad.scaling 2
+defaults write -g com.apple.trackpad.scaling 3
 # System settings > Mouse > Mouse Sensitivity > Max
 defaults write -g com.apple.mouse.scaling 3
 
@@ -54,7 +52,10 @@ defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 #"Use column view in all Finder windows by default"
-defaults write com.apple.finder FXPreferredViewStyle Clmv
+defaults write com.apple.finder "FXPreferredViewStyle" -string "clmv"
+
+#"Show path bar in the bottom of Finder windows"
+defaults write com.apple.finder "ShowPathbar" -bool "true"
 
 #"Avoiding the creation of .DS_Store files on network volumes"
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
@@ -87,13 +88,13 @@ defaults write com.apple.dock "expose-group-by-app" -bool true
 defaults write com.apple.dock showhidden -bool TRUE; killall Dock
 defaults write com.apple.dock show-recents -bool false
 
-echo "Do you want to remove all existing dock icons? [yes/no, default: yes]: "
+echo "Do you want to remove all existing dock icons? [yes/no, default: no]: "
 read removeExistingDockIcons
 removeExistingDockIcons=${removeExistingDockIcons:l}
 
 killall Dock # kill dock because the next command doesn't work without it
 sleep 2 # wait for dock to restart to avoid next `killall Dock` from error'ing.
-if [[ "$removeExistingDockIcons" == "yes" ]] || [[ -z "$removeExistingDockIcons" ]]; then
+if [[ "$removeExistingDockIcons" == "yes" ]]; then
   echo "Removing existing dock icons..."
   defaults write com.apple.dock persistent-apps -array
 fi
