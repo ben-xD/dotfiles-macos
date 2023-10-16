@@ -63,6 +63,33 @@ else
   open "https://github.com/ryanoasis/nerd-fonts/releases"
 fi
 
+echo "set up: GitHub SSH key"
+GITHUB_SSH_KEY="$HOME/.ssh/github"
+if test -f $GITHUB_SSH_KEY; then
+  echo "skip: github ssh key already exists"
+else
+  echo "create: creating GitHub ssh key with no passphrase."
+  ssh-keygen -f $GITHUB_SSH_KEY -N ""
+  echo "Add a new SSH key to GitHub. The public key is in your clipboard."
+  open -a "firefox" https://github.com/settings/keys
+  cat "${GITHUB_SSH_KEY}.pub" | pbcopy
+  echo "Press [Enter] to continue..."
+  read
+fi
+
+echo "Set up sudo with touch id"
+sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
+umask 000
+chmod +r /etc/pam.d/sudo_local
+echo "Uncomment the line in the next file to set up sudo with touch id. Press [Enter] to continue..."
+read
+sudo vim /etc/pam.d/sudo_local
+
+echo "Set up .secrets.env containing machine or organisation specific secrets, e.g. Artifactory credentials, Cloudflare credentials or device identifiers."
+touch "$HOME/.secrets.env"
+
+brew install iterm2 rectangle
+
 echo "install: oh-my-zsh, as per https://ohmyz.sh/#install. Why? It makes using command line more comfortable."
 echo "More plugins available on https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins"
 if test -d "$HOME/.oh-my-zsh"; then
@@ -80,26 +107,27 @@ else
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 fi
 
+echo "install: powerlevel10k, as per https://github.com/romkatv/powerlevel10k#installation. Why? It makes the command line tidy."
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
 echo "install: apps via brew. Find more casks on https://formulae.brew.sh/cask/"
-echo "Do you want to install optional apps? (yes/no): "
+echo "optional: Do you want to install optional apps? (yes/no): "
 read toInstallExtraApps
 toInstallExtraApps=$(echo "$toInstallExtraApps" | tr '[:upper:]' '[:lower:]')
 # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
 apps=(
-  iterm2
-  rectangle
-  itsycal
-  alfred
   visual-studio-code
+  alfred
+  obsidian
+  fork
+  docker
+  itsycal
   jetbrains-toolbox
   cleanshot
   firefox
   google-chrome
   microsoft-edge
-  docker
   figma
-  obsidian
-  fork
   qlmarkdown
   qlstephen
   yubico-yubikey-manager
@@ -145,6 +173,12 @@ for app in "${extra_apps[@]}"; do
     brew install --cask --appdir="/Applications" "$app" || echo "Failed to install $app"
 done
 
+echo "manual: install apps"
+open "https://eagle.cool/"
+open "https://www.blackmagicdesign.com/products/davinciresolve"
+echo "Press [Enter] to continue..."
+read
+
 # Login with Apple Account
 echo "login: macOS Apple Account"
 open "/System/Library/PreferencePanes/AppleIDPrefPane.prefPane"
@@ -152,6 +186,7 @@ echo "Press [Enter] after logging in..."
 read
 
 # Install Mac App Store apps
+echo "install: macOS apps from the App Store. Bitwarden, amphetamine, TestFlight and Snippose"
 mas install 1352778147 # bitwarden
 mas install 937984704 # amphetamine
 mas install 899247664 # TestFlight
@@ -204,37 +239,3 @@ echo "Save Google Meet as PWA"
 open -a "google chrome" https://meet.google.com
 echo "Press [Enter] to continue..."
 read
-
-echo "install: powerlevel10k, as per https://github.com/romkatv/powerlevel10k#installation. Why? It makes the command line tidy."
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-
-echo "set up: GitHub SSH key"
-GITHUB_SSH_KEY="$HOME/.ssh/github"
-if test -f $GITHUB_SSH_KEY; then
-  echo "skip: github ssh key already exists"
-else
-  echo "create: creating GitHub ssh key with no passphrase."
-  ssh-keygen -f $GITHUB_SSH_KEY -N ""
-  echo "Add a new SSH key to GitHub. The public key is in your clipboard."
-  open -a "firefox" https://github.com/settings/keys
-  cat "${GITHUB_SSH_KEY}.pub" | pbcopy
-  echo "Press [Enter] to continue..."
-  read
-fi
-
-echo "manual: install apps"
-open "https://eagle.cool/"
-open "https://www.blackmagicdesign.com/products/davinciresolve"
-echo "Press [Enter] to continue..."
-read
-
-echo "Set up sudo with touch id"
-sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
-umask 000
-chmod +r /etc/pam.d/sudo_local
-echo "Uncomment the line in the next file to set up sudo with touch id. Press [Enter] to continue..."
-read
-sudo vim /etc/pam.d/sudo_local
-
-echo "Set up .secrets.env containing machine or organisation specific secrets, e.g. Artifactory credentials, Cloudflare credentials or device identifiers."
-touch "$HOME/.secrets.env"
