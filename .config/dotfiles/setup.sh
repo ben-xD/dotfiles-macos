@@ -20,6 +20,7 @@ fi
 brew install mas # https://github.com/mas-cli/mas
 brew install htop
 brew install legit
+brew install derailed/k9s/k9s
 # brew install git-flow
 brew install git-extras
 brew install wget trash tree
@@ -88,7 +89,13 @@ sudo vim /etc/pam.d/sudo_local
 echo "Set up .secrets.env containing machine or organisation specific secrets, e.g. Artifactory credentials, Cloudflare credentials or device identifiers."
 touch "$HOME/.secrets.env"
 
-brew install iterm2 rectangle
+brew install iterm2 rectangle --cask
+echo "install: iterm2 themes"
+wget https://github.com/mbadolato/iTerm2-Color-Schemes/tarball/master -O themes.tar.gz
+pushd mbadolato-iTerm2-Color-Schemes*
+tools/import-scheme.sh  schemes/*
+popd
+trash themes.tar.gz mbadolato-iTerm2-Color-Schemes*
 
 echo "install: oh-my-zsh, as per https://ohmyz.sh/#install. Why? It makes using command line more comfortable."
 echo "More plugins available on https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins"
@@ -186,7 +193,7 @@ echo "Press [Enter] after logging in..."
 read
 
 # Install Mac App Store apps
-echo "install: macOS apps from the App Store. Bitwarden, amphetamine, TestFlight and Snippose"
+echo "install: macOS apps from the App Store. Bitwarden, amphetamine,"
 mas install 1352778147 # bitwarden
 mas install 937984704 # amphetamine
 mas install 899247664 # TestFlight
