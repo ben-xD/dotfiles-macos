@@ -24,6 +24,7 @@ echo "Getting files"
 cf checkout
 cf push --set-upstream origin main
 cf remote set-url origin git@github.com:ben-xD/dotfiles-macos.git
+cf update-index --assume-unchanged .gitconfig
 ```
 - If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles
 - Run `.config/dotfiles/setup.sh` and follow its instructions. For more info, read the script.
