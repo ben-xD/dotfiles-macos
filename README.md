@@ -22,6 +22,8 @@ echo "Hide untracked files"
 cf config --local status.showUntrackedFiles no
 echo "Getting files"
 cf checkout
+cf push --set-upstream origin main
+cf remote set-url origin git@github.com:ben-xD/dotfiles-macos.git
 ```
 - If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles
 - Run `.config/dotfiles/setup.sh` and follow its instructions. For more info, read the script.
@@ -68,7 +70,7 @@ I use GPG subkeys on my machines, with a GPG key on a Yubikey/smartcard.
 - Configure to use this new key:
     - Run: `git config --global commit.gpgsign true`
     - Run: `git config --global user.signingkey $signing_key`, update it to use your public key. You can get the from `gpg --list-keys`
-    - Run: `git config --global gpg.program "$(which gpg)"` so that other apps (e.g. GitHub app, and obisidian-git for Obisidian) can find gpg and won't throw error. See [Git Hub Desktop on Mac, error: cannot run gpg: No such file or directory](https://stackoverflow.com/a/37261769/7365866). 
+    - Run: `git config --global gpg.program "$(which gpg)"` so that other apps (e.g. GitHub app, and obisidian-git for Obisidian) can find gpg and won't throw error. See [Git Hub Desktop on Mac, error: cannot run gpg: No such file or directory](https://stackoverflow.com/a/37261769/7365866).
 - Test:
     - Make some changes to a repo and create a git commit
     - Check commit includes GPG signature: `git log --show-signature`
@@ -94,7 +96,7 @@ Primary key fingerprint: 6A4B E50A 13CE 50C1 4E31  8795 5FC8 0BAF 2B00 A4F9
 
 - Create one subkey for each machine. This avoids needing to plug in your smartcard every time you want to make a commit. Get a subkey and use that instead so I don't need hardware plugged in.
 - Plug in yubikey. For the machine to detect it, you might need to wait a few seconds or run `gpg --edit-card`
-- Create subkey: run `gpg --edit-key $public_key_id` 
+- Create subkey: run `gpg --edit-key $public_key_id`
     - You should see "secret key is available"
     - run `addkey`
     - Select `4`: `z(4) RSA (sign only)` and enter `4096`
