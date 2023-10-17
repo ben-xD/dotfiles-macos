@@ -131,7 +131,6 @@ apps=(
   qlmarkdown
   qlstephen
   yubico-yubikey-manager
-  logi-options-plus
   typora
   trailer
   slack
@@ -174,6 +173,7 @@ for app in "${extra_apps[@]}"; do
 done
 
 echo "manual: install apps"
+open "https://www.logitech.com/en-gb/software/logi-options-plus.html"
 open "https://eagle.cool/"
 open "https://www.blackmagicdesign.com/products/davinciresolve"
 echo "Press [Enter] to continue..."
