@@ -18,7 +18,7 @@ fi
 
 # Primary browser install
 brew install firefox --cask
-open -a firefox https://gmail.com
+open -a Firefox https://gmail.com
 
 ## More dev tools
 brew install mas # https://github.com/mas-cli/mas
