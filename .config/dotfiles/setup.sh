@@ -97,6 +97,7 @@ touch "$HOME/.secrets.env"
 brew install iterm2 rectangle --cask
 echo "install: iterm2 themes"
 wget https://github.com/mbadolato/iTerm2-Color-Schemes/tarball/master -O themes.tar.gz
+tar -xvf themes.tar.gz
 pushd mbadolato-iTerm2-Color-Schemes*
 tools/import-scheme.sh  schemes/*
 popd
