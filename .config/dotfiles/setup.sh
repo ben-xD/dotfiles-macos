@@ -16,6 +16,10 @@ else
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# Primary browser install
+brew install firefox --cask
+open -a firefox https://gmail.com
+
 ## More dev tools
 brew install mas # https://github.com/mas-cli/mas
 brew install k9s
@@ -132,7 +136,6 @@ apps=(
   itsycal
   jetbrains-toolbox
   cleanshot
-  firefox
   google-chrome
   microsoft-edge
   figma
