@@ -86,7 +86,7 @@ fi
 echo "Set up sudo with touch id"
 sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
 umask 000
-chmod +r /etc/pam.d/sudo_local
+sudo chmod +r /etc/pam.d/sudo_local
 echo "Uncomment the line in the next file to set up sudo with touch id. Press [Enter] to continue..."
 read
 sudo vim /etc/pam.d/sudo_local
