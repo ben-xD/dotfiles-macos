@@ -250,3 +250,7 @@ echo "Save Google Meet as PWA"
 open -a "google chrome" https://meet.google.com
 echo "Press [Enter] to continue..."
 read
+
+# Finally, use SSH instead of HTTPs
+cf remote set-url origin git@github.com:ben-xD/dotfiles-macos.git
+cf push --set-upstream origin main
