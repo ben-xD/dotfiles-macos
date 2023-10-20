@@ -18,6 +18,7 @@ fi
 
 ## More dev tools
 brew install mas # https://github.com/mas-cli/mas
+brew install k9s
 brew install htop
 brew install legit
 brew install derailed/k9s/k9s

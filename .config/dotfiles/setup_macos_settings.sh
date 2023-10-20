@@ -16,7 +16,7 @@ defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
 #"Activity monitor updates every second"
-defaults write com.apple.ActivityMonitor "UpdatePeriod" -int "1" && killall Activity\ Monitor
+defaults write com.apple.ActivityMonitor "UpdatePeriod" -int "1"
 
 #"F1, F2, etc. behave as standard function keys"
 defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
