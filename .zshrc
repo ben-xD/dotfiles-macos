@@ -240,3 +240,10 @@ eval "$(pyenv init -)"
 # Secrets
 source "$HOME/.secrets.env"
 # WARNING: ADD SECRETS TO .secrets.env, not here.
+
+# bun completions
+[ -s "/Users/zen/.bun/_bun" ] && source "/Users/zen/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
