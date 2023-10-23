@@ -102,6 +102,8 @@ Primary key fingerprint: 6A4B E50A 13CE 50C1 4E31  8795 5FC8 0BAF 2B00 A4F9
     - You should see "secret key is available"
     - run `addkey`
     - Select `4`: `z(4) RSA (sign only)` and enter `4096`
+    - Select an expiry date
+        - It's better to extend the expiry date of existing subkeys instead of creating a new one. Why? After using a subkey on GitHub, you cannot delete it from the public key. Commits signed with that public subkey will be unverified if the new GPG public key doesn't include that subkey. This doesn't mean there is a tradeoff between the size of the GPG public key and how frequently you expire subkeys, because you can just extend the expiry date of the subkey.
     - Save it: run `save`
 - and configure Git to use it: `git config --global user.signingkey $sub_key_id`
 - Export the public key, run Run `gpg --export --armor $public_key_id > gpg.$(whoami).$(date +%Y%m%d).pub`
