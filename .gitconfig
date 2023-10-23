@@ -1,7 +1,7 @@
 [user]
 	name = Ben Butterworth
 	email = 24711048+ben-xD@users.noreply.github.com
-	signingkey = 0x4461576025C0B541
+	signingkey = 0x8655E3DEF2B340C7
 [core]
 	excludesfile = /Users/zen/.gitignore_global
 	filemode = false
