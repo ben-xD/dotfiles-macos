@@ -63,8 +63,9 @@ I use GPG subkeys on my machines, with a GPG key on a Yubikey/smartcard.
 - Open GitHub's [key page](https://github.com/settings/keys) and click **add new GPG key**
     - Name it following a meaningful format, e.g. , e.g. `ben.20231006`
 - Reminder: Re-export public key and replace existing GPG key on Github, otherwise the subkey won't be recognized by Github.
-    - Run `gpg --export --armor 0x5FC80BAF2B00A4F9`
-    - Paste the output into a new GPG key. Name it the same: `ben.20231006`, but using new date
+    - Run `gpg --export --armor $public_key_id > gpg.$(whoami).$(date +%Y%m%d).pub`
+    - Copy to clipboard: `cat gpg.$(whoami).$(date +%Y%m%d).pub | pbcopy`
+    - Paste the output into a new GPG key. Name it the same as the file to be consistent.
 
 ### Configure git
 - See your existing config: `git config --global --list`
