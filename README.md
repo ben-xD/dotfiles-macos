@@ -96,11 +96,14 @@ Primary key fingerprint: 6A4B E50A 13CE 50C1 4E31  8795 5FC8 0BAF 2B00 A4F9
 ### Adding a machine subkey
 
 - Create one subkey for each machine. This avoids needing to plug in your smartcard every time you want to make a commit. Get a subkey and use that instead so I don't need hardware plugged in.
-- Plug in yubikey. For the machine to detect it, you might need to wait a few seconds or run `gpg --edit-card`
+- Plug in yubikey
+- Let machine detect it, run `gpg --edit-card`
 - Create subkey: run `gpg --edit-key $public_key_id`
     - You should see "secret key is available"
     - run `addkey`
     - Select `4`: `z(4) RSA (sign only)` and enter `4096`
     - Save it: run `save`
 - and configure Git to use it: `git config --global user.signingkey $sub_key_id`
-- Export the public key, and update GitHub with the new public key. GitHub needs to know about the newly added subkey.
+- Export the public key, run Run `gpg --export --armor $public_key_id > gpg.$(whoami).$(date +%Y%m%d).pub`
+- Save this public key somewhere (e.g. in a password manager). You should use this public key the next time you add a subkey, because you can only upload 1 public key for all the subkeys to GitHub.
+- Update GitHub with the new public key. GitHub needs to know about the newly added subkey. You can delete your previous one, since it should be a subset of the new key. Copy it to clipboard by running run `cat gpg.$(whoami).$(date +%Y%m%d).pub | pbcopy` and paste it into https://github.com/settings/gpg/new
