@@ -10,7 +10,6 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
 [commit]
-	template = /Users/zen/.stCommitMsg
 	gpgsign = true
 [init]
 	defaultBranch = main
@@ -39,3 +38,5 @@
 
 [gpg]
 	program = /opt/homebrew/bin/gpg
+[push]
+	autoSetupRemote = true
