@@ -135,6 +135,7 @@ apps=(
   fork
   docker
   itsycal
+  meetingbar
   jetbrains-toolbox
   cleanshot
   google-chrome
