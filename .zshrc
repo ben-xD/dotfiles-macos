@@ -253,3 +253,7 @@ source "$HOME/.secrets.env"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+gitgc() {
+  git branch --merged | grep -v "\*" | xargs -n 1 git branch -d
+}
