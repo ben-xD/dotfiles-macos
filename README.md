@@ -55,7 +55,7 @@ I use GPG subkeys on my machines, with a GPG key on a Yubikey/smartcard.
 - Back up the private key
   - You could create a QR (or split across multiple QR codes) or store the private key digitally. For example, you couldencrypt the private key using GPG and upload it to a password manager, or keep on a USB stick.
   - #not-done create paper copy with QR code. See https://security.stackexchange.com/questions/51771/where-do-you-store-your-personal-private-gpg-key
-  - I keep it digitally in my password manager, after encrypting it.
+  - I keep it digitally in my password manager. You could either add a passphrase to the private key, or use gpg symmetric encryption.
   - I use `gpg --symmetric $filename` which will generate an ecrypted file: `$filename.gpg`. It will ask for a password.
   - To decrypt, run `gpg $filename`.
 
