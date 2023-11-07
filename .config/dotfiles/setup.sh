@@ -124,7 +124,7 @@ echo "install: powerlevel10k, as per https://github.com/romkatv/powerlevel10k#in
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 echo "install: apps via brew. Find more casks on https://formulae.brew.sh/cask/"
-echo "optional: Do you want to install optional apps? (yes/no): "
+echo "Do you want to install extra apps? Some apps will still be installed. (yes/no): "
 read toInstallExtraApps
 toInstallExtraApps=$(echo "$toInstallExtraApps" | tr '[:upper:]' '[:lower:]')
 # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
@@ -154,6 +154,7 @@ apps=(
 # Install apps to /Applications
 # Default is: /Users/$user/Applications
 # brew install --cask --appdir="/Applications" ${apps[@]} || true
+echo "Installing apps"
 for app in "${apps[@]}"; do
     brew install --cask --appdir="/Applications" "$app" || echo "Failed to install $app"
 done
@@ -181,9 +182,14 @@ extra_apps=(
   cloudflare-warp
 )
 
-for app in "${extra_apps[@]}"; do
-    brew install --cask --appdir="/Applications" "$app" || echo "Failed to install $app"
-done
+if [[ "$toInstallExtraApps" == "yes" ]]; then
+  echo "Installing extra apps..."
+  for app in "${extra_apps[@]}"; do
+      brew install --cask --appdir="/Applications" "$app" || echo "Failed to install $app"
+  done
+else
+  echo "Skipping..."
+fi
 
 echo "manual: install apps"
 open "https://www.logitech.com/en-gb/software/logi-options-plus.html"
@@ -204,6 +210,7 @@ mas install 1352778147 # bitwarden
 mas install 937984704 # amphetamine
 mas install 899247664 # TestFlight
 mas install 1140313689 # snippose
+mas install 1287239339 # ColorSlurp
 
 # More apps to consider:
   # openbb terminal
