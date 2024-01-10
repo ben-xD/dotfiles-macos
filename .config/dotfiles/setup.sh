@@ -129,15 +129,14 @@ read toInstallExtraApps
 toInstallExtraApps=$(echo "$toInstallExtraApps" | tr '[:upper:]' '[:lower:]')
 # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
 apps=(
-  visual-studio-code
   alfred
   obsidian
+  cleanshot
   fork
+  visual-studio-code
   docker
-  itsycal
   meetingbar
   jetbrains-toolbox
-  cleanshot
   google-chrome
   microsoft-edge
   figma
@@ -145,11 +144,12 @@ apps=(
   qlstephen
   yubico-yubikey-manager
   typora
-  trailer
   slack
   bartender
   vlc
   monitorcontrol
+  proxyman
+  insomnia
 )
 # Install apps to /Applications
 # Default is: /Users/$user/Applications
@@ -164,6 +164,8 @@ open -a "firefox" https://gmail.com
 open -a "google chrome" https://gmail.com
 
 extra_apps=(
+  trailer
+  itsycal
   obs
   discord
   netnewswire
@@ -180,6 +182,7 @@ extra_apps=(
   db-browser-for-sqlite
   dbeaver-community
   cloudflare-warp
+  betterdisplay
 )
 
 if [[ "$toInstallExtraApps" == "yes" ]]; then

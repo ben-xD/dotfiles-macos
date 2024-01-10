@@ -39,7 +39,7 @@ cf update-index --assume-unchanged .gitconfig
 
 ## Limitations
 
-- Unfortunately, this doesn’t currently automate all macOS settings or app configuration (and licenses/activation). Consider using https://macos-defaults.com/
+- Unfortunately, this doesn’t currently automate all macOS settings or app configuration (and licenses/activation). Some people have used chezmoi, but my first attempt caused some issues.
 
 ## Project history
 

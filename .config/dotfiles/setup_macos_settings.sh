@@ -91,6 +91,8 @@ showHiddenFilesFinder=${showHiddenFilesFinder:l}
 if [[ "$showHiddenFilesFinder" == "yes" ]]; then
   echo "Showing hidden files in finder..."
   defaults write com.apple.finder AppleShowAllFiles true
+else
+  echo "Skipping..."
 fi
 
 
@@ -103,6 +105,8 @@ sleep 2 # wait for dock to restart to avoid next `killall Dock` from error'ing.
 if [[ "$removeExistingDockIcons" == "yes" ]]; then
   echo "Removing existing dock icons..."
   defaults write com.apple.dock persistent-apps -array
+else
+  echo "Skipping..."
 fi
 
 killall Dock
