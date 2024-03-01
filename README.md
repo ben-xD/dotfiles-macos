@@ -22,7 +22,6 @@ echo "Hide untracked files"
 cf config --local status.showUntrackedFiles no
 echo "Getting files"
 cf checkout
-cf push --set-upstream origin main
 cf remote set-url origin git@github.com:ben-xD/dotfiles-macos.git
 cf update-index --assume-unchanged .gitconfig
 ```
