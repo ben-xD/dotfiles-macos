@@ -257,3 +257,9 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 gitgc() {
   git branch --merged | grep -v "\*" | xargs -n 1 git branch -d
 }
+
+# yt-dlp
+export PATH="$PATH:/opt"
+
+# mcfly history
+eval "$(mcfly init zsh)"
