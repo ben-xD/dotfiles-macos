@@ -144,10 +144,7 @@ apps=(
   qlstephen
   yubico-yubikey-manager
   typora
-  slack
-  bartender
   vlc
-  monitorcontrol
   proxyman
   insomnia
 )
@@ -164,6 +161,9 @@ open -a "firefox" https://gmail.com
 open -a "google chrome" https://gmail.com
 
 extra_apps=(
+  monitorcontrol
+  slack
+  bartender
   trailer
   itsycal
   obs
