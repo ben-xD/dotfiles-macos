@@ -4,6 +4,8 @@
 # Exit immediately if any command errors (e), error if variables undefined (u), error on pipeline error (-o pipefail). Why? See https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
 set -euo pipefail
 
+# Reminder about brew: although it's convenient, brew has been painful when needing to specify a specific version of a package. This is important when using brew to install dependencies of C/C++ projects. I'll still use it for general purpose tools and apps, but not build dependencies.
+
 SCRIPT_PATH="${0:A:h}"
 source "$SCRIPT_PATH/setup_macos_settings.sh"
 
@@ -17,27 +19,28 @@ else
 fi
 
 # Primary browser install
-brew install firefox --cask
-open -a Firefox https://gmail.com
+brew install google-chrome --cask
+open -a "Google Chrome" https://gmail.com
 
 ## More dev tools
-brew install mas # https://github.com/mas-cli/mas
 brew install k9s
 brew install htop
 brew install legit
-brew install derailed/k9s/k9s
-# brew install git-flow
 brew install git-extras
-brew install wget trash tree
+brew install wget
 brew install gnupg pinentry-mac
+brew install trash tree
 brew install ollama
-brew install pyenv
+brew install mas # https://github.com/mas-cli/mas
 
-# nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+# Python version manager and package manager, https://docs.astral.sh/uv/getting-started/installation/
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Node version manager, fnm https://github.com/Schniz/fnm
+curl -fsSL https://fnm.vercel.app/install | bash
 
 ## nvim
-echo "install: neovim, as per https://github.com/neovim/neovim/wiki/Installing-Neovim#macos--os-x. Why? It avoids Microsoft (corporate, behemoth, buggy software) and Jetbrains IDEs (JDK, slow)"
+echo "install: neovim, as per https://github.com/neovim/neovim/wiki/Installing-Neovim#macos--os-x."
 brew install neovim
 
 echo "setting up symlink for custom neovim configuration"
@@ -49,9 +52,6 @@ if [[ ! -d "$HOME/.config/nvim" ]]; then
 fi
 
 source $HOME/.zshrc || true
-PYTHON_VERSION=3.11
-pyenv install $PYTHON_VERSION || true
-pyenv global $PYTHON_VERSION || true
 
 # Fonts
 echo "Do you want to download and install the Jetbrains font? (yes/no): "
@@ -130,14 +130,14 @@ toInstallExtraApps=$(echo "$toInstallExtraApps" | tr '[:upper:]' '[:lower:]')
 # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
 apps=(
   alfred
+  stats
   obsidian
   cleanshot
   fork
   visual-studio-code
-  docker
+  podman-desktop
   meetingbar
-  jetbrains-toolbox
-  google-chrome
+  firefox
   microsoft-edge
   figma
   qlmarkdown
@@ -146,7 +146,6 @@ apps=(
   typora
   vlc
   proxyman
-  insomnia
 )
 # Install apps to /Applications
 # Default is: /Users/$user/Applications
@@ -161,28 +160,29 @@ open -a "firefox" https://gmail.com
 open -a "google chrome" https://gmail.com
 
 extra_apps=(
-  monitorcontrol
+  little-snitch
+  surfshark
+  tailscale
+  wireshark
+  cloudflare-warp
+  discord
   slack
-  bartender
+  monitorcontrol
+  jordanbaird-ice
   trailer
   itsycal
   obs
-  discord
   netnewswire
-  little-snitch
-  istats-menus
-  wireshark
   bartender
   zotero
   pdf-expert
   qbittorrent
   calibre
   blender
-  postico
+  betterdisplay
   db-browser-for-sqlite
   dbeaver-community
-  cloudflare-warp
-  betterdisplay
+  postico
 )
 
 if [[ "$toInstallExtraApps" == "yes" ]]; then
@@ -263,6 +263,6 @@ open -a "google chrome" https://meet.google.com
 echo "Press [Enter] to continue..."
 read
 
-# Finally, use SSH instead of HTTPs
+# Finally, swap git repo to use SSH instead of HTTPS
 cf remote set-url origin git@github.com:ben-xD/dotfiles-macos.git
 cf push --set-upstream origin main

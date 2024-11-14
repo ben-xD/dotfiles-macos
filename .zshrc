@@ -28,7 +28,6 @@ export HOMEBREW_NO_ANALYTICS=1
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="agnoster"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
@@ -141,19 +140,8 @@ export GOOGLE_JAVA_FORMAT_PATH=/opt/google-java-format-1.13.0-all-deps.jar
 # umask
 umask 077
 
-# autoload -U +X bashcompinit && bashcompinit
-# complete -o nospace -C /opt/homebrew/bin/terraform terraform
-
 # rust
 export PATH=$PATH:~/.cargo/bin
-
-# Poetry
-export PATH="$HOME/.poetry/bin:$PATH"
-
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 
 # GO
 export GOPATH="$HOME/go"
@@ -188,17 +176,8 @@ export FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=xngh-swkt-bliw-bfbl
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-#nvm, auto set by https://github.com/nvm-sh/nvm#install--update-script
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # CMake
 export PATH="/Applications/CMake.app/Contents/bin:$PATH"
-
-# Postgres
-export PATH="/Library/PostgreSQL/15/bin:$PATH"
-# export LIBRARY_PATH="/Library/PostgreSQL/15/lib:$LIBRARY_PATH"
 
 # Neovim
 export PATH="$PATH:/opt/nvim/bin"
@@ -208,9 +187,6 @@ alias v=vi
 
 # mysql
 export PATH="$PATH:/usr/local/mysql/bin"
-
-# Python PDM
-export PATH="/Users/zen/.local/bin:$PATH"
 
 # Google SDK
 export PATH="/opt/google-cloud-sdk/bin:$PATH"
@@ -224,35 +200,22 @@ fpath=(~/.zsh $fpath)
 autoload -Uz compinit
 compinit -u
 
-# fnm
+# fnm. I use fnm because it's simple and works well on all platforms compared to nvm. I don't use asdf because it's actually complicated and confusing compared to all other version managers, probably because it tries to do everything. See https://star-history.com/#tj/n&Schniz/fnm&volta-cli/volta&Date for github star comparison. I'd probably be happy with `n` too.
 export PATH="/Users/zen/Library/Application Support/fnm:$PATH"
 if command -v fnm &> /dev/null
 then
 eval "`fnm env`"
 fi
 
-# Volta/node
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-
-# gcloud
-export PATH="$PATH:/opt/google-cloud-sdk/bin"
-
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 # Secrets
 source "$HOME/.secrets.env"
 # WARNING: ADD SECRETS TO .secrets.env, not here.
 
-# bun completions
-[ -s "/Users/zen/.bun/_bun" ] && source "/Users/zen/.bun/_bun"
-
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+# bun completions
+[ -s "/Users/zen/.bun/_bun" ] && source "/Users/zen/.bun/_bun"
 
 gitgc() {
   git branch --merged | grep -v "\*" | xargs -n 1 git branch -d
@@ -261,5 +224,13 @@ gitgc() {
 # yt-dlp
 export PATH="$PATH:/opt"
 
-# mcfly history
-eval "$(mcfly init zsh)"
+# Allow containers to access X11/XQuartZ
+xhost + 127.0.0.1 >/dev/null 2>&1
+
+export PATH="$HOME/.jetbrains:$PATH"
+
+# Gstreamer
+export PATH="$PATH:/Library/Frameworks/GStreamer.framework/Versions/Current/bin"
+
+# Turso DB
+export PATH="$PATH:/Users/zen/.turso"
