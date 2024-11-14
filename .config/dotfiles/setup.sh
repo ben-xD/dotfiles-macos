@@ -20,6 +20,8 @@ fi
 
 # Primary browser install
 brew install google-chrome --cask
+# To avoid "Unable to find application named 'Google Chrome'" error immediately after installing
+sleep 5
 open -a "Google Chrome" https://gmail.com
 
 ## More dev tools
@@ -77,7 +79,7 @@ else
   echo "create: creating GitHub ssh key with no passphrase."
   ssh-keygen -f $GITHUB_SSH_KEY -N ""
   echo "Add a new SSH key to GitHub. The public key is in your clipboard."
-  open -a "firefox" https://github.com/settings/keys
+  open -a "Google Chrome" https://github.com/settings/keys
   cat "${GITHUB_SSH_KEY}.pub" | pbcopy
   echo "Press [Enter] to continue..."
   read
@@ -87,7 +89,7 @@ echo "Set up sudo with touch id"
 sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
 umask 000
 sudo chmod +r /etc/pam.d/sudo_local
-echo "Uncomment the line in the next file to set up sudo with touch id. Press [Enter] to continue..."
+echo "Uncomment the line with pam_tid.so in the next file to set up sudo with touch id, and press :w!. Press [Enter] to continue..."
 read
 sudo vim /etc/pam.d/sudo_local
 
@@ -122,6 +124,10 @@ fi
 
 echo "install: powerlevel10k, as per https://github.com/romkatv/powerlevel10k#installation. Why? It makes the command line tidy."
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+echo "install: rosetta 2 for running x86_64 apps on Apple Silicon. Accept the prompt."
+# Needed by yubico-yubikey-manager
+sudo softwareupdate --install-rosetta
 
 echo "install: apps via brew. Find more casks on https://formulae.brew.sh/cask/"
 echo "Do you want to install extra apps? Some apps will still be installed. (yes/no): "
