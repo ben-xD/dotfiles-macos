@@ -162,7 +162,6 @@ for app in "${apps[@]}"; do
 done
 
 echo "manual: feel free to open browsers to login "
-open -a "firefox" https://gmail.com
 open -a "google chrome" https://gmail.com
 
 extra_apps=(
