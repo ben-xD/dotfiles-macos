@@ -38,6 +38,7 @@ cf update-index --assume-unchanged .gitconfig
 - Commit: run `cf commit -m "example commit message"`
 - push to github: run `cf push`
 - [on other machines] pull changes: `cf pull`
+- Any other git commands? Use `cf` instead of git
 
 ## Limitations
 
