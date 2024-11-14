@@ -213,7 +213,7 @@ echo "Press [Enter] after logging in..."
 read
 
 # Install Mac App Store apps
-echo "install: macOS apps from the App Store. Bitwarden, amphetamine,"
+echo "install: macOS apps from the App Store. Bitwarden, amphetamine, testflight, snippose and colorslurp"
 mas install 1352778147 # bitwarden
 mas install 937984704 # amphetamine
 mas install 899247664 # TestFlight
@@ -248,6 +248,7 @@ mas install 1287239339 # ColorSlurp
 brew cleanup
 
 echo "Setting up GPG key. Why? It's needed for signing commits or encrypting files."
+open -a "Google Chrome" https://github.com/ben-xD/dotfiles-macos?tab=readme-ov-file#set-up-gpg
 echo "Press [Enter] to continue..."
 read
 
@@ -255,7 +256,7 @@ echo "Add licenses to apps: alfred, cleanshot, fork"
 echo "Press [Enter] to continue..."
 read
 
-echo "Copy configuration of Alfred"
+echo "Copy configuration of Alfred from previous machine"
 echo "Press [Enter] to continue..."
 read
 
