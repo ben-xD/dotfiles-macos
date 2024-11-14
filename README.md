@@ -26,7 +26,10 @@ cf remote set-url origin git@github.com:ben-xD/dotfiles-macos.git
 cf update-index --assume-unchanged .gitconfig
 ```
 - If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles
-- Run `.config/dotfiles/setup.sh` and follow its instructions. For more info, read the script.
+- Run
+```bash
+.config/dotfiles/setup.sh
+```
 - Optional: If you'd like to use GPG keys, configure machine to use a new subkey from your GPG key. See [Adding a machine subkey](#adding-a-machine-subkey).
 
 ### Making changes
