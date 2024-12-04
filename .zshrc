@@ -160,77 +160,33 @@ alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias bb="bash /Applications/OpenBB\ Terminal/OpenBB\ Terminal"
 
 # pnpm
-export PNPM_HOME="/Users/zen/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+export PNPM_HOME="/Users/safe/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
 
-# flutter
-export PATH=/opt/flutter/bin:$PATH
-# Flutter / pub
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-# For working on the Flutter repo
-export PATH="$PATH:/opt/depot_tools"
-# For fastlane
-export FLUTTER_ROOT=/opt/flutter
-export FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=xngh-swkt-bliw-bfbl
+# fnm
+FNM_PATH="/Users/safe/Library/Application Support/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/Users/safe/Library/Application Support/fnm:$PATH"
+  eval "`fnm env`"
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+. "$HOME/.local/bin/env"
+
+# adb, installed with Android Studio
+export PATH="$PATH:/Users/safe/Library/Android/sdk/platform-tools"
+
 # CMake
-export PATH="/Applications/CMake.app/Contents/bin:$PATH"
-
-# Neovim
-export PATH="$PATH:/opt/nvim/bin"
-alias vim=nvim
-alias vi=vim
-alias v=vi
-
-# mysql
-export PATH="$PATH:/usr/local/mysql/bin"
-
-# Google SDK
-export PATH="/opt/google-cloud-sdk/bin:$PATH"
-
-# Deno
-export DENO_INSTALL="/Users/zen/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
-# Autocompletions
-fpath=(~/.zsh $fpath)
-autoload -Uz compinit
-compinit -u
-
-# fnm. I use fnm because it's simple and works well on all platforms compared to nvm. I don't use asdf because it's actually complicated and confusing compared to all other version managers, probably because it tries to do everything. See https://star-history.com/#tj/n&Schniz/fnm&volta-cli/volta&Date for github star comparison. I'd probably be happy with `n` too.
-export PATH="/Users/zen/Library/Application Support/fnm:$PATH"
-if command -v fnm &> /dev/null
-then
-eval "`fnm env`"
-fi
-
-# Secrets
-source "$HOME/.secrets.env"
-# WARNING: ADD SECRETS TO .secrets.env, not here.
+export PATH="$PATH:/Applications/CMake.app/Contents/bin"
+# bun completions
+[ -s "/Users/safe/.bun/_bun" ] && source "/Users/safe/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-# bun completions
-[ -s "/Users/zen/.bun/_bun" ] && source "/Users/zen/.bun/_bun"
-
-gitgc() {
-  git branch --merged | grep -v "\*" | xargs -n 1 git branch -d
-}
-
-# yt-dlp
-export PATH="$PATH:/opt"
-
-# Allow containers to access X11/XQuartZ
-xhost + 127.0.0.1 >/dev/null 2>&1
-
-export PATH="$HOME/.jetbrains:$PATH"
-
-# Gstreamer
-export PATH="$PATH:/Library/Frameworks/GStreamer.framework/Versions/Current/bin"
-
-# Turso DB
-export PATH="$PATH:/Users/zen/.turso"

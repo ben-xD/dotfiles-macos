@@ -152,6 +152,9 @@ apps=(
   typora
   vlc
   proxyman
+  chatgpt
+  signal
+  whatsapp
 )
 # Install apps to /Applications
 # Default is: /Users/$user/Applications
@@ -161,11 +164,15 @@ for app in "${apps[@]}"; do
     brew install --cask --appdir="/Applications" "$app" || echo "Failed to install $app"
 done
 
-echo "manual: feel free to open browsers to login "
+echo "manual: login to gmail"
 open -a "google chrome" https://gmail.com
 
+echo "Save Google Meet as PWA"
+open -a "google chrome" https://meet.google.com
+echo "Press [Enter] to continue..."
+read
+
 extra_apps=(
-  little-snitch
   surfshark
   tailscale
   wireshark
@@ -188,6 +195,7 @@ extra_apps=(
   db-browser-for-sqlite
   dbeaver-community
   postico
+  notunes
 )
 
 if [[ "$toInstallExtraApps" == "yes" ]]; then
@@ -203,6 +211,7 @@ echo "manual: install apps"
 open "https://www.logitech.com/en-gb/software/logi-options-plus.html"
 open "https://eagle.cool/"
 open "https://www.blackmagicdesign.com/products/davinciresolve"
+open "https://syncthing.net/downloads/"
 echo "Press [Enter] to continue..."
 read
 
@@ -212,9 +221,11 @@ open "/System/Library/PreferencePanes/AppleIDPrefPane.prefPane"
 echo "Press [Enter] after logging in..."
 read
 
-# Install Mac App Store apps
+# Install Mac App Store apps. To get more ids, see https://github.com/mas-cli/mas?tab=readme-ov-file#-app-ids
+# quick command: run `mas list` to see what you already have
 echo "install: macOS apps from the App Store. Bitwarden, amphetamine, testflight, snippose and colorslurp"
 mas install 1352778147 # bitwarden
+mas install 1295203466 # windows app (previously remote desktop)
 mas install 937984704 # amphetamine
 mas install 899247664 # TestFlight
 mas install 1140313689 # snippose
@@ -246,28 +257,6 @@ mas install 1287239339 # ColorSlurp
   # GodMode
 
 brew cleanup
-
-echo "Setting up GPG key. Why? It's needed for signing commits or encrypting files."
-open -a "Google Chrome" https://github.com/ben-xD/dotfiles-macos?tab=readme-ov-file#set-up-gpg
-echo "Press [Enter] to continue..."
-read
-
-echo "Add licenses to apps: alfred, cleanshot, fork"
-echo "Press [Enter] to continue..."
-read
-
-echo "Copy configuration of Alfred from previous machine"
-echo "Press [Enter] to continue..."
-read
-
-echo "Login to browsers and browser extensions"
-echo "Press [Enter] to continue..."
-read
-
-echo "Save Google Meet as PWA"
-open -a "google chrome" https://meet.google.com
-echo "Press [Enter] to continue..."
-read
 
 # Finally, swap git repo to use SSH instead of HTTPS
 cf remote set-url origin git@github.com:ben-xD/dotfiles-macos.git
