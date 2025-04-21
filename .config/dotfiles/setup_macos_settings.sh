@@ -85,12 +85,12 @@ defaults write com.apple.dock "expose-group-by-app" -bool true
 defaults write com.apple.dock showhidden -bool TRUE; killall Dock
 defaults write com.apple.dock show-recents -bool false
 
-echo "Do you want to show all hidden files in Finder? [yes/no, default: no]: "
-read showHiddenFilesFinder
-showHiddenFilesFinder=${showHiddenFilesFinder:l}
-if [[ "$showHiddenFilesFinder" == "yes" ]]; then
-  echo "Showing hidden files in finder..."
-  defaults write com.apple.finder AppleShowAllFiles true
+echo "Do you want to show all hidden files in Finder and other apps? [yes/no, default: no]: "
+read showHiddenFiles
+showHiddenFiles=${showHiddenFiles:l}
+if [[ "$showHiddenFiles" == "yes" ]]; then
+  echo "Showing hidden files in all apps..."
+  defaults write -g AppleShowAllFiles -bool true
 else
   echo "Skipping..."
 fi

@@ -3,10 +3,13 @@ alias cf='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
 setopt completealiases
 
 # Help pages (zsh doesn't enable them by default). See https://superuser.com/questions/1563825/is-there-a-zsh-equivalent-to-the-bash-help-builtin
-unalias run-help
-autoload run-help
-HELPDIR=/usr/share/zsh/"${ZSH_VERSION}"/help
-alias help=run-help
+# This errors with `/Users/safe/.zshrc:unalias:8: no such hash table element: run-help` in VSCode
+if [[ "$TERM_PROGRAM" != "vscode" ]]; then
+  unalias run-help
+  autoload run-help
+  HELPDIR=/usr/share/zsh/"${ZSH_VERSION}"/help
+  alias help=run-help
+fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -90,7 +93,8 @@ HYPHEN_INSENSITIVE="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions asdf z)
+# I removed asdf because i didn't use it, and it got in the way of install cocoapods (`sudo gem install cocoapods`).
+plugins=(git zsh-autosuggestions z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -190,3 +194,24 @@ export PATH="$PATH:/Applications/CMake.app/Contents/bin"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Gstreamer
+export PATH="/Library/Frameworks/GStreamer.framework/Versions/Current/bin:$PATH"
+
+# Flutter
+export PATH="$HOME/repos/flutter/bin:$PATH"
+
+# Android Studio
+export PATH="/Applications/Android Studio.app/Contents/MacOS:$PATH"
+# eval "$(~/.local/bin/mise activate zsh)"
+
+# Added by Windsurf
+export PATH="/Users/safe/.codeium/windsurf/bin:$PATH"
+
+# Fly (I prefer to install via script, not brew: `curl -L https://fly.io/install.sh | sh`)
+export FLYCTL_INSTALL="/Users/safe/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+
+# VSCode, to read from terminal. See https://github.com/cline/cline/wiki/Troubleshooting-%E2%80%90-Shell-Integration-Unavailable#still-having-trouble and https://code.visualstudio.com/docs/terminal/shell-integration#_manual-installation
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"

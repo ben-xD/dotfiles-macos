@@ -231,31 +231,6 @@ mas install 899247664 # TestFlight
 mas install 1140313689 # snippose
 mas install 1287239339 # ColorSlurp
 
-# More apps to consider:
-  # openbb terminal
-  # raycast
-  # bettertouchtool
-  # cleanmymac
-  # cloud
-  # colloquy
-  # cornerstone
-  # diffmerge
-  # harvest
-  # hipchat
-  # licecap
-  # mou
-  # razer-synapse
-  # sublime-text2
-  # textexpander
-  # transmission
-  # sequel-pro
-  # chromecast
-  # suspicious-package
-  # AI apps:
-  # DiffusionBee
-  # Draw Things
-  # GodMode
-
 brew cleanup
 
 # Finally, swap git repo to use SSH instead of HTTPS
