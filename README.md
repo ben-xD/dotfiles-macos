@@ -1,17 +1,20 @@
 # dotfiles-macos
 
-Reproducible set up for my macOS machines. Using a bare git repo (files are not inside the cloned folder), we set the working tree to be the home folder instead. Then we install tools using zsh, brew and macOS commands. Consider forking the repo and modifying the files to customise your setup.
+Reproducible set up for my macOS machines. Using a bare git repo (files are not inside the cloned folder), we set the working tree to be the home folder instead. Then we install tools using nix, nix-darwin, brew and mas commands. Consider forking the repo and modifying the files to customize your setup.
 
 ## Usage
 
 ### Setting up a new machine
 
 - Open Terminal.app and run
+
 ```bash
 xcode-select --install
 ```
+
 - Click "Install" and wait for it to finish
 - Run
+
 ```bash
 echo "Clone the repo into ~/.cfg"
 git clone --bare https://github.com/ben-xD/dotfiles-macos.git $HOME/.cfg
@@ -30,14 +33,16 @@ softwareupdate --install-rosetta --agree-to-license
 # Install Nix with Determinate Systems. https://docs.determinate.systems/
 curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
 ```
+
 - If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles
-- Run
-```bash
-.config/dotfiles/setup.sh
-```
+- Rebuild and apply: `sudo darwin-rebuild switch --flake ~/.config/dotfiles`
+- Optional:
+  - Run setup app to open some links for manual user installation: `nix run ~/.config/dotfiles#setup`
+  - to clear all dock icons, run `nix run ~/.config/dotfiles#reset-dock-icons`
 - Optional: If you'd like to use GPG keys, configure machine to use a new subkey from your GPG key. See [Adding a machine subkey](#adding-a-machine-subkey).
 
 ### Making changes
+
 - Make changes to any config
 - Add the file to the git staging area: run `cf add $filename`
 - Commit: run `cf commit -m "example commit message"`
