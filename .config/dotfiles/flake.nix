@@ -72,8 +72,6 @@
         k9s
         ollama
         wireshark
-        # fonts
-        jetbrains-mono
         # The tailscale package doesn't include the mac menu bar, so we use the cask instead
         # tailscale
         # Not always needed
