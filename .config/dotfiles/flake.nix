@@ -36,6 +36,12 @@
         [ pkgs.vim
           pkgs.rectangle
           pkgs.starship
+          pkgs.gnupg
+          pkgs.pinentry_mac
+          pkgs.raycast
+          pkgs.brave
+          pkgs.obsidian
+          pkgs.mas
         ];
 
       # Necessary for using flakes on this system.
@@ -54,8 +60,17 @@
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
 
+      # Allow unfree packages
+      nixpkgs.config.allowUnfree = true;
+
       # Sudo touch id
       security.pam.services.sudo_local.touchIdAuth = true;
+
+      # Enable GPG agent
+      programs.gnupg.agent = {
+        enable = true;
+        enableSSHSupport = true;
+      };
 
       system.primaryUser = username;
       system.defaults = {
@@ -72,7 +87,10 @@
       homebrew = {
         enable = true;
         brews = [];
-        casks = [ "ghostty" "brave-browser" "obsidian" ];
+        casks = [ "ghostty" "alfred" ];
+        masApps = {
+          "Xcode" = 497799835;
+        };
       };
     };
 
