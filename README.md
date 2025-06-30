@@ -24,6 +24,11 @@ echo "Getting files"
 cf checkout
 cf remote set-url origin git@github.com:ben-xD/dotfiles-macos.git
 cf update-index --assume-unchanged .gitconfig
+# Install rosetta
+softwareupdate --install-rosetta --agree-to-license
+
+# Install Nix with Determinate Systems. https://docs.determinate.systems/
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
 ```
 - If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles
 - Run

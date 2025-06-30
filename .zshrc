@@ -181,7 +181,8 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-. "$HOME/.local/bin/env"
+# Not sure what this is for
+# . "$HOME/.local/bin/env"
 
 # adb, installed with Android Studio
 export PATH="$PATH:/Users/safe/Library/Android/sdk/platform-tools"
@@ -215,3 +216,6 @@ export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 # VSCode, to read from terminal. See https://github.com/cline/cline/wiki/Troubleshooting-%E2%80%90-Shell-Integration-Unavailable#still-having-trouble and https://code.visualstudio.com/docs/terminal/shell-integration#_manual-installation
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
+# starship (keep at end of file)
+eval "$(starship init zsh)"
