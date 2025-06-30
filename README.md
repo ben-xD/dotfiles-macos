@@ -55,19 +55,28 @@ curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determin
 - Inspired by https://gist.githubusercontent.com/eknowles/71ed8b770cd66adb96d5fbe8241e01e8/raw/532392d60d4973421e29b040a2867c224eb5f0c8/mac-setup.md
 
 ## Set up GPG
+
 I use GPG subkeys on my machines, with a GPG key on a Yubikey/smartcard.
 
 ### Set up GPG key
 
 - Create PGP key using GPG: run `gpg --full-generate-key`
 - Back up the private key
-  - You could create a QR (or split across multiple QR codes) or store the private key digitally. For example, you couldencrypt the private key using GPG and upload it to a password manager, or keep on a USB stick.
+  - You could create a QR (or split across multiple QR codes) or store the private key digitally. For example, you could encrypt the private key using GPG and upload it to a password manager, or keep on a USB stick.
   - #not-done create paper copy with QR code. See https://security.stackexchange.com/questions/51771/where-do-you-store-your-personal-private-gpg-key
-  - I keep it digitally in my password manager. You could either add a passphrase to the private key, or use gpg symmetric encryption.
+  - First I export the private and public keys into files:
+
+```
+gpg --export-secret-keys 0x5FC80BAF2B00A4F9 > gpg.$USER.$(date +%Y%m%d)
+gpg --export 0x5FC80BAF2B00A4F9 > gpg.$USER.$(date +%Y%m%d).pub
+```
+
+  - I keep it digitally in my password manager. You could then either add a passphrase to the private key, or use gpg symmetric encryption.
   - I use `gpg --symmetric $filename` which will generate an encrypted file: `$filename.gpg`. It will ask for a password.
   - To decrypt, run `gpg $filename`.
 
 ### Add it to Github
+
 - Open GitHub's [key page](https://github.com/settings/keys) and click **add new GPG key**
     - Name it following a meaningful format, e.g. , e.g. `ben.20231006`
 - Reminder: Re-export public key and replace existing GPG key on Github, otherwise the subkey won't be recognized by Github.
@@ -76,6 +85,7 @@ I use GPG subkeys on my machines, with a GPG key on a Yubikey/smartcard.
     - Paste the output into a new GPG key. Name it the same as the file to be consistent.
 
 ### Configure git
+
 - See your existing config: `git config --global --list`
 - Configure to use this new key:
     - Run: `git config --global commit.gpgsign true`
@@ -86,7 +96,9 @@ I use GPG subkeys on my machines, with a GPG key on a Yubikey/smartcard.
     - Check commit includes GPG signature: `git log --show-signature`
 
 ### Configure other machines to trust the public key
+
 - To fix the issue: Not certified with trusted signature
+
 ```bash
 gpg: Signature made Fri  6 Oct 14:39:04 2023 BST
 gpg:                using RSA key 6A4BE50A13CE50C14E3187955FC80BAF2B00A4F9
@@ -95,6 +107,7 @@ gpg: WARNING: This key is not certified with a trusted signature!
 gpg:          There is no indication that the signature belongs to the owner.
 Primary key fingerprint: 6A4B E50A 13CE 50C1 4E31  8795 5FC8 0BAF 2B00 A4F9
 ```
+
 - Download the public key onto the device (e.g. using Airdrop, Bitwarden secure note, file server)
 - install `GnuPG` and `pinentry-mac`: run `brew install gnupg pinentry-mac`
 - Import the public key into the machine: `gpg --import $file`
