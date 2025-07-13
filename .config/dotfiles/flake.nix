@@ -26,6 +26,10 @@
       url = "github:Homebrew/homebrew-cask";
       flake = false;
     };
+    homebrew-hyprnote = {
+      url = "github:fastrepl/homebrew-hyprnote";
+      flake = false;
+    };
   };
 
   outputs =
@@ -38,6 +42,7 @@
       homebrew-cask,
       home-manager,
       nix4nvchad,
+      homebrew-hyprnote,
     }:
     let
       username = "jiji";
@@ -60,7 +65,7 @@
             vim
             neovim
             starship
-            pkgs.nixfmt-rfc-style
+            nixfmt-rfc-style
             # System/Mac Utilities
             rectangle
             darwin.trash
@@ -242,7 +247,8 @@
               "cloudflare-warp"
               "calibre"
               # Productivity
-              "cleanshot"
+              # "cleanshot"
+              "fastrepl/hyprnote/hyprnote"
               "meetingbar"
               "typora"
               "figma"
@@ -291,10 +297,11 @@
         taps = {
           "homebrew/homebrew-core" = homebrew-core;
           "homebrew/homebrew-cask" = homebrew-cask;
+          "fastrepl/hyprnote" = homebrew-hyprnote;
         };
 
-        # Enable fully-declarative tap management (disables 'brew tap' imperatively)
-        mutableTaps = false;
+        # Temporarily allow mutable taps to fix permission issues
+        mutableTaps = true;
       };
 
       homeManagerConfig = {
