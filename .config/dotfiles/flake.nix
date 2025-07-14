@@ -45,7 +45,7 @@
       homebrew-hyprnote,
     }:
     let
-      username = "jiji";
+      username = "safe";
       config =
         { pkgs, ... }:
         {
@@ -84,7 +84,8 @@
             # Productivity
             raycast
             obsidian
-            syncthing
+            # Out of date, so we use brew instead
+            # syncthing
             # Dev Tools
             vscode
             tree
@@ -228,7 +229,8 @@
           # Reminder about brew: although it's convenient, brew has been painful when needing to specify a specific version of a package. This is important when using brew to install dependencies of C/C++ projects. I'll still use it for general purpose tools and apps, but not build dependencies.
           homebrew = {
             enable = true;
-            brews = [ ];
+            brews = [
+            ];
 
             # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
             casks = [
@@ -248,6 +250,7 @@
               "calibre"
               # Productivity
               # "cleanshot"
+              "syncthing-app"
               "fastrepl/hyprnote/hyprnote"
               "meetingbar"
               "typora"
@@ -321,8 +324,8 @@
     in
     {
       # Build darwin flake using:
-      # $ darwin-rebuild build --flake .#air25
-      darwinConfigurations."air25" = nix-darwin.lib.darwinSystem {
+      # $ darwin-rebuild build --flake .#Batmark
+      darwinConfigurations."Batmark" = nix-darwin.lib.darwinSystem {
         modules = [
           config
           nix-homebrew.darwinModules.nix-homebrew

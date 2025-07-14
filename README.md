@@ -32,9 +32,15 @@ softwareupdate --install-rosetta --agree-to-license
 
 # Install Nix with Determinate Systems. https://docs.determinate.systems/
 curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
+
+# First time setup, run (taken from https://github.com/nix-darwin/nix-darwin)
+sudo nix run nix-darwin/nix-darwin-25.05#darwin-rebuild -- switch --flake ~/.config/dotfiles
+
+# Applying further changes:
+sudo darwin-rebuild switch --flake ~/.config/dotfiles
 ```
 
-- If you get an errors (like `files would be overwritten by checkout`), see https://www.atlassian.com/git/tutorials/dotfiles
+- If you get an errors (like `files would be overwritten by checkout`), see <https://www.atlassian.com/git/tutorials/dotfiles>
 - Rebuild and apply: `sudo darwin-rebuild switch --flake ~/.config/dotfiles`
 - Optional:
   - Run setup app to open some links for manual user installation: `nix run ~/.config/dotfiles#setup`
@@ -56,8 +62,8 @@ curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determin
 
 ## Project history
 
-- Inspired by https://www.atlassian.com/git/tutorials/dotfiles
-- Inspired by https://gist.githubusercontent.com/eknowles/71ed8b770cd66adb96d5fbe8241e01e8/raw/532392d60d4973421e29b040a2867c224eb5f0c8/mac-setup.md
+- Inspired by <https://www.atlassian.com/git/tutorials/dotfiles>
+- Inspired by <https://gist.githubusercontent.com/eknowles/71ed8b770cd66adb96d5fbe8241e01e8/raw/532392d60d4973421e29b040a2867c224eb5f0c8/mac-setup.md>
 
 ## Set up GPG
 
@@ -68,7 +74,7 @@ I use GPG subkeys on my machines, with a GPG key on a Yubikey/smartcard.
 - Create PGP key using GPG: run `gpg --full-generate-key`
 - Back up the private key
   - You could create a QR (or split across multiple QR codes) or store the private key digitally. For example, you could encrypt the private key using GPG and upload it to a password manager, or keep on a USB stick.
-  - #not-done create paper copy with QR code. See https://security.stackexchange.com/questions/51771/where-do-you-store-your-personal-private-gpg-key
+  - #not-done create paper copy with QR code. See <https://security.stackexchange.com/questions/51771/where-do-you-store-your-personal-private-gpg-key>
   - First I export the private and public keys into files:
 
 ```
@@ -76,29 +82,29 @@ gpg --export-secret-keys 0x5FC80BAF2B00A4F9 > gpg.$USER.$(date +%Y%m%d)
 gpg --export 0x5FC80BAF2B00A4F9 > gpg.$USER.$(date +%Y%m%d).pub
 ```
 
-  - I keep it digitally in my password manager. You could then either add a passphrase to the private key, or use gpg symmetric encryption.
-  - I use `gpg --symmetric $filename` which will generate an encrypted file: `$filename.gpg`. It will ask for a password.
-  - To decrypt, run `gpg $filename`.
+- I keep it digitally in my password manager. You could then either add a passphrase to the private key, or use gpg symmetric encryption.
+- I use `gpg --symmetric $filename` which will generate an encrypted file: `$filename.gpg`. It will ask for a password.
+- To decrypt, run `gpg $filename`.
 
 ### Add it to Github
 
 - Open GitHub's [key page](https://github.com/settings/keys) and click **add new GPG key**
-    - Name it following a meaningful format, e.g. , e.g. `ben.20231006`
+  - Name it following a meaningful format, e.g. , e.g. `ben.20231006`
 - Reminder: Re-export public key and replace existing GPG key on Github, otherwise the subkey won't be recognized by Github.
-    - Run `gpg --export --armor $public_key_id > gpg.$(whoami).$(date +%Y%m%d).pub`
-    - Copy to clipboard: `cat gpg.$(whoami).$(date +%Y%m%d).pub | pbcopy`
-    - Paste the output into a new GPG key. Name it the same as the file to be consistent.
+  - Run `gpg --export --armor $public_key_id > gpg.$(whoami).$(date +%Y%m%d).pub`
+  - Copy to clipboard: `cat gpg.$(whoami).$(date +%Y%m%d).pub | pbcopy`
+  - Paste the output into a new GPG key. Name it the same as the file to be consistent.
 
 ### Configure git
 
 - See your existing config: `git config --global --list`
 - Configure to use this new key:
-    - Run: `git config --global commit.gpgsign true`
-    - Run: `git config --global user.signingkey $signing_key`, update it to use your public key. You can get the from `gpg --list-keys`
-    - Run: `git config --global gpg.program "$(which gpg)"` so that other apps (e.g. GitHub app, and obisidian-git for Obisidian) can find gpg and won't throw error. See [Git Hub Desktop on Mac, error: cannot run gpg: No such file or directory](https://stackoverflow.com/a/37261769/7365866).
+  - Run: `git config --global commit.gpgsign true`
+  - Run: `git config --global user.signingkey $signing_key`, update it to use your public key. You can get the from `gpg --list-keys`
+  - Run: `git config --global gpg.program "$(which gpg)"` so that other apps (e.g. GitHub app, and obisidian-git for Obisidian) can find gpg and won't throw error. See [Git Hub Desktop on Mac, error: cannot run gpg: No such file or directory](https://stackoverflow.com/a/37261769/7365866).
 - Test:
-    - Make some changes to a repo and create a git commit
-    - Check commit includes GPG signature: `git log --show-signature`
+  - Make some changes to a repo and create a git commit
+  - Check commit includes GPG signature: `git log --show-signature`
 
 ### Configure other machines to trust the public key
 
@@ -118,7 +124,7 @@ Primary key fingerprint: 6A4B E50A 13CE 50C1 4E31  8795 5FC8 0BAF 2B00 A4F9
 - Import the public key into the machine: `gpg --import $file`
 - List available keys to get the key id: `gpg --list-keys`
 - Edit the key: run `gpg --edit-key $key_id`
-    - enter `trust`, and select `5` (Ultimate trust - you created this key).
+  - enter `trust`, and select `5` (Ultimate trust - you created this key).
 
 ### Adding a machine subkey
 
@@ -126,13 +132,13 @@ Primary key fingerprint: 6A4B E50A 13CE 50C1 4E31  8795 5FC8 0BAF 2B00 A4F9
 - Plug in yubikey
 - Let machine detect it, run `gpg --edit-card`
 - Create subkey: run `gpg --edit-key $public_key_id`
-    - You should see "secret key is available"
-    - run `addkey`
-    - Select `4`: `z(4) RSA (sign only)` and enter `4096`
-    - Select an expiry date
-        - It's better to extend the expiry date of existing subkeys instead of creating a new one. Why? After using a subkey on GitHub, you cannot delete it from the public key. Commits signed with that public subkey will be unverified if the new GPG public key doesn't include that subkey. This doesn't mean there is a tradeoff between the size of the GPG public key and how frequently you expire subkeys, because you can just extend the expiry date of the subkey.
-    - Save it: run `save`
+  - You should see "secret key is available"
+  - run `addkey`
+  - Select `4`: `z(4) RSA (sign only)` and enter `4096`
+  - Select an expiry date
+    - It's better to extend the expiry date of existing subkeys instead of creating a new one. Why? After using a subkey on GitHub, you cannot delete it from the public key. Commits signed with that public subkey will be unverified if the new GPG public key doesn't include that subkey. This doesn't mean there is a tradeoff between the size of the GPG public key and how frequently you expire subkeys, because you can just extend the expiry date of the subkey.
+  - Save it: run `save`
 - and configure Git to use it: `git config --global user.signingkey $sub_key_id`
 - Export the public key, run Run `gpg --export --armor $public_key_id > gpg.$(whoami).$(date +%Y%m%d).pub`
 - Save this public key somewhere (e.g. in a password manager). You should use this public key the next time you add a subkey, because you can only upload 1 public key for all the subkeys to GitHub.
-- Update GitHub with the new public key. GitHub needs to know about the newly added subkey. You can delete your previous one, since it should be a subset of the new key. Copy it to clipboard by running run `cat gpg.$(whoami).$(date +%Y%m%d).pub | pbcopy` and paste it into https://github.com/settings/gpg/new
+- Update GitHub with the new public key. GitHub needs to know about the newly added subkey. You can delete your previous one, since it should be a subset of the new key. Copy it to clipboard by running run `cat gpg.$(whoami).$(date +%Y%m%d).pub | pbcopy` and paste it into <https://github.com/settings/gpg/new>
