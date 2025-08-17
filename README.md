@@ -56,6 +56,12 @@ sudo darwin-rebuild switch --flake ~/.config/dotfiles
 - [on other machines] pull changes: `cf pull`
 - Any other git commands? Use `cf` instead of git
 
+### Updating the nix flake
+
+- Run `nix flake update`
+  - This helps update the flake inputs, which will pull the latest versions of the Homebrew taps
+- Then rebuild as normal: `sudo darwin-rebuild switch --flake ~/.config/dotfiles`
+
 ## Limitations
 
 - Unfortunately, this doesn’t currently automate all macOS settings or app configuration (and licenses/activation). Some people have used chezmoi, but my first attempt caused some issues.

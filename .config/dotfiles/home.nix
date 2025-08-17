@@ -31,6 +31,13 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  # Enable direnv for automatic environment loading
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
+
   # Zsh configuration with Oh My Zsh
   programs.zsh = {
     enable = true;
@@ -39,7 +46,7 @@ in
       EDITOR = "nvim";
       # ADB for android studio old emulator API level 21
       # We add The pnpm home directory to the PATH so that `pnpm install -g $package` doesn't error
-      PATH = "/Users/${username}/Library/Android/sdk/platform-tools:/Users/safe/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$PATH";
+      PATH = "/Users/${username}/repos/flutter/bin:/Users/${username}/Library/Android/sdk/platform-tools:/Users/safe/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$PATH:/Users/safe/.opencode/bin";
       GOOGLE_JAVA_FORMAT_PATH = "/opt/google-java-format-1.13.0-all-deps.jar";
       # We set the PNPM_HOME to ensure pnpm can install global packages
       PNPM_HOME = pnpmHome;
@@ -89,6 +96,14 @@ in
 
       # fnm
       eval "$(fnm env --use-on-cd)"
+
+      # Rust up (manually installed from https://rustup.rs/)
+      . "$HOME/.cargo/env"
+
+      # # Don't enter tmux if already inside one.
+      # if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+      #   tmux attach -t main || tmux new -s main
+      # fi
     '';
 
     # Additional plugins that work well with the setup

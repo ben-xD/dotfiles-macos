@@ -60,19 +60,25 @@
 
           # List packages installed in system profile. To search by name, run:
           # $ nix-env -qaP | grep wget
+          # nixpkgs are almost always out of date with brew.
           environment.systemPackages = with pkgs; [
             # Editors & Shell
+            tmux
             vim
             neovim
             starship
             nixfmt-rfc-style
+            # For Flutter, Android and iOS
+            # too out of date
+            # bundler
+            # read permissions failing when trying to `bundle install`
+            # ruby
             # System/Mac Utilities
             rectangle
             darwin.trash
             pinentry_mac
             gnupg
             bartender
-            itsycal
             monitorcontrol
             betterdisplay
             stats
@@ -95,8 +101,11 @@
             fnm
             git-extras
             k9s
-            ollama
+            # I don't really use local AI much right now
+            # ollama
             wireshark
+            # formatting code
+            dprint
             # The tailscale package doesn't include the mac menu bar, so we use the cask instead
             # tailscale
             # Not always needed
@@ -106,6 +115,9 @@
             # qbittorrent
             # blender
           ];
+
+          # Add Podman to PATH (installed by Podman Desktop)
+          environment.systemPath = [ "/opt/podman/bin" ];
 
           # Enable Tailscale service
           services.tailscale.enable = true;
@@ -230,20 +242,38 @@
           homebrew = {
             enable = true;
             brews = [
+              "fastlane"
+              "ffmpeg"
+              # for podman
+              "docker-credential-helper"
             ];
 
             # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
             casks = [
               # Terminal & Dev Tools
+              "zed"
               "ghostty"
+              "iterm2"
               "alfred"
               "tailscale"
               "notunes"
               "surfshark"
               "trailer"
+              "claude"
+              "chatgpt"
+              "keyclu"
+              "customshortcuts"
+              "android-studio"
+              # the nix package errors when it is not located in /Applications
+              "itsycal"
               "pdf-expert"
               "db-browser-for-sqlite"
-              "jordanbaird-ice"
+              # beta with fix for macos 26 tahoe
+              "jordanbaird-ice@beta"
+              # Doesn't allow you to make below/separate from the menubar
+              # "hiddenbar"
+              # Crashes on macos 26 tahoe
+              # "bartender"
               "dbeaver-community"
               "postico"
               "cloudflare-warp"
@@ -260,7 +290,6 @@
               # Browsers
               "microsoft-edge"
               # Communication
-              "chatgpt"
               "signal"
               # Utilities
               "fork"
