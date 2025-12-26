@@ -67,6 +67,7 @@ sudo darwin-rebuild switch --flake ~/.config/dotfiles#Batmark
 
 ## Limitations
 
+- Can't rebuild without internet...
 - Git UIs/tools usually use the current directory for the repo. Because we use bare repo, this is harder. For example, this is not supported by Fork: https://github.com/fork-dev/Tracker/issues/247. lazygit does with `lazygit --git-dir=$HOME/.cfg --work-tree=$HOME` as per https://github.com/jesseduffield/lazygit/discussions/1201
 - Unfortunately, this doesn’t currently automate all macOS settings or app configuration (and licenses/activation). Some people have used chezmoi, but my first attempt caused some issues.
 
