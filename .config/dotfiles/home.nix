@@ -44,16 +44,22 @@ in
     sessionVariables = {
       HOMEBREW_NO_ANALYTICS = "1";
       EDITOR = "nvim";
+      BUN_INSTALL="$HOME/.bun";
+      # https://bitwarden.com/help/ssh-agent
+      # Confirm the file is available. Either in
+      # - $HOME/.bitwarden-ssh-agent.sock (official dmg installer)
+      # - $HOME/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock
+      SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock";
       # ADB for android studio old emulator API level 21
       # We add The pnpm home directory to the PATH so that `pnpm install -g $package` doesn't error
-      PATH = "/Users/${username}/repos/flutter/bin:/Users/${username}/Library/Android/sdk/platform-tools:/Users/safe/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$PATH:/Users/safe/.opencode/bin";
+      PATH = "$BUN_INSTALL/bin:/Users/${username}/repos/flutter/bin:/Users/${username}/Library/Android/sdk/platform-tools:/Users/safe/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$PATH:/Users/safe/.opencode/bin";
       GOOGLE_JAVA_FORMAT_PATH = "/opt/google-java-format-1.13.0-all-deps.jar";
       # We set the PNPM_HOME to ensure pnpm can install global packages
       PNPM_HOME = pnpmHome;
     };
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" ];
+      plugins = [ "git" "z" ];
       theme = "robbyrussell"; # You can change this to any theme you prefer
     };
 
@@ -104,6 +110,31 @@ in
       # if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
       #   tmux attach -t main || tmux new -s main
       # fi
+
+      # This is ended up being annoying, so I disabled it.
+      # https://github.com/jesseduffield/lazygit
+      # lg()
+      # {
+      #     export LAZYGIT_NEW_DIR_FILE=~/.lazygit/newdir
+# 
+      #     lazygit "$@"
+# 
+      #     if [ -f $LAZYGIT_NEW_DIR_FILE ]; then
+      #             cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
+      #             rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
+      #     fi
+      # }
+
+      alias lg="lazygit"
+
+      # lazygit supports bare repos
+      alias cflg="lazygit --git-dir=$HOME/.cfg --work-tree=$HOME"
+
+      # Use nvim instead of vim. Use \vim to use old vim.
+      alias vim="nvim"
+      alias vi="nvim"
+
+      alias cl="claude"
     '';
 
     # Additional plugins that work well with the setup
