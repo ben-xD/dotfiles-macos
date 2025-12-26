@@ -38,6 +38,8 @@ sudo nix run nix-darwin/nix-darwin-25.05#darwin-rebuild -- switch --flake ~/.con
 
 # Applying further changes:
 sudo darwin-rebuild switch --flake ~/.config/dotfiles
+# or for a specific machine
+sudo darwin-rebuild switch --flake ~/.config/dotfiles#Batmark
 ```
 
 - If you get an errors (like `files would be overwritten by checkout`), see <https://www.atlassian.com/git/tutorials/dotfiles>
@@ -50,6 +52,7 @@ sudo darwin-rebuild switch --flake ~/.config/dotfiles
 ### Making changes
 
 - Make changes to any config
+- Use lazygit for covenience: run `cflg` (it runs `lazygit --git-dir=$HOME/.cfg --work-tree=$HOME`)
 - Add the file to the git staging area: run `cf add $filename`
 - Commit: run `cf commit -m "example commit message"`
 - push to github: run `cf push`
@@ -64,6 +67,7 @@ sudo darwin-rebuild switch --flake ~/.config/dotfiles
 
 ## Limitations
 
+- Git UIs/tools usually use the current directory for the repo. Because we use bare repo, this is harder. For example, this is not supported by Fork: https://github.com/fork-dev/Tracker/issues/247. lazygit does with `lazygit --git-dir=$HOME/.cfg --work-tree=$HOME` as per https://github.com/jesseduffield/lazygit/discussions/1201
 - Unfortunately, this doesn’t currently automate all macOS settings or app configuration (and licenses/activation). Some people have used chezmoi, but my first attempt caused some issues.
 
 ## Project history
