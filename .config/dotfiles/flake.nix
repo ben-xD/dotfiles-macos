@@ -30,6 +30,10 @@
       url = "github:fastrepl/homebrew-hyprnote";
       flake = false;
     };
+    homebrew-cloudflare = {
+      url = "github:cloudflare/homebrew-cloudflare";
+      flake = false;
+    };
   };
 
   outputs =
@@ -43,6 +47,7 @@
       home-manager,
       nix4nvchad,
       homebrew-hyprnote,
+      homebrew-cloudflare,
     }:
     let
       username = "safe";
@@ -62,6 +67,7 @@
           # $ nix-env -qaP | grep wget
           # nixpkgs are almost always out of date with brew.
           environment.systemPackages = with pkgs; [
+            ripgrep
             # Editors & Shell
             tmux
             vim
@@ -78,7 +84,7 @@
             darwin.trash
             pinentry_mac
             gnupg
-            bartender
+            # bartender
             monitorcontrol
             betterdisplay
             stats
@@ -88,7 +94,7 @@
             google-chrome
             firefox
             # Productivity
-            raycast
+            # raycast # because then it can update itself on the app
             obsidian
             # Out of date, so we use brew instead
             # syncthing
@@ -101,6 +107,9 @@
             fnm
             git-extras
             k9s
+            cmake
+            nmap
+            lazygit
             # I don't really use local AI much right now
             # ollama
             wireshark
@@ -119,8 +128,8 @@
           # Add Podman to PATH (installed by Podman Desktop)
           environment.systemPath = [ "/opt/podman/bin" ];
 
-          # Enable Tailscale service
-          services.tailscale.enable = true;
+          # Tailscale is installed via Homebrew cask (see line 263) for the menu bar app
+          # services.tailscale.enable = true;
 
           # Necessary for using flakes on this system.
           nix.settings.experimental-features = "nix-command flakes";
@@ -170,7 +179,7 @@
             finder.AppleShowAllExtensions = true;
             finder.FXPreferredViewStyle = "clmv";
             finder.AppleShowAllFiles = true;
-            loginwindow.LoginwindowText = "If found, please email ben@orth.uk, contact +44 7482 148484 or +447927067521";
+            loginwindow.LoginwindowText = "If found, please email plantbased@duck.com or 074821 48484 (UK). International: +44 7482 148484 or +447927067521";
             screencapture.location = "~/Desktop";
 
             # Expanding the save and print panels by default
@@ -243,9 +252,14 @@
             enable = true;
             brews = [
               "fastlane"
+              "iproute2mac"
               "ffmpeg"
+              "gh"
               # for podman
               "docker-credential-helper"
+              "mkcert"
+              "imagemagick"
+              "cloudflared"
             ];
 
             # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
@@ -303,7 +317,7 @@
             ];
             # Install Mac App Store apps. To get more ids, see https://github.com/mas-cli/mas?tab=readme-ov-file#-app-ids
             masApps = {
-              "Xcode" = 497799835;
+              # "Xcode" = 497799835;
               "Windows app" = 1295203466;
               "Amphetamine" = 937984704;
               "Colorslurp" = 1505894090;
@@ -330,6 +344,7 @@
           "homebrew/homebrew-core" = homebrew-core;
           "homebrew/homebrew-cask" = homebrew-cask;
           "fastrepl/hyprnote" = homebrew-hyprnote;
+          "cloudflare/homebrew-cloudflare" = homebrew-cloudflare;
         };
 
         # Temporarily allow mutable taps to fix permission issues
