@@ -66,6 +66,7 @@
           # List packages installed in system profile. To search by name, run:
           # $ nix-env -qaP | grep wget
           # nixpkgs are almost always out of date with brew.
+          # I don't like using Nix packages for auto updating apps because they will just add a duplicate app into /applications.
           environment.systemPackages = with pkgs; [
             ripgrep
             # Editors & Shell
@@ -87,7 +88,6 @@
             # bartender
             monitorcontrol
             betterdisplay
-            stats
             mas
             # Browsers
             brave
