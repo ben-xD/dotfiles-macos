@@ -135,6 +135,9 @@ in
       alias vi="nvim"
 
       alias cl="claude"
+
+      # for fzf
+      source <(fzf --zsh)
     '';
 
     # Additional plugins that work well with the setup

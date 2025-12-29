@@ -69,6 +69,7 @@
           # I don't like using Nix packages for auto updating apps because they will just add a duplicate app into /applications.
           environment.systemPackages = with pkgs; [
             ripgrep
+            delta
             # Editors & Shell
             tmux
             vim
@@ -108,6 +109,7 @@
             git-extras
             k9s
             cmake
+            fzf
             nmap
             lazygit
             # I don't really use local AI much right now
