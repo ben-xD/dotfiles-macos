@@ -90,17 +90,6 @@
             monitorcontrol
             betterdisplay
             mas
-            # Browsers
-            brave
-            google-chrome
-            firefox
-            # Productivity
-            # raycast # because then it can update itself on the app
-            obsidian
-            # Out of date, so we use brew instead
-            # syncthing
-            # Dev Tools
-            vscode
             tree
             wget
             htop
@@ -112,19 +101,10 @@
             fzf
             nmap
             lazygit
-            # I don't really use local AI much right now
-            # ollama
-            wireshark
             # formatting code
             dprint
             # The tailscale package doesn't include the mac menu bar, so we use the cask instead
             # tailscale
-            # Not always needed
-            # obs-studio
-            # net-news-wire
-            # zotero
-            # qbittorrent
-            # blender
           ];
 
           # Add Podman to PATH (installed by Podman Desktop)
@@ -284,8 +264,9 @@
               "itsycal"
               "pdf-expert"
               "db-browser-for-sqlite"
-              # beta with fix for macos 26 tahoe
-              "jordanbaird-ice@beta"
+              "jordanbaird-ice"
+              # network
+              "wireshark"
               # Doesn't allow you to make below/separate from the menubar
               # "hiddenbar"
               # Crashes on macos 26 tahoe
@@ -296,7 +277,6 @@
               "calibre"
               # Productivity
               # "cleanshot"
-              "syncthing-app"
               "fastrepl/hyprnote/hyprnote"
               "meetingbar"
               "typora"
@@ -316,6 +296,20 @@
               # Quick Look Plugins
               "qlmarkdown"
               "qlstephen"
+              # Browsers
+              "brave-browser"
+              "google-chrome"
+              "firefox"
+              # Productivity
+              "obsidian"
+              # Dev Tools
+              "visual-studio-code"
+              # Not always needed
+              # obs-studio
+              # net-news-wire
+              # zotero
+              # qbittorrent
+              # blender
             ];
             # Install Mac App Store apps. To get more ids, see https://github.com/mas-cli/mas?tab=readme-ov-file#-app-ids
             masApps = {
