@@ -82,13 +82,9 @@
             # read permissions failing when trying to `bundle install`
             # ruby
             # System/Mac Utilities
-            rectangle
             darwin.trash
-            pinentry_mac
             gnupg
             # bartender
-            monitorcontrol
-            betterdisplay
             mas
             tree
             wget
@@ -101,6 +97,8 @@
             fzf
             nmap
             lazygit
+            # https://github.com/restic/restic
+            restic
             # formatting code
             dprint
             # The tailscale package doesn't include the mac menu bar, so we use the cask instead
@@ -242,8 +240,10 @@
               "mkcert"
               "imagemagick"
               "cloudflared"
+              "pinentry-mac"
             ];
 
+            # Add desktop applications here!
             # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
             casks = [
               # Terminal & Dev Tools
@@ -251,7 +251,7 @@
               "ghostty"
               "iterm2"
               "alfred"
-              "tailscale"
+              "tailscale-app"
               "notunes"
               "surfshark"
               "trailer"
@@ -264,14 +264,14 @@
               "itsycal"
               "pdf-expert"
               "db-browser-for-sqlite"
-              "jordanbaird-ice"
+              "dbeaver-community"
+              "jordanbaird-ice@beta"
               # network
               "wireshark"
               # Doesn't allow you to make below/separate from the menubar
               # "hiddenbar"
               # Crashes on macos 26 tahoe
               # "bartender"
-              "dbeaver-community"
               "postico"
               "cloudflare-warp"
               "calibre"
@@ -310,6 +310,9 @@
               # zotero
               # qbittorrent
               # blender
+              "monitorcontrol"
+              "betterdisplay"
+              "rectangle"
             ];
             # Install Mac App Store apps. To get more ids, see https://github.com/mas-cli/mas?tab=readme-ov-file#-app-ids
             masApps = {
