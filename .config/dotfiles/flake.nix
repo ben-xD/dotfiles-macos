@@ -231,7 +231,9 @@
           homebrew = {
             enable = true;
             brews = [
+              "ollama"
               "fastlane"
+              "f3"
               "iproute2mac"
               "ffmpeg"
               "gh"
