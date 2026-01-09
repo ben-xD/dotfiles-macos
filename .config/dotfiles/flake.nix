@@ -231,6 +231,7 @@
           homebrew = {
             enable = true;
             brews = [
+              # also need to run `brew services start ollama`, to actually run the API which the CLI connects to
               "ollama"
               "fastlane"
               "f3"
