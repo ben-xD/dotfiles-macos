@@ -101,7 +101,9 @@ in
       fi
 
       # fnm
-      eval "$(fnm env --use-on-cd)"
+      # Disabled for now. I'm using mise instead.
+      # To add it back, add `fnm` to `environment.systemPackages`
+      # eval "$(fnm env --use-on-cd)"
 
       # Rust up (manually installed from https://rustup.rs/)
       . "$HOME/.cargo/env"
@@ -135,9 +137,14 @@ in
       alias vi="nvim"
 
       alias cl="claude"
+      alias co="codex"
+      alias oc="opencode"
 
       # for fzf
       source <(fzf --zsh)
+
+      # mise
+      eval "$("$HOME/.local/bin/mise" activate zsh)"
     '';
 
     # Additional plugins that work well with the setup
