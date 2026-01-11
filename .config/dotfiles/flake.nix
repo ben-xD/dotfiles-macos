@@ -50,7 +50,22 @@
       homebrew-cloudflare,
     }:
     let
-      username = "safe";
+      username =
+        let
+          u = builtins.getEnv "NIX_DARWIN_USER";
+        in
+        if u == "" then
+          throw "NIX_DARWIN_USER environment variable must be set (e.g., NIX_DARWIN_USER=\"$(whoami)\")"
+        else
+          u;
+      hostname =
+        let
+          h = builtins.getEnv "NIX_DARWIN_HOST";
+        in
+        if h == "" then
+          throw "NIX_DARWIN_HOST environment variable must be set (e.g., NIX_DARWIN_HOST=\"$(hostname -s)\")"
+        else
+          h;
       config =
         { pkgs, ... }:
         {
@@ -90,7 +105,6 @@
             wget
             htop
             uv
-            fnm
             git-extras
             k9s
             cmake
@@ -370,8 +384,8 @@
     in
     {
       # Build darwin flake using:
-      # $ darwin-rebuild build --flake .#Batmark
-      darwinConfigurations."Batmark" = nix-darwin.lib.darwinSystem {
+      # $ NIX_DARWIN_HOST="$(hostname -s)" sudo darwin-rebuild switch --flake ~/.config/dotfiles --impure
+      darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
         modules = [
           config
           nix-homebrew.darwinModules.nix-homebrew
