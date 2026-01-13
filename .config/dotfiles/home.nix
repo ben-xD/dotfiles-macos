@@ -53,7 +53,7 @@ in
       SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock";
       # ADB for android studio old emulator API level 21
       # We add The pnpm home directory to the PATH so that `pnpm install -g $package` doesn't error
-      PATH = "$BUN_INSTALL/bin:$HOME/repos/flutter/bin:$HOME/Library/Android/sdk/platform-tools:$HOME/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$HOME/.opencode/bin:$PATH";
+      PATH = "$BUN_INSTALL/bin:$HOME/repos/flutter/bin:$HOME/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$HOME/.opencode/bin:$PATH";
       GOOGLE_JAVA_FORMAT_PATH = "/opt/google-java-format-1.13.0-all-deps.jar";
       # We set the PNPM_HOME to ensure pnpm can install global packages
       PNPM_HOME = pnpmHome;
@@ -95,7 +95,6 @@ in
       # lazygit for dotfiles
       alias cflg="lazygit --git-dir=$HOME/.cfg --work-tree=$HOME"
 
-
       setopt completealiases
 
       # VSCode, to read from terminal. See https://github.com/cline/cline/wiki/Troubleshooting-%E2%80%90-Shell-Integration-Unavailable#still-having-trouble and https://code.visualstudio.com/docs/terminal/shell-integration#_manual-installation
@@ -117,8 +116,8 @@ in
       # Rust up (manually installed from https://rustup.rs/)
       . "$HOME/.cargo/env"
 
-      # Don't enter tmux if already inside one.
-      if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+      # Don't enter tmux if already inside one, or in VSCode
+      if [[ "$TERM_PROGRAM" != "vscode" ]] && command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
         tmux attach -t main || tmux new -s main
       fi
 
@@ -142,15 +141,6 @@ in
 
     # Additional plugins that work well with the setup
     plugins = [
-      {
-        name = "zsh-autosuggestions";
-        src = pkgs.fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-autosuggestions";
-          rev = "v0.7.0";
-          sha256 = "1g3pij5qn2j7v7jjac2a63lxd97mcsgw6xq6k5p7835q9fjiid98";
-        };
-      }
       {
         name = "zsh-syntax-highlighting";
         src = pkgs.fetchFromGitHub {
