@@ -282,6 +282,7 @@
               "pdf-expert"
               "db-browser-for-sqlite"
               "dbeaver-community"
+              "postico"
               "jordanbaird-ice@beta"
               # network
               "wireshark"
@@ -289,7 +290,6 @@
               # "hiddenbar"
               # Crashes on macos 26 tahoe
               # "bartender"
-              "postico"
               "cloudflare-warp"
               "calibre"
               # Productivity

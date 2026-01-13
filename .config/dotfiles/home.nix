@@ -44,6 +44,7 @@ in
     sessionVariables = {
       HOMEBREW_NO_ANALYTICS = "1";
       EDITOR = "nvim";
+      VISUAL = "$EDITOR";
       BUN_INSTALL="$HOME/.bun";
       # https://bitwarden.com/help/ssh-agent
       # Confirm the file is available. Either in
@@ -52,14 +53,14 @@ in
       SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock";
       # ADB for android studio old emulator API level 21
       # We add The pnpm home directory to the PATH so that `pnpm install -g $package` doesn't error
-      PATH = "$BUN_INSTALL/bin:/Users/${username}/repos/flutter/bin:/Users/${username}/Library/Android/sdk/platform-tools:/Users/safe/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$PATH:/Users/safe/.opencode/bin";
+      PATH = "$BUN_INSTALL/bin:$HOME/repos/flutter/bin:$HOME/Library/Android/sdk/platform-tools:$HOME/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$HOME/.opencode/bin:$PATH";
       GOOGLE_JAVA_FORMAT_PATH = "/opt/google-java-format-1.13.0-all-deps.jar";
       # We set the PNPM_HOME to ensure pnpm can install global packages
       PNPM_HOME = pnpmHome;
     };
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "z" ];
+      plugins = [ "git" ];
       theme = "robbyrussell"; # You can change this to any theme you prefer
     };
 
@@ -82,11 +83,19 @@ in
     autosuggestion.enable = true;
     enableCompletion = true;
     initContent = ''
-      # umask
+      # umask 077: removes group/other permissions (666-077=600 for files, 777-077=700 for dirs)
+      # (Debian 13 defaults to 002, macOS to 022 - both allow group/other read access)
       umask 077
+      
+      # Git
+      alias lg="lazygit"
 
       # dotfiles
       alias cf='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
+      # lazygit for dotfiles
+      alias cflg="lazygit --git-dir=$HOME/.cfg --work-tree=$HOME"
+
+
       setopt completealiases
 
       # VSCode, to read from terminal. See https://github.com/cline/cline/wiki/Troubleshooting-%E2%80%90-Shell-Integration-Unavailable#still-having-trouble and https://code.visualstudio.com/docs/terminal/shell-integration#_manual-installation
@@ -108,29 +117,10 @@ in
       # Rust up (manually installed from https://rustup.rs/)
       . "$HOME/.cargo/env"
 
-      # # Don't enter tmux if already inside one.
-      # if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-      #   tmux attach -t main || tmux new -s main
-      # fi
-
-      # This is ended up being annoying, so I disabled it.
-      # https://github.com/jesseduffield/lazygit
-      # lg()
-      # {
-      #     export LAZYGIT_NEW_DIR_FILE=~/.lazygit/newdir
-#
-      #     lazygit "$@"
-#
-      #     if [ -f $LAZYGIT_NEW_DIR_FILE ]; then
-      #             cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
-      #             rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
-      #     fi
-      # }
-
-      alias lg="lazygit"
-
-      # lazygit supports bare repos
-      alias cflg="lazygit --git-dir=$HOME/.cfg --work-tree=$HOME"
+      # Don't enter tmux if already inside one.
+      if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+        tmux attach -t main || tmux new -s main
+      fi
 
       # Use nvim instead of vim. Use \vim to use old vim.
       alias vim="nvim"
@@ -145,6 +135,9 @@ in
 
       # mise
       eval "$("$HOME/.local/bin/mise" activate zsh)"
+
+      # zoxide (smarter cd)
+      eval "$(zoxide init zsh)"
     '';
 
     # Additional plugins that work well with the setup
@@ -165,15 +158,6 @@ in
           repo = "zsh-syntax-highlighting";
           rev = "0.7.1";
           sha256 = "03r6hpb5fy4yaakqm3lbf4xcvd408r44jgpv4lnzl9asp4sb9qc0";
-        };
-      }
-      {
-        name = "zoxide";
-        src = pkgs.fetchFromGitHub {
-          owner = "ajeetdsouza";
-          repo = "zoxide";
-          rev = "v0.9.8";
-          sha256 = "sha256-8hXoC3vyR08hN8MMojnAO7yIskg4FsEm28GtFfh5liI=";
         };
       }
     ];
