@@ -277,6 +277,7 @@
               "keyclu"
               "customshortcuts"
               "android-studio"
+              "alt-tab"
               # the nix package errors when it is not located in /Applications
               "itsycal"
               "pdf-expert"

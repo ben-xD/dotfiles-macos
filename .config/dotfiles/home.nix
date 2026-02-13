@@ -116,10 +116,10 @@ in
       # Rust up (manually installed from https://rustup.rs/)
       . "$HOME/.cargo/env"
 
-      # Don't enter tmux if already inside one, or in VSCode
-      if [[ "$TERM_PROGRAM" != "vscode" ]] && command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-        tmux attach -t main || tmux new -s main
-      fi
+      # t to attach onto main session
+      alias t='tmux attach -t main 2>/dev/null || tmux new -s main'
+      tnew() { tmux new -s "w-$(date +%Y%m%d-%H%M%S)"; }
+      tproj() { local n="''${1:-main}"; tmux new -A -s "$n"; }
 
       # Use nvim instead of vim. Use \vim to use old vim.
       alias vim="nvim"
