@@ -119,6 +119,22 @@
         "type": "github"
       }
     },
+    "homebrew-kaset": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1769233419,
+        "narHash": "sha256-cGdGb+Td7lW4rhtCieWBOdu0equbyy+9L/rIv6dt6oA=",
+        "owner": "sozercan",
+        "repo": "homebrew-repo",
+        "rev": "b6f28d7a0d9497a2471c3ea39d63dfe2ed653e44",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sozercan",
+        "repo": "homebrew-repo",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -220,6 +236,7 @@
         "homebrew-cloudflare": "homebrew-cloudflare",
         "homebrew-core": "homebrew-core",
         "homebrew-hyprnote": "homebrew-hyprnote",
+        "homebrew-kaset": "homebrew-kaset",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nix4nvchad": "nix4nvchad",

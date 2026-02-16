@@ -34,7 +34,7 @@
       url = "github:cloudflare/homebrew-cloudflare";
       flake = false;
     };
-  };
+};
 
   outputs =
     inputs@{
@@ -150,7 +150,7 @@
           # Enable GPG agent
           programs.gnupg.agent = {
             enable = true;
-            enableSSHSupport = true;
+            enableSSHSupport = false;
           };
 
           system.primaryUser = username;
@@ -248,6 +248,7 @@
               # also need to run `brew services start ollama`, to actually run the API which the CLI connects to
               "ollama"
               "fastlane"
+              "git-filter-repo"
               "f3"
               "iproute2mac"
               "ffmpeg"
@@ -258,6 +259,7 @@
               "imagemagick"
               "cloudflared"
               "pinentry-mac"
+              "pam-reattach"
             ];
 
             # Add desktop applications here!

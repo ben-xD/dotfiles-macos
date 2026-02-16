@@ -45,12 +45,13 @@ in
       HOMEBREW_NO_ANALYTICS = "1";
       EDITOR = "nvim";
       VISUAL = "$EDITOR";
-      BUN_INSTALL="$HOME/.bun";
+      BUN_INSTALL = "$HOME/.bun";
+      # Not using Bitwarden SSH agent anymore because I don't want to login to Bitwarden so frequently
       # https://bitwarden.com/help/ssh-agent
       # Confirm the file is available. Either in
       # - $HOME/.bitwarden-ssh-agent.sock (official dmg installer)
       # - $HOME/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock
-      SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock";
+      # SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock";
       # ADB for android studio old emulator API level 21
       # We add The pnpm home directory to the PATH so that `pnpm install -g $package` doesn't error
       PATH = "$BUN_INSTALL/bin:$HOME/repos/flutter/bin:$HOME/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$HOME/.opencode/bin:$PATH";
@@ -86,7 +87,7 @@ in
       # umask 077: removes group/other permissions (666-077=600 for files, 777-077=700 for dirs)
       # (Debian 13 defaults to 002, macOS to 022 - both allow group/other read access)
       umask 077
-      
+
       # Git
       alias lg="lazygit"
 
@@ -119,7 +120,17 @@ in
       # t to attach onto main session
       alias t='tmux attach -t main 2>/dev/null || tmux new -s main'
       tnew() { tmux new -s "w-$(date +%Y%m%d-%H%M%S)"; }
-      tproj() { local n="''${1:-main}"; tmux new -A -s "$n"; }
+      tproj() {
+        local n="''${1:-main}"
+        local dir
+        dir=$(zoxide query "$n" 2>/dev/null)
+        if [[ -n "$dir" ]]; then
+          tmux new -A -s "$n" -c "$dir"
+        else
+          echo "zoxide: no match for '$n', starting session in current directory"
+          tmux new -A -s "$n"
+        fi
+      }
 
       # Use nvim instead of vim. Use \vim to use old vim.
       alias vim="nvim"
