@@ -10,12 +10,6 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # https://github.com/nix-community/nix4nvchad
-    nix4nvchad = {
-      url = "github:nix-community/nix4nvchad";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # https://github.com/zhaofengli/nix-homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     homebrew-core = {
@@ -45,7 +39,6 @@
       homebrew-core,
       homebrew-cask,
       home-manager,
-      nix4nvchad,
       homebrew-hyprnote,
       homebrew-cloudflare,
     }:
@@ -373,8 +366,7 @@
       homeManagerConfig = {
         home-manager.extraSpecialArgs = {
           inherit username;
-          inherit nix4nvchad;
-        };
+};
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.users.${username} = import ./home.nix;
