@@ -21,6 +21,14 @@
           read -r
         fi
 
+        echo "set up: TPM (Tmux Plugin Manager)"
+        if test -d "${userHome}/.tmux/plugins/tpm"; then
+          echo "skip: TPM already installed"
+        else
+          git clone https://github.com/tmux-plugins/tpm "${userHome}/.tmux/plugins/tpm"
+          echo "TPM installed. Run 'prefix + I' inside tmux to install plugins."
+        fi
+
         echo "Set up .secrets.env containing machine or organisation specific secrets, e.g. Artifactory credentials, Cloudflare credentials or device identifiers."
         touch "$HOME/.secrets.env"
 
