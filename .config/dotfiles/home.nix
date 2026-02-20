@@ -67,6 +67,7 @@ in
       l = "ls -l";
       ".." = "cd ..";
       "..." = "cd ../..";
+      ghc = "ghostty +edit-config";
     };
 
     # Custom zsh options

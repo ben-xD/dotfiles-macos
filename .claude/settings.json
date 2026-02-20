@@ -1,0 +1,26 @@
+{
+  "env": {
+    "USE_BUILTIN_RIPGREP": "1"
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay -v 0.2 /Users/safe/docs/documents/sound-files/r2d2-voicy.mp3 &"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "python3 ~/.claude/statusline.py"
+  },
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true
+  },
+  "skipDangerousModePermissionPrompt": true
+}
