@@ -282,7 +282,7 @@
               "postico"
               "jordanbaird-ice@beta"
               # network
-              "wireshark"
+              "wireshark-app"
               # Doesn't allow you to make below/separate from the menubar
               # "hiddenbar"
               # Crashes on macos 26 tahoe
