@@ -306,7 +306,7 @@
               "podman-desktop"
               "proxyman"
               "vlc"
-              "yubico-yubikey-manager"
+              "yubico-authenticator"
               # Quick Look Plugins
               "qlmarkdown"
               "qlstephen"
