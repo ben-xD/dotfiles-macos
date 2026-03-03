@@ -20,8 +20,8 @@
       url = "github:Homebrew/homebrew-cask";
       flake = false;
     };
-    homebrew-hyprnote = {
-      url = "github:fastrepl/homebrew-hyprnote";
+    homebrew-fastrepl = {
+      url = "github:fastrepl/homebrew-fastrepl";
       flake = false;
     };
     homebrew-cloudflare = {
@@ -39,7 +39,7 @@
       homebrew-core,
       homebrew-cask,
       home-manager,
-      homebrew-hyprnote,
+      homebrew-fastrepl,
       homebrew-cloudflare,
     }:
     let
@@ -291,7 +291,7 @@
               "calibre"
               # Productivity
               # "cleanshot"
-              "fastrepl/hyprnote/hyprnote"
+              "fastrepl/fastrepl/char@nightly"
               "meetingbar"
               "typora"
               "figma"
@@ -356,7 +356,7 @@
         taps = {
           "homebrew/homebrew-core" = homebrew-core;
           "homebrew/homebrew-cask" = homebrew-cask;
-          "fastrepl/hyprnote" = homebrew-hyprnote;
+          "fastrepl/fastrepl" = homebrew-fastrepl;
           "cloudflare/homebrew-cloudflare" = homebrew-cloudflare;
         };
 
