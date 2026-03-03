@@ -16,7 +16,8 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "python3 ~/.claude/statusline.py"
+    "command": "bash /Users/safe/.claude/statusline.sh",
+    "padding": 0
   },
   "enabledPlugins": {
     "rust-analyzer-lsp@claude-plugins-official": true,

@@ -253,6 +253,7 @@
               "cloudflared"
               "pinentry-mac"
               "pam-reattach"
+              "cloc"
             ];
 
             # Add desktop applications here!
