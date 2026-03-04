@@ -293,7 +293,7 @@
               # "cleanshot"
               "fastrepl/fastrepl/char@nightly"
               "meetingbar"
-              "typora"
+              # "typora" # SHA-256 mismatch on download
               "figma"
               "ogdesign-eagle"
               "logi-options+"
