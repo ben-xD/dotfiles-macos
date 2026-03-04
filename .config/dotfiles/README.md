@@ -13,6 +13,10 @@ NeoVim config (`~/.config/nvim`) is managed manually (AstroNvim), not through ni
 
 Tmux config (`~/.tmux.conf`) is managed manually with TPM, not through home-manager's `programs.tmux`. Using `programs.tmux` requires a full Nix rebuild on every config change, which is too slow for iterating on tmux settings. These files are still version-controlled via the bare git repo (`cf` alias).
 
+## Gotchas
+
+- If a single Homebrew cask fails to install, `darwin-rebuild switch` aborts before home-manager activation finishes. This leaves symlinks like `~/.zshrc` pointing at a garbage-collected nix store path (broken shell). Fix: resolve the failing cask and re-run the rebuild command.
+
 ## Useful commands
 
 - rebuild flake: `sudo NIX_DARWIN_HOST="$(hostname -s)" NIX_DARWIN_USER="$(whoami)" darwin-rebuild switch --flake ~/.config/dotfiles --impure`

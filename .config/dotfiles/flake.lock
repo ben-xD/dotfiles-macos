@@ -85,19 +85,19 @@
         "type": "github"
       }
     },
-    "homebrew-hyprnote": {
+    "homebrew-fastrepl": {
       "flake": false,
       "locked": {
-        "lastModified": 1765704623,
-        "narHash": "sha256-5Uml1geCmgumA2vzfbZlxny//XiPFa4ygTfclVl59u8=",
+        "lastModified": 1772269740,
+        "narHash": "sha256-PG3JGFz6gUq+RKrdRFyeK/uXYxRRn99fXXuFrgT5hL4=",
         "owner": "fastrepl",
-        "repo": "homebrew-hyprnote",
-        "rev": "2903c1a6dd44d92465eded6fa504d1ef7694fbf1",
+        "repo": "homebrew-fastrepl",
+        "rev": "953a6af17d75b4f7fdc376d3ad210232adb0fa68",
         "type": "github"
       },
       "original": {
         "owner": "fastrepl",
-        "repo": "homebrew-hyprnote",
+        "repo": "homebrew-fastrepl",
         "type": "github"
       }
     },
@@ -162,7 +162,7 @@
         "homebrew-cask": "homebrew-cask",
         "homebrew-cloudflare": "homebrew-cloudflare",
         "homebrew-core": "homebrew-core",
-        "homebrew-hyprnote": "homebrew-hyprnote",
+        "homebrew-fastrepl": "homebrew-fastrepl",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs"

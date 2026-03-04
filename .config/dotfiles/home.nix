@@ -111,7 +111,7 @@ in
       # eval "$(fnm env --use-on-cd)"
 
       # Rust up (manually installed from https://rustup.rs/)
-      . "$HOME/.cargo/env"
+      [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
       # t to attach onto main session
       alias t='tmux attach -t main 2>/dev/null || tmux new -s main'
@@ -141,7 +141,7 @@ in
       source <(fzf --zsh)
 
       # mise
-      eval "$("$HOME/.local/bin/mise" activate zsh)"
+      [[ -x "$HOME/.local/bin/mise" ]] && eval "$("$HOME/.local/bin/mise" activate zsh)"
 
       # zoxide (smarter cd)
       eval "$(zoxide init zsh)"
