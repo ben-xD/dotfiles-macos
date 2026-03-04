@@ -333,7 +333,7 @@
               # "Xcode" = 497799835;
               "Windows app" = 1295203466;
               "Amphetamine" = 937984704;
-              "Colorslurp" = 1505894090;
+              "Colorslurp" = 1287239339;
               # "Snippose" = 1140313689;
               # "TestFlight" = 899247664;
               # "Bitwarden" = 1352778147;
