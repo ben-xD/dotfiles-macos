@@ -82,7 +82,6 @@
             tmux
             vim
             neovim
-            starship
             nixfmt-rfc-style
             # For Flutter, Android and iOS
             # too out of date

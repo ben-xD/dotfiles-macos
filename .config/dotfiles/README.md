@@ -9,6 +9,20 @@
 
 NeoVim config (`~/.config/nvim`) is managed manually (AstroNvim), not through nix. Do not add nix modules that write to `~/.config/nvim` — they will overwrite your config on every `darwin-rebuild switch`.
 
+## Starship (Zsh prompt)
+
+Starship is enabled via `programs.starship.enable = true` in `home.nix`, which handles both installation and zsh integration.
+
+To customize, edit `~/.config/starship.toml`. Currently using the `gruvbox-rainbow` preset:
+
+```bash
+starship preset gruvbox-rainbow -o ~/.config/starship.toml
+```
+
+Browse other presets with `starship preset --list`.
+
+Full configuration reference: https://starship.rs/config/
+
 ## Tmux
 
 Tmux config (`~/.tmux.conf`) is managed manually with TPM, not through home-manager's `programs.tmux`. Using `programs.tmux` requires a full Nix rebuild on every config change, which is too slow for iterating on tmux settings. These files are still version-controlled via the bare git repo (`cf` alias).
