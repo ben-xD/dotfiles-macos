@@ -93,7 +93,7 @@
             darwin.trash
             gnupg
             # bartender
-            mas
+            # mas  # disabled — MASError 5 on nix
             tree
             wget
             htop
@@ -250,7 +250,6 @@
               "docker-credential-helper"
               "mkcert"
               "imagemagick"
-              "cloudflared"
               "pinentry-mac"
               "pam-reattach"
               "cloc"
@@ -260,7 +259,6 @@
             # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
             casks = [
               # Terminal & Dev Tools
-              "zed"
               "ghostty"
               "iterm2"
               "alfred"
@@ -287,7 +285,6 @@
               # "hiddenbar"
               # Crashes on macos 26 tahoe
               # "bartender"
-              "cloudflare-warp"
               "calibre"
               # Productivity
               # "cleanshot"
@@ -329,11 +326,12 @@
               "rectangle"
             ];
             # Install Mac App Store apps. To get more ids, see https://github.com/mas-cli/mas?tab=readme-ov-file#-app-ids
+            # masApps disabled — MASError 5 on nix
             masApps = {
               # "Xcode" = 497799835;
-              "Windows app" = 1295203466;
-              "Amphetamine" = 937984704;
-              "Colorslurp" = 1287239339;
+              # "Windows app" = 1295203466;  # MASError 5 on nix
+              # "Amphetamine" = 937984704;  # MASError 5 on nix
+              # "Colorslurp" = 1287239339;  # MASError 5 on nix
               # "Snippose" = 1140313689;
               # "TestFlight" = 899247664;
               # "Bitwarden" = 1352778147;

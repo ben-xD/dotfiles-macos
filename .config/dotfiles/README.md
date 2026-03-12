@@ -15,7 +15,21 @@ Tmux config (`~/.tmux.conf`) is managed manually with TPM, not through home-mana
 
 ## Gotchas
 
+> **Warning:** This setup is not guaranteed to succeed end-to-end. It depends on online services (Homebrew, Mac App Store, Nix caches, GitHub) that can fail at any time. If a single step fails, the entire rebuild can abort partway through, leaving the system in a partially-configured state. There is no automatic rollback — you have to fix the failing step and re-run.
+
 - If a single Homebrew cask fails to install, `darwin-rebuild switch` aborts before home-manager activation finishes. This leaves symlinks like `~/.zshrc` pointing at a garbage-collected nix store path (broken shell). Fix: resolve the failing cask and re-run the rebuild command.
+- Mac App Store installs via `mas` are particularly unreliable on nix-darwin (frequent `MASError 5`). These are currently disabled in `flake.nix`.
+
+## Bad internet / flights
+
+A full `darwin-rebuild switch` is not viable on bad internet — if any single step fails, the whole rebuild aborts. If you just need to install one thing, bypass nix and use Homebrew directly:
+
+```bash
+brew install <formula>
+brew install --cask <cask>
+```
+
+This won't be managed by nix, but it works on spotty connections since you can just retry the one command that failed. Add it to `flake.nix` later when you're back on stable internet.
 
 ## Useful commands
 
