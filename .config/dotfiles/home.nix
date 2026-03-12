@@ -57,7 +57,8 @@ in
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" ];
-      theme = "robbyrussell"; # You can change this to any theme you prefer
+      # p10k is loaded via programs.zsh.plugins below, not as an OMZ theme
+      theme = "";
     };
 
     # Additional zsh configuration
@@ -80,6 +81,9 @@ in
     autosuggestion.enable = true;
     enableCompletion = true;
     initContent = ''
+      # Powerlevel10k config
+      [[ -f "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
+
       # umask 077: removes group/other permissions (666-077=600 for files, 777-077=700 for dirs)
       # (Debian 13 defaults to 002, macOS to 022 - both allow group/other read access)
       umask 077
@@ -149,6 +153,11 @@ in
 
     # Additional plugins that work well with the setup
     plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
       {
         name = "zsh-syntax-highlighting";
         src = pkgs.fetchFromGitHub {
