@@ -34,14 +34,14 @@ softwareupdate --install-rosetta --agree-to-license
 curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
 
 # First time setup, run (taken from https://github.com/nix-darwin/nix-darwin)
-sudo NIX_DARWIN_HOST="$(hostname -s)" NIX_DARWIN_USER="$(whoami)" nix run nix-darwin/nix-darwin-25.05#darwin-rebuild -- switch --flake ~/.config/dotfiles --impure
+sudo NIX_DARWIN_HOST="$(scutil --get LocalHostName)" NIX_DARWIN_USER="$(whoami)" nix run nix-darwin/nix-darwin-25.05#darwin-rebuild -- switch --flake ~/.config/dotfiles --impure
 ```
 
 - If you get errors (like `files would be overwritten by checkout`), see <https://www.atlassian.com/git/tutorials/dotfiles>
 - Applying further changes:
 
 ```bash
-sudo NIX_DARWIN_HOST="$(hostname -s)" NIX_DARWIN_USER="$(whoami)" darwin-rebuild switch --flake ~/.config/dotfiles --impure
+sudo NIX_DARWIN_HOST="$(scutil --get LocalHostName)" NIX_DARWIN_USER="$(whoami)" darwin-rebuild switch --flake ~/.config/dotfiles --impure
 ```
 - Optional:
   - Run setup app for initial provisioning (SSH keys, TPM, etc.): `NIX_DARWIN_USER="$(whoami)" nix run ~/.config/dotfiles#setup --impure`
@@ -62,9 +62,9 @@ sudo NIX_DARWIN_HOST="$(hostname -s)" NIX_DARWIN_USER="$(whoami)" darwin-rebuild
 
 - Run `nix flake update`
   - This helps update the flake inputs, which will pull the latest versions of the Homebrew taps
-- Then rebuild as normal: `sudo NIX_DARWIN_HOST="$(hostname -s)" NIX_DARWIN_USER="$(whoami)" darwin-rebuild switch --flake ~/.config/dotfiles --impure`
+- Then rebuild as normal: `sudo NIX_DARWIN_HOST="$(scutil --get LocalHostName)" NIX_DARWIN_USER="$(whoami)" darwin-rebuild switch --flake ~/.config/dotfiles --impure`
 
-For more details on Nix configuration, environment variables, and manually managed configs (NeoVim, Tmux), see [`~/.config/dotfiles/README.md`](.config/dotfiles/README.md).
+For more details on Nix configuration, environment variables, manually managed configs (NeoVim, Tmux), and GPG key syncing/expiry, see [`~/.config/dotfiles/README.md`](.config/dotfiles/README.md).
 
 ## Limitations
 

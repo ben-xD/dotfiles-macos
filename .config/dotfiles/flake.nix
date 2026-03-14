@@ -10,6 +10,9 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    # nix-darwin module for configuring the determinate-nixd daemon (installed separately by the Determinate Nix installer)
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+
     # https://github.com/zhaofengli/nix-homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     homebrew-core = {
@@ -35,6 +38,7 @@
       self,
       nix-darwin,
       nixpkgs,
+      determinate,
       nix-homebrew,
       homebrew-core,
       homebrew-cask,
@@ -56,7 +60,7 @@
           h = builtins.getEnv "NIX_DARWIN_HOST";
         in
         if h == "" then
-          throw "NIX_DARWIN_HOST environment variable must be set (e.g., NIX_DARWIN_HOST=\"$(hostname -s)\")"
+          throw "NIX_DARWIN_HOST environment variable must be set (e.g., NIX_DARWIN_HOST=\"$(scutil --get LocalHostName)\")"
         else
           h;
       config =
@@ -377,10 +381,17 @@
     in
     {
       # Build darwin flake using:
-      # $ NIX_DARWIN_HOST="$(hostname -s)" sudo darwin-rebuild switch --flake ~/.config/dotfiles --impure
+      # $ NIX_DARWIN_HOST="$(scutil --get LocalHostName)" NIX_DARWIN_USER="$(whoami)" sudo darwin-rebuild switch --flake ~/.config/dotfiles --impure
       darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
         modules = [
           config
+          determinate.darwinModules.default
+          {
+            determinateNix = {
+              enable = true;
+              determinateNixd.garbageCollector.strategy = "disabled";
+            };
+          }
           nix-homebrew.darwinModules.nix-homebrew
           { nix-homebrew = nixHomebrewConfig; }
           home-manager.darwinModules.home-manager

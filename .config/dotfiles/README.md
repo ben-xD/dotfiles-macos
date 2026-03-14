@@ -2,7 +2,7 @@
 
 ## Environment variables
 
-- `NIX_DARWIN_HOST` (required): The hostname for the darwin configuration (e.g., `$(hostname -s)`)
+- `NIX_DARWIN_HOST` (required): The hostname for the darwin configuration (e.g., `$(scutil --get LocalHostName)`). Do not use `hostname -s` — macOS mDNS deduplication can silently change the kernel hostname (e.g. `batmark` → `batmark-4`) when multiple network interfaces are active, but `scutil --get LocalHostName` always returns the configured name.
 - `NIX_DARWIN_USER` (required): The username for the configuration (e.g., `$(whoami)`)
 
 ## NeoVim
@@ -31,7 +31,7 @@ Tmux config (`~/.tmux.conf`) is managed manually with TPM, not through home-mana
 
 > **Warning:** This setup is not guaranteed to succeed end-to-end. It depends on online services (Homebrew, Mac App Store, Nix caches, GitHub) that can fail at any time. If a single step fails, the entire rebuild can abort partway through, leaving the system in a partially-configured state. There is no automatic rollback — you have to fix the failing step and re-run.
 
-- If a single Homebrew cask fails to install, `darwin-rebuild switch` aborts before home-manager activation finishes. This leaves symlinks like `~/.zshrc` pointing at a garbage-collected nix store path (broken shell). Fix: resolve the failing cask and re-run the rebuild command.
+- **Broken shell after failed rebuild (delayed, not immediate):** If a rebuild fails partway (e.g. a Homebrew cask fails, a flake attribute isn't found), home-manager activation never runs. Your symlinks (e.g. `~/.zshrc`) still point to old nix store paths. Everything works fine — until nix garbage collection eventually deletes those old paths, and your shell breaks. This can be days or weeks after the failed rebuild, making it very hard to connect cause and effect. **Always re-run a rebuild to completion after any failure**, even if you don't care about the change you were making.
 - Mac App Store installs via `mas` are particularly unreliable on nix-darwin (frequent `MASError 5`). These are currently disabled in `flake.nix`.
 
 ## Bad internet / flights
@@ -46,6 +46,8 @@ brew install --cask <cask>
 This won't be managed by nix, but it works on spotty connections since you can just retry the one command that failed. Add it to `flake.nix` later when you're back on stable internet.
 
 ## GPG keys
+
+For initial GPG key creation, backup, GitHub setup, and adding machine subkeys, see the [GPG section in ~/README.md](../../README.md#set-up-gpg).
 
 GPG signing key: `0x0541CB6FA5A1DD15` (rsa4096, under primary key `0x5FC80BAF2B00A4F9`).
 Primary key + encryption subkey live on a YubiKey. The signing subkey is stored locally on each machine.
@@ -98,14 +100,6 @@ gpg --import pubkey.asc
 ```
 
 The secret key doesn't change — only the public key metadata needs syncing.
-
-## Useful commands
-
-- rebuild flake: `sudo NIX_DARWIN_HOST="$(hostname -s)" NIX_DARWIN_USER="$(whoami)" darwin-rebuild switch --flake ~/.config/dotfiles --impure`
-  - impure because we're passing env vars
-- fresh machine setup: `NIX_DARWIN_USER="$(whoami)" nix run ~/.config/dotfiles#setup --impure`
-  - initial provisioning (SSH keys, TPM, etc.). Not run during rebuilds. Safe to re-run on existing machines — all steps are guarded or idempotent.
-- completely update dependencies: `nix flake update`
 
 ## LocalHostName, hostname and ComputerName
 

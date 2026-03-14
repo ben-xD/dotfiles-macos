@@ -143,6 +143,11 @@ in
       alias co="codex"
       alias oc="opencode"
 
+      # nix-darwin
+      alias nix-rebuild='sudo NIX_DARWIN_HOST="$(scutil --get LocalHostName)" NIX_DARWIN_USER="$(whoami)" darwin-rebuild switch --flake ~/.config/dotfiles --impure && exec zsh'
+      alias nix-rollback='sudo nix-env -p /nix/var/nix/profiles/system --rollback && sudo /nix/var/nix/profiles/system/activate && exec zsh'
+      alias nix-gc='nix-collect-garbage -d && exec zsh'
+
       # for fzf
       source <(fzf --zsh)
 
