@@ -86,6 +86,11 @@ in
     autosuggestion.enable = true;
     enableCompletion = true;
     initContent = ''
+      # Install Ghostty terminfo so Nix shells can find it
+      if ! infocmp xterm-ghostty &>/dev/null && [[ -d /Applications/Ghostty.app ]]; then
+        TERMINFO=/Applications/Ghostty.app/Contents/Resources/terminfo infocmp xterm-ghostty 2>/dev/null | tic -x - 2>/dev/null
+      fi
+
       # umask 077: removes group/other permissions (666-077=600 for files, 777-077=700 for dirs)
       # (Debian 13 defaults to 002, macOS to 022 - both allow group/other read access)
       umask 077
@@ -173,6 +178,15 @@ in
   };
 
   fonts.fontconfig.enable = true;
+
+  fonts.packages = with pkgs; [
+    # Maple Mono (Ligature TTF unhinted)
+    maple-mono.truetype
+    # Maple Mono NF (Ligature unhinted)
+    maple-mono.NF-unhinted
+    # Maple Mono NF CN (Ligature unhinted)
+    maple-mono.NF-CN-unhinted
+  ];
 
   home.packages = with pkgs; [
     jetbrains-mono
