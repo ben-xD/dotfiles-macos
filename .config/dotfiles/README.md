@@ -45,6 +45,60 @@ brew install --cask <cask>
 
 This won't be managed by nix, but it works on spotty connections since you can just retry the one command that failed. Add it to `flake.nix` later when you're back on stable internet.
 
+## GPG keys
+
+GPG signing key: `0x0541CB6FA5A1DD15` (rsa4096, under primary key `0x5FC80BAF2B00A4F9`).
+Primary key + encryption subkey live on a YubiKey. The signing subkey is stored locally on each machine.
+
+### Syncing the signing subkey to a new machine
+
+On the source machine:
+
+```bash
+gpg --export-secret-subkeys --armor 0x0541CB6FA5A1DD15 > ~/signing-subkey.asc
+gpg --export --armor gpg@tlduck.com > ~/pubkey.asc
+```
+
+On the new machine:
+
+```bash
+gpg --import pubkey.asc
+gpg --import signing-subkey.asc
+gpg --edit-key gpg@tlduck.com trust  # set to 5 (ultimate)
+```
+
+Then delete the exported files:
+
+```bash
+rm -P ~/signing-subkey.asc ~/pubkey.asc
+```
+
+- `--export-secret-subkeys` exports only the subkey's secret material, not the primary key's — the new machine can sign but not manage the key
+- `--armor` outputs ASCII instead of binary
+- `rm -P` securely deletes on macOS
+
+### Key expiry
+
+The signing subkeys expire (currently 2026-11-30). You don't need to generate new keys — just extend the expiry:
+
+```bash
+gpg --edit-key gpg@tlduck.com
+> key 1        # select the subkey
+> expire       # set new expiry
+> save
+```
+
+After extending, re-export and sync the **public key** to all other machines so they see the updated expiry:
+
+```bash
+# source machine
+gpg --export --armor gpg@tlduck.com > ~/pubkey.asc
+# other machines
+gpg --import pubkey.asc
+```
+
+The secret key doesn't change — only the public key metadata needs syncing.
+
 ## Useful commands
 
 - rebuild flake: `sudo NIX_DARWIN_HOST="$(hostname -s)" NIX_DARWIN_USER="$(whoami)" darwin-rebuild switch --flake ~/.config/dotfiles --impure`
