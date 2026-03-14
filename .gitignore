@@ -1,3 +1,6 @@
 # avoid recursive directories in git
 .cfg
 .secrets.env
+# symlinks are different across machines. Don't share these between machines to avoid breaking shell for all machines except yours
+.zshrc
+
