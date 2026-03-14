@@ -17,7 +17,7 @@ xcode-select --install
 
 ```bash
 echo "Clone the repo into ~/.cfg"
-git clone --bare https://github.com/ben-xD/dotfiles-macos.git $HOME/.cfg
+git clone --bare https://github.com/uxduck/dotfiles-macos.git $HOME/.cfg
 cf() {
     /usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME "$@"
 }
@@ -25,7 +25,7 @@ echo "Hide untracked files"
 cf config --local status.showUntrackedFiles no
 echo "Getting files"
 cf checkout
-cf remote set-url origin git@github.com:ben-xD/dotfiles-macos.git
+cf remote set-url origin git@github.com:uxduck/dotfiles-macos.git
 cf update-index --assume-unchanged .gitconfig
 # Install rosetta
 softwareupdate --install-rosetta --agree-to-license
@@ -121,7 +121,7 @@ gpg --export 0x5FC80BAF2B00A4F9 > gpg.$USER.$(date +%Y%m%d).pub
 ```bash
 gpg: Signature made Fri  6 Oct 14:39:04 2023 BST
 gpg:                using RSA key 6A4BE50A13CE50C14E3187955FC80BAF2B00A4F9
-gpg: Good signature from "Ben Butterworth (https://orth.uk) <24711048+ben-xD@users.noreply.github.com>" [unknown]
+gpg: Good signature from "Ben Butterworth (https://orth.uk) <24711048+uxduck@users.noreply.github.com>" [unknown]
 gpg: WARNING: This key is not certified with a trusted signature!
 gpg:          There is no indication that the signature belongs to the owner.
 Primary key fingerprint: 6A4B E50A 13CE 50C1 4E31  8795 5FC8 0BAF 2B00 A4F9
