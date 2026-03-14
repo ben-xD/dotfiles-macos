@@ -1,9 +1,9 @@
 [user]
 	name = Ben Butterworth
-	email = 24711048+ben-xD@users.noreply.github.com
-	signingkey = 0x8655E3DEF2B340C7
+	email = gpg@tlduck.com
+	signingkey = 0x0541CB6FA5A1DD15!
 [core]
-	excludesfile = /Users/zen/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	filemode = false
 	autocrlf = false
 [difftool "sourcetree"]
@@ -26,7 +26,7 @@
 	new = log origin/main@{1}..origin/main@{0}
 	newd = log origin/develop@{1}..origin/develop@{0}
 
-    c = commit -v
+  c = commit -v
 	co = checkout
 	cod = checkout develop
 	com = checkout main
@@ -37,6 +37,13 @@
 
 
 [gpg]
-	program = /opt/homebrew/bin/gpg
+	program = /run/current-system/sw/bin/gpg
 [push]
 	autoSetupRemote = true
+[tag]
+	gpgSign = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
