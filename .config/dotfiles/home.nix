@@ -86,6 +86,11 @@ in
     autosuggestion.enable = true;
     enableCompletion = true;
     initContent = ''
+      # Auto-launch tmux over SSH (attach to existing "ssh" session or create one)
+      if [[ -n "$SSH_CONNECTION" && -z "$TMUX" && -z "$VSCODE_INJECTION" ]]; then
+        exec tmux new-session -A -s ssh
+      fi
+
       # Install Ghostty terminfo so Nix shells can find it
       if ! infocmp xterm-ghostty &>/dev/null && [[ -d /Applications/Ghostty.app ]]; then
         TERMINFO=/Applications/Ghostty.app/Contents/Resources/terminfo infocmp xterm-ghostty 2>/dev/null | tic -x - 2>/dev/null
