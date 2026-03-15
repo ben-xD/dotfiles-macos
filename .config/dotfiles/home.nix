@@ -153,6 +153,7 @@ in
       alias vi="nvim"
 
       alias cl="claude"
+      alias clrd="claude remote-control --permission-mode bypassPermissions"
       alias co="codex"
       alias oc="opencode"
 
