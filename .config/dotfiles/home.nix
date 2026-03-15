@@ -55,7 +55,7 @@ in
       # SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock";
       # ADB for android studio old emulator API level 21
       # We add The pnpm home directory to the PATH so that `pnpm install -g $package` doesn't error
-      PATH = "$BUN_INSTALL/bin:$HOME/repos/flutter/bin:$HOME/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$HOME/.opencode/bin:$PATH";
+      PATH = "$BUN_INSTALL/bin:$HOME/repos/flutter/bin:$HOME/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$HOME/.opencode/bin:$HOME/.vite-plus/bin:$PATH";
       GOOGLE_JAVA_FORMAT_PATH = "/opt/google-java-format-1.13.0-all-deps.jar";
       # We set the PNPM_HOME to ensure pnpm can install global packages
       PNPM_HOME = pnpmHome;
@@ -124,6 +124,9 @@ in
       # Rust up (manually installed from https://rustup.rs/)
       [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
+      # Vite+ (https://vite.plus)
+      [[ -f "$HOME/.vite-plus/env" ]] && . "$HOME/.vite-plus/env"
+
       # t to attach onto main session
       alias t='tmux attach -t main 2>/dev/null || tmux new -s main'
       tnew() { tmux new -s "w-$(date +%Y%m%d-%H%M%S)"; }
@@ -179,18 +182,15 @@ in
 
   fonts.fontconfig.enable = true;
 
-  fonts.packages = with pkgs; [
+  home.packages = with pkgs; [
+    jetbrains-mono
+    pnpm
+    zoxide
     # Maple Mono (Ligature TTF unhinted)
     maple-mono.truetype
     # Maple Mono NF (Ligature unhinted)
     maple-mono.NF-unhinted
     # Maple Mono NF CN (Ligature unhinted)
     maple-mono.NF-CN-unhinted
-  ];
-
-  home.packages = with pkgs; [
-    jetbrains-mono
-    pnpm
-    zoxide
   ];
 }
