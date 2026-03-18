@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   username,
   ...
@@ -73,7 +74,7 @@ in
       l = "ls -l";
       ".." = "cd ..";
       "..." = "cd ../..";
-      ghc = "ghostty +edit-config";
+      ghc = "nvim ~/.config/ghostty/config";
     };
 
     # Custom zsh options
@@ -131,6 +132,13 @@ in
 
       # Vite+ (https://vite.plus)
       [[ -f "$HOME/.vite-plus/env" ]] && . "$HOME/.vite-plus/env"
+
+      # Reset terminal mouse tracking after SSH exits (clean or broken connection)
+      # Prevents escape sequence spam when remote app (tmux/vim) enabled mouse reporting
+      ssh() {
+        command ssh "$@"
+        printf '\e[?1000l\e[?1002l\e[?1003l\e[?1006l'
+      }
 
       # t to attach onto main session
       alias t='tmux attach -t main 2>/dev/null || tmux new -s main'
