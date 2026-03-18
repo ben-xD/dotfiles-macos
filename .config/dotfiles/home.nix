@@ -196,7 +196,13 @@ in
 
   fonts.fontconfig.enable = true;
 
+  home.activation.setDefaultEditor = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    run ${pkgs.duti}/bin/duti -s com.microsoft.VSCode public.data all
+    run ${pkgs.duti}/bin/duti -s com.microsoft.VSCode public.plain-text all
+  '';
+
   home.packages = with pkgs; [
+    duti
     jetbrains-mono
     pnpm
     zoxide
