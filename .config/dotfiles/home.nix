@@ -89,7 +89,7 @@ in
     initContent = ''
       # Auto-launch tmux over SSH (attach to existing "ssh" session or create one)
       if [[ -n "$SSH_CONNECTION" && -z "$TMUX" && -z "$VSCODE_INJECTION" ]]; then
-        exec tmux new-session -A -s ssh
+        tmux new-session -A -s ssh
       fi
 
       # Install Ghostty terminfo so Nix shells can find it
