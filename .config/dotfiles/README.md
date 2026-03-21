@@ -27,6 +27,12 @@ Full configuration reference: https://starship.rs/config/
 
 Tmux config (`~/.tmux.conf`) is managed manually with TPM, not through home-manager's `programs.tmux`. Using `programs.tmux` requires a full Nix rebuild on every config change, which is too slow for iterating on tmux settings. These files are still version-controlled via the bare git repo (`cf` alias).
 
+## Homebrew
+
+Homebrew is **not managed by Nix** — it's installed independently and owns `/opt/homebrew` itself. The `homebrew` block in `flake.nix` is nix-darwin's built-in module that runs `brew bundle` during `darwin-rebuild switch` to ensure listed brews/casks are installed. It does **not** uninstall anything — removing a package from the list just means nix-darwin stops ensuring it's installed.
+
+Taps are managed by Homebrew directly. If a cask references a custom tap (e.g. `fastrepl/fastrepl/char@nightly`), you need to `brew tap` it manually first.
+
 ## Gotchas
 
 > **Warning:** This setup is not guaranteed to succeed end-to-end. It depends on online services (Homebrew, Mac App Store, Nix caches, GitHub) that can fail at any time. If a single step fails, the entire rebuild can abort partway through, leaving the system in a partially-configured state. There is no automatic rollback — you have to fix the failing step and re-run.
@@ -36,14 +42,14 @@ Tmux config (`~/.tmux.conf`) is managed manually with TPM, not through home-mana
 
 ## Bad internet / flights
 
-A full `darwin-rebuild switch` is not viable on bad internet — if any single step fails, the whole rebuild aborts. If you just need to install one thing, bypass nix and use Homebrew directly:
+A full `darwin-rebuild switch` is not viable on bad internet — if any single step fails, the whole rebuild aborts. If you just need to install one thing, use Homebrew directly:
 
 ```bash
 brew install <formula>
 brew install --cask <cask>
 ```
 
-This won't be managed by nix, but it works on spotty connections since you can just retry the one command that failed. Add it to `flake.nix` later when you're back on stable internet.
+Add it to `flake.nix` later when you're back on stable internet.
 
 ## GPG keys
 
