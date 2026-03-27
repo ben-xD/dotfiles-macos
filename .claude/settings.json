@@ -2,6 +2,7 @@
   "env": {
     "USE_BUILTIN_RIPGREP": "1"
   },
+  "showClearContextOnPlanAccept": true,
   "hooks": {
     "Stop": [
       {
@@ -24,5 +25,31 @@
     "clangd-lsp@claude-plugins-official": true
   },
   "effortLevel": "high",
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": [
+      "Spiriting away",
+      "Feeding Calcifer",
+      "Riding the Catbus",
+      "Moving the castle",
+      "Sweeping the bathhouse",
+      "Befriending soot sprites",
+      "Delivering by broomstick",
+      "Growing Totoro's tree",
+      "Wandering the Spirit World",
+      "Rising with the wind",
+      "Waku waku-ing",
+      "Earning Stella stars",
+      "Executing Operation Strix",
+      "Reading Anya's mind",
+      "Maintaining elegance",
+      "Forging a new identity",
+      "Walking Bond",
+      "Studying at Eden Academy",
+      "Dodging Yuri",
+      "Cooking with Yor"
+    ]
+  },
+  "feedbackSurveyRate": 0
 }
