@@ -60,6 +60,8 @@ in
       GOOGLE_JAVA_FORMAT_PATH = "/opt/google-java-format-1.13.0-all-deps.jar";
       # We set the PNPM_HOME to ensure pnpm can install global packages
       PNPM_HOME = pnpmHome;
+      # Prevent Homebrew's git from traversing into the read-only Nix store
+      GIT_CEILING_DIRECTORIES = "/nix";
     };
     oh-my-zsh = {
       enable = true;
@@ -90,6 +92,11 @@ in
       # Auto-launch tmux over SSH (attach to existing "ssh" session or create one)
       if [[ -n "$SSH_CONNECTION" && -z "$TMUX" && -z "$VSCODE_INJECTION" ]]; then
         exec tmux new-session -A -s ssh
+      fi
+
+      # Auto-launch tmux in VSCode terminal with the current directory
+      if [[ "$TERM_PROGRAM" == "vscode" && -z "$TMUX" ]]; then
+        exec tmux new-session -A -s "vscode-''${PWD##*/}" -c "$PWD"
       fi
 
       # Install Ghostty terminfo so Nix shells can find it
