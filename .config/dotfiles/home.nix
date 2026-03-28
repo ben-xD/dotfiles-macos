@@ -76,7 +76,6 @@ in
       l = "ls -l";
       ".." = "cd ..";
       "..." = "cd ../..";
-      ghc = "nvim ~/.config/ghostty/config";
     };
 
     # Custom zsh options
@@ -89,6 +88,9 @@ in
     autosuggestion.enable = true;
     enableCompletion = true;
     initContent = ''
+      # This file is managed by Home Manager. Do not edit directly.
+      # To make changes, edit ~/.config/dotfiles/home.nix
+
       # Auto-launch tmux over SSH (attach to existing "ssh" session or create one)
       if [[ -n "$SSH_CONNECTION" && -z "$TMUX" && -z "$VSCODE_INJECTION" ]]; then
         exec tmux new-session -A -s ssh
@@ -97,11 +99,6 @@ in
       # Auto-launch tmux in VSCode terminal with the current directory
       if [[ "$TERM_PROGRAM" == "vscode" && -z "$TMUX" ]]; then
         exec tmux new-session -A -s "vscode-''${PWD##*/}" -c "$PWD"
-      fi
-
-      # Install Ghostty terminfo so Nix shells can find it
-      if ! infocmp xterm-ghostty &>/dev/null && [[ -d /Applications/Ghostty.app ]]; then
-        TERMINFO=/Applications/Ghostty.app/Contents/Resources/terminfo infocmp xterm-ghostty 2>/dev/null | tic -x - 2>/dev/null
       fi
 
       # umask 077: removes group/other permissions (666-077=600 for files, 777-077=700 for dirs)

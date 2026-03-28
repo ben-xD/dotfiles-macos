@@ -31,7 +31,7 @@
       url = "github:cloudflare/homebrew-cloudflare";
       flake = false;
     };
-};
+  };
 
   outputs =
     inputs@{
@@ -262,7 +262,6 @@
             # Need a custom cask? see https://github.com/Homebrew/homebrew-cask/blob/c1bc489c27f061871660c902c89a250a621fb7aa/Casks/e/eagle.rb
             casks = [
               # Terminal & Dev Tools
-              "ghostty"
               "iterm2"
               "alfred"
               "tailscale-app"
@@ -368,7 +367,7 @@
       homeManagerConfig = {
         home-manager.extraSpecialArgs = {
           inherit username;
-};
+        };
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.users.${username} = import ./home.nix;
