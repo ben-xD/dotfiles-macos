@@ -27,6 +27,15 @@ Full configuration reference: https://starship.rs/config/
 
 Tmux config (`~/.tmux.conf`) is managed manually with TPM, not through home-manager's `programs.tmux`. Using `programs.tmux` requires a full Nix rebuild on every config change, which is too slow for iterating on tmux settings. These files are still version-controlled via the bare git repo (`cf` alias).
 
+For overall setup instructions, see the [root README](../../README.md).
+
+### iTerm2: Right Option as Meta
+
+The tmux config uses `M-[` / `M-]` (Alt+brackets) for switching windows. To use both Option keys for these bindings in iTerm2:
+
+1. Set **both** Option keys to Esc+: Settings > Profiles > Keys > General > Left Option key = Esc+, Right Option key = Esc+
+2. Re-add `#` (lost on UK keyboards where `#` = Option+3): Settings > Profiles > Keys > Key Mappings > **+** > Keyboard shortcut: Option+3, Action: Send Text, Value: `#`
+
 ## Gotchas
 
 > **Warning:** This setup is not guaranteed to succeed end-to-end. It depends on online services (Homebrew, Mac App Store, Nix caches, GitHub) that can fail at any time. If a single step fails, the entire rebuild can abort partway through, leaving the system in a partially-configured state. There is no automatic rollback — you have to fix the failing step and re-run.
