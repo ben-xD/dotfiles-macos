@@ -2,7 +2,9 @@
   "env": {
     "USE_BUILTIN_RIPGREP": "1"
   },
-  "showClearContextOnPlanAccept": true,
+  "permissions": {
+    "defaultMode": "auto"
+  },
   "hooks": {
     "Stop": [
       {
@@ -24,8 +26,7 @@
     "rust-analyzer-lsp@claude-plugins-official": true,
     "clangd-lsp@claude-plugins-official": true
   },
-  "effortLevel": "high",
-  "skipDangerousModePermissionPrompt": true,
+  "feedbackSurveyRate": 0,
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
@@ -51,5 +52,11 @@
       "Cooking with Yor"
     ]
   },
-  "feedbackSurveyRate": 0
+  "effortLevel": "xhigh",
+  "showClearContextOnPlanAccept": true,
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "light",
+  "verbose": true,
+  "skipAutoPermissionPrompt": true,
+  "model": "opus"
 }
