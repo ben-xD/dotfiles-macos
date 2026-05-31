@@ -5,18 +5,6 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "afplay -v 0.2 /Users/safe/docs/documents/sound-files/r2d2-voicy.mp3 &"
-          }
-        ]
-      }
-    ]
-  },
   "statusLine": {
     "type": "command",
     "command": "bash /Users/safe/.claude/statusline.sh",
