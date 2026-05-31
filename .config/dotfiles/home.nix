@@ -159,6 +159,49 @@ in
         fi
       }
 
+      # optimize: re-encode video(s) into a small, shareable H.265/HEVC file.
+      #   <name>.<ext> -> <name>.opt.mp4   (libx265, capped at 720p, aggressive CRF 32)
+      # hvc1 tag + yuv420p keep it playable on Apple apps/browsers; faststart for web.
+      optimize() {
+        emulate -L zsh
+        if (( $# == 0 )); then
+          print -u2 "optimize: shrink video(s) to small H.265 for sharing -> <name>.opt.mp4"
+          print -u2 "usage: optimize <video> [more videos...]"
+          return 2
+        fi
+        zmodload -F zsh/stat b:zstat 2>/dev/null
+        local in out insize outsize
+        local -i rc=0
+        for in in "$@"; do
+          if [[ ! -f "$in" ]]; then
+            print -u2 "optimize: not found: $in"; rc=1; continue
+          fi
+          if [[ "$in" == *.opt.mp4 ]]; then
+            print -u2 "optimize: already optimized, skipping: $in"; rc=1; continue
+          fi
+          out="''${in:r}.opt.mp4"
+          if [[ -e "$out" ]]; then
+            print -u2 "optimize: output exists, skipping: $out"; rc=1; continue
+          fi
+          print -u2 "optimize: $in -> $out"
+          if ! ffmpeg -hide_banner -loglevel warning -stats -n -i "$in" \
+              -vf "scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2" \
+              -c:v libx265 -preset faster -crf 32 -tag:v hvc1 -pix_fmt yuv420p \
+              -c:a aac -b:a 96k -ac 2 \
+              -movflags +faststart "$out"; then
+            print -u2 "optimize: ffmpeg failed for: $in"
+            [[ -f "$out" ]] && rm -f "$out"
+            rc=1; continue
+          fi
+          insize=$(zstat +size -- "$in" 2>/dev/null)
+          outsize=$(zstat +size -- "$out" 2>/dev/null)
+          if [[ -n "$insize" && -n "$outsize" && "$insize" -gt 0 ]]; then
+            print -u2 -- "optimize: done $(awk -v i="$insize" -v o="$outsize" 'BEGIN{printf "%.1fMB -> %.1fMB (%d%% of original)", i/1048576, o/1048576, o*100/i}')"
+          fi
+        done
+        return $rc
+      }
+
       # Use nvim instead of vim. Use \vim to use old vim.
       alias v="vim"
       alias vim="nvim"
