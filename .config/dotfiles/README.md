@@ -36,12 +36,36 @@ The tmux config uses `M-[` / `M-]` (Alt+brackets) for switching windows. To use 
 1. Set **both** Option keys to Esc+: Settings > Profiles > Keys > General > Left Option key = Esc+, Right Option key = Esc+
 2. Re-add `#` (lost on UK keyboards where `#` = Option+3): Settings > Profiles > Keys > Key Mappings > **+** > Keyboard shortcut: Option+3, Action: Send Text, Value: `#`
 
+## Shell functions
+
+Custom zsh functions live in `programs.zsh.initContent` in `home.nix`. They take effect after a `nix-rebuild`.
+
+### `optimize` — shrink video for sharing
+
+Re-encodes one or more videos into a small, shareable H.265/HEVC file. Output is written alongside the source with a `.opt.mp4` extension (`clip.mov` → `clip.opt.mp4`).
+
+```bash
+optimize input.mov          # -> input.opt.mp4
+optimize *.mp4 clip.mkv     # batch; skips anything already named *.opt.mp4
+```
+
+Encoding profile (tuned for small files / quick chat-and-DM sharing, not archival):
+
+- **Codec:** H.265/HEVC via software `libx265` (best compression per byte).
+- **Quality:** CRF 32, `preset faster` — aggressively small; visibly soft on a large screen.
+- **Resolution:** fits within 1280×720, aspect ratio preserved, **downscale only** — smaller/lower-res videos are left untouched. Portrait video is handled correctly (ffmpeg autorotate).
+- **Compatibility:** `-tag:v hvc1` and `-pix_fmt yuv420p` so Apple apps, QuickTime, and Safari play it; `-movflags +faststart` for web streaming. HEVC is not universal — some upload targets (older Android, certain web forms) still prefer H.264.
+- **Audio:** AAC 96k stereo.
+
+Safety: never overwrites (uses `-n` plus a pre-check), skips inputs already named `*.opt.mp4`, removes the partial file if ffmpeg fails, and prints a `12.3MB -> 4.1MB (33% of original)` summary per file. Requires `ffmpeg` (installed via Homebrew).
+
 ## Gotchas
 
 > **Warning:** This setup is not guaranteed to succeed end-to-end. It depends on online services (Homebrew, Mac App Store, Nix caches, GitHub) that can fail at any time. If a single step fails, the entire rebuild can abort partway through, leaving the system in a partially-configured state. There is no automatic rollback — you have to fix the failing step and re-run.
 
 - **Broken shell after failed rebuild (delayed, not immediate):** If a rebuild fails partway (e.g. a Homebrew cask fails, a flake attribute isn't found), home-manager activation never runs. Your symlinks (e.g. `~/.zshrc`) still point to old nix store paths. Everything works fine — until nix garbage collection eventually deletes those old paths, and your shell breaks. This can be days or weeks after the failed rebuild, making it very hard to connect cause and effect. **Always re-run a rebuild to completion after any failure**, even if you don't care about the change you were making.
 - Mac App Store installs via `mas` are particularly unreliable on nix-darwin (frequent `MASError 5`). These are currently disabled in `flake.nix`.
+- Homebrew itself is intentionally installed outside Nix. nix-darwin only manages the Brewfile-style package lists. Do not re-add `nix-homebrew`: Homebrew developer commands such as `brew style` expect a mutable Homebrew checkout and can fail when the Homebrew Ruby bundle lives in the read-only Nix store.
 
 ## Bad internet / flights
 
@@ -53,6 +77,10 @@ brew install --cask <cask>
 ```
 
 This won't be managed by nix, but it works on spotty connections since you can just retry the one command that failed. Add it to `flake.nix` later when you're back on stable internet.
+
+## Homebrew ownership
+
+This setup expects the normal Homebrew installation at `/opt/homebrew` on Apple Silicon. If `brew config` reports `HOMEBREW_REPOSITORY: /opt/homebrew/Library/.homebrew-is-managed-by-nix` or `brew style` fails trying to write under `/nix/store`, the old nix-homebrew-managed installation is still active. Remove that managed prefix after confirming anything important is backed up, then reinstall Homebrew with the official installer and re-run `nix-rebuild`.
 
 ## GPG keys
 

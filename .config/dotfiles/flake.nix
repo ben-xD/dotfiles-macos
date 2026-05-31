@@ -13,24 +13,6 @@
     # nix-darwin module for configuring the determinate-nixd daemon (installed separately by the Determinate Nix installer)
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
 
-    # https://github.com/zhaofengli/nix-homebrew
-    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    homebrew-core = {
-      url = "github:Homebrew/homebrew-core";
-      flake = false;
-    };
-    homebrew-cask = {
-      url = "github:Homebrew/homebrew-cask";
-      flake = false;
-    };
-    homebrew-fastrepl = {
-      url = "github:fastrepl/homebrew-fastrepl";
-      flake = false;
-    };
-    homebrew-cloudflare = {
-      url = "github:cloudflare/homebrew-cloudflare";
-      flake = false;
-    };
   };
 
   outputs =
@@ -39,12 +21,7 @@
       nix-darwin,
       nixpkgs,
       determinate,
-      nix-homebrew,
-      homebrew-core,
-      homebrew-cask,
       home-manager,
-      homebrew-fastrepl,
-      homebrew-cloudflare,
     }:
     let
       username =
@@ -240,6 +217,10 @@
           # Reminder about brew: although it's convenient, brew has been painful when needing to specify a specific version of a package. This is important when using brew to install dependencies of C/C++ projects. I'll still use it for general purpose tools and apps, but not build dependencies.
           homebrew = {
             enable = true;
+            # Keep Homebrew itself mutable. nix-darwin only writes a Brewfile and
+            # runs brew bundle, which avoids nix-homebrew's read-only Ruby bundle.
+            taps = [];
+
             brews = [
               # also need to run `brew services start ollama`, to actually run the API which the CLI connects to
               "ollama"
@@ -268,12 +249,8 @@
               "notunes"
               "surfshark"
               "trailer"
-              "claude"
-              "chatgpt"
-              "keyclu"
               "customshortcuts"
-              "android-studio"
-              "alt-tab"
+              # "android-studio"
               # the nix package errors when it is not located in /Applications
               "itsycal"
               "pdf-expert"
@@ -290,26 +267,22 @@
               "calibre"
               # Productivity
               # "cleanshot"
-              "fastrepl/fastrepl/char@nightly"
               "meetingbar"
               # "typora" # SHA-256 mismatch on download
               "figma"
               "ogdesign-eagle"
               "logi-options+"
               # Browsers
-              "microsoft-edge"
               # Communication
               "signal"
               # Utilities
-              "fork"
-              "podman-desktop"
-              "proxyman"
               "vlc"
               "yubico-authenticator"
               # Quick Look Plugins
               "qlmarkdown"
               "qlstephen"
-              # Browsers
+              # Browsers 
+              "microsoft-edge"
               "brave-browser"
               "google-chrome"
               "firefox"
@@ -341,29 +314,6 @@
           };
         };
 
-      # Refactored nix-homebrew configuration for clarity and reuse
-      nixHomebrewConfig = {
-        # Enable Homebrew installation under the default prefix
-        enable = true;
-
-        # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
-        enableRosetta = true;
-
-        # User owning the Homebrew prefix
-        user = username;
-
-        # Declarative tap management: specify which taps to use
-        taps = {
-          "homebrew/homebrew-core" = homebrew-core;
-          "homebrew/homebrew-cask" = homebrew-cask;
-          "fastrepl/fastrepl" = homebrew-fastrepl;
-          "cloudflare/homebrew-cloudflare" = homebrew-cloudflare;
-        };
-
-        # Temporarily allow mutable taps to fix permission issues
-        mutableTaps = true;
-      };
-
       homeManagerConfig = {
         home-manager.extraSpecialArgs = {
           inherit username;
@@ -391,8 +341,6 @@
               determinateNixd.garbageCollector.strategy = "disabled";
             };
           }
-          nix-homebrew.darwinModules.nix-homebrew
-          { nix-homebrew = nixHomebrewConfig; }
           home-manager.darwinModules.home-manager
           homeManagerConfig
         ];
