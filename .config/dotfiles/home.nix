@@ -244,8 +244,15 @@ in
   fonts.fontconfig.enable = true;
 
   home.activation.setDefaultEditor = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    run ${pkgs.duti}/bin/duti -s com.microsoft.VSCode public.data all
+    # Note: public.data (the abstract root data UTI) is intentionally omitted —
+    # Launch Services rejects setting a handler for it with error -50 (paramErr).
+    # Instead, register VSCode for concrete text/code UTIs.
     run ${pkgs.duti}/bin/duti -s com.microsoft.VSCode public.plain-text all
+    run ${pkgs.duti}/bin/duti -s com.microsoft.VSCode public.source-code all
+    run ${pkgs.duti}/bin/duti -s com.microsoft.VSCode public.shell-script all
+    run ${pkgs.duti}/bin/duti -s com.microsoft.VSCode public.json all
+    run ${pkgs.duti}/bin/duti -s com.microsoft.VSCode public.xml all
+    run ${pkgs.duti}/bin/duti -s com.microsoft.VSCode public.yaml all
   '';
 
   home.packages = with pkgs; [
