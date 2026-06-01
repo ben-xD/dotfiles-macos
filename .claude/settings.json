@@ -5,6 +5,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
+  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "bash /Users/safe/.claude/statusline.sh",
@@ -45,6 +46,5 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "light",
   "verbose": true,
-  "skipAutoPermissionPrompt": true,
-  "model": "opus"
+  "skipAutoPermissionPrompt": true
 }
