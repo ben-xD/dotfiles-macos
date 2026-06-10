@@ -42,7 +42,7 @@ Custom zsh functions live in `programs.zsh.initContent` in `home.nix`. They take
 
 ### `optimize` — shrink video for sharing
 
-Re-encodes one or more videos into a small, shareable H.265/HEVC file. Output is written alongside the source with a `.opt.mp4` extension (`clip.mov` → `clip.opt.mp4`).
+Re-encodes one or more videos into a small, shareable H.265/HEVC file. Output is written alongside the source with a `.opt.mp4` extension (`clip.mov` → `clip.opt.mp4`), and the optimized file(s) are revealed in Finder when done.
 
 ```bash
 optimize input.mov          # -> input.opt.mp4

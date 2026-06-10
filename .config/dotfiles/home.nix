@@ -162,6 +162,7 @@ in
       # optimize: re-encode video(s) into a small, shareable H.265/HEVC file.
       #   <name>.<ext> -> <name>.opt.mp4   (libx265, capped at 720p, aggressive CRF 32)
       # hvc1 tag + yuv420p keep it playable on Apple apps/browsers; faststart for web.
+      # Reveals the optimized file(s) in Finder when done.
       optimize() {
         emulate -L zsh
         if (( $# == 0 )); then
@@ -171,6 +172,7 @@ in
         fi
         zmodload -F zsh/stat b:zstat 2>/dev/null
         local in out insize outsize
+        local -a outs
         local -i rc=0
         for in in "$@"; do
           if [[ ! -f "$in" ]]; then
@@ -198,7 +200,12 @@ in
           if [[ -n "$insize" && -n "$outsize" && "$insize" -gt 0 ]]; then
             print -u2 -- "optimize: done $(awk -v i="$insize" -v o="$outsize" 'BEGIN{printf "%.1fMB -> %.1fMB (%d%% of original)", i/1048576, o/1048576, o*100/i}')"
           fi
+          outs+=("$out")
         done
+        # Reveal the optimized file(s) in Finder.
+        if (( ''${#outs} )); then
+          open -R "''${outs[@]}" 2>/dev/null
+        fi
         return $rc
       }
 
