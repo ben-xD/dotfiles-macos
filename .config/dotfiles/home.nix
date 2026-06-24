@@ -105,6 +105,11 @@ in
       # (Debian 13 defaults to 002, macOS to 022 - both allow group/other read access)
       umask 077
 
+      # Secrets / private tokens (values stored in macOS Keychain, never on disk)
+      # FORGEJO_TOKEN: auth for the tlduck Forgejo npm registry (referenced as ''${FORGEJO_TOKEN} in .npmrc).
+      # Stored with: security add-generic-password -s forgejo-token -a "$USER" -w "<token>"
+      export FORGEJO_TOKEN="$(security find-generic-password -s forgejo-token -w 2>/dev/null)"
+
       # Git
       alias lg="lazygit"
 
