@@ -230,15 +230,20 @@
               "fastlane"
               "git-filter-repo"
               "f3"
+              "fastfetch"
               "iproute2mac"
               "ffmpeg"
               "gh"
+              "gmp"
+              "meson"
               # for podman
               "docker-credential-helper"
               "mkcert"
               "imagemagick"
               "pinentry-mac"
               "pam-reattach"
+              "sccache"
+              "scrcpy"
               "cloc"
             ];
 
@@ -252,14 +257,17 @@
               "notunes"
               "surfshark"
               "trailer"
+              "alt-tab"
               "customshortcuts"
-              # "android-studio"
               # the nix package errors when it is not located in /Applications
+              "android-studio"
               "itsycal"
               "pdf-expert"
               "db-browser-for-sqlite"
               "dbeaver-community"
               "postico"
+              "mitmproxy"
+              "fork"
               "jordanbaird-ice@beta"
               # network
               "wireshark-app"
@@ -275,6 +283,7 @@
               "figma"
               "ogdesign-eagle"
               "logi-options+"
+              "keyclu"
               # Browsers
               # Communication
               "signal"
@@ -285,13 +294,15 @@
               # Quick Look Plugins
               "qlmarkdown"
               "qlstephen"
-              # Browsers 
+              # Browsers
               "microsoft-edge"
               "brave-browser"
               "google-chrome"
               "firefox"
               # Productivity
               "obsidian"
+              "chatgpt"
+              "claude"
               # Dev Tools
               "visual-studio-code"
               # Not always needed

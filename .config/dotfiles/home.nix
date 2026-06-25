@@ -54,9 +54,10 @@ in
       # - $HOME/.bitwarden-ssh-agent.sock (official dmg installer)
       # - $HOME/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock
       # SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock";
+      # Prefer the normal Apple Silicon Homebrew over any stale /usr/local shim from /etc/paths.
       # ADB for android studio old emulator API level 21
       # We add The pnpm home directory to the PATH so that `pnpm install -g $package` doesn't error
-      PATH = "$BUN_INSTALL/bin:$HOME/repos/flutter/bin:$HOME/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$HOME/.opencode/bin:$HOME/.vite-plus/bin:$PATH";
+      PATH = "/opt/homebrew/bin:/opt/homebrew/sbin:$BUN_INSTALL/bin:$HOME/repos/flutter/bin:$HOME/Library/Android/sdk/platform-tools:/Library/Frameworks/GStreamer.framework/Versions/Current/bin:${pnpmHome}:$HOME/.opencode/bin:$HOME/.vite-plus/bin:$PATH";
       GOOGLE_JAVA_FORMAT_PATH = "/opt/google-java-format-1.13.0-all-deps.jar";
       # We set the PNPM_HOME to ensure pnpm can install global packages
       PNPM_HOME = pnpmHome;

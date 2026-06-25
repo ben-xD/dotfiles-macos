@@ -80,7 +80,9 @@ This won't be managed by nix, but it works on spotty connections since you can j
 
 ## Homebrew ownership
 
-This setup expects the normal Homebrew installation at `/opt/homebrew` on Apple Silicon. If `brew config` reports `HOMEBREW_REPOSITORY: /opt/homebrew/Library/.homebrew-is-managed-by-nix` or `brew style` fails trying to write under `/nix/store`, the old nix-homebrew-managed installation is still active. Remove that managed prefix after confirming anything important is backed up, then reinstall Homebrew with the official installer and re-run `nix-rebuild`.
+This setup expects the normal Homebrew installation at `/opt/homebrew` on Apple Silicon. If `type -a brew` shows `/usr/local/bin/brew` before `/opt/homebrew/bin/brew`, the stale nix-managed Homebrew shim is taking precedence and current Homebrew formulae may fail to load. Until the shell config is rebuilt, run Homebrew explicitly as `/opt/homebrew/bin/brew`.
+
+If `brew config` reports a `HOMEBREW_REPOSITORY` ending in `.homebrew-is-managed-by-nix`, or `brew style` fails trying to write under `/nix/store`, the old nix-homebrew-managed installation is still active. Remove that managed prefix after confirming anything important is backed up, then reinstall Homebrew with the official installer and re-run `nix-rebuild`.
 
 ## GPG keys
 
