@@ -216,7 +216,10 @@
 
           # Reminder about brew: although it's convenient, brew has been painful when needing to specify a specific version of a package. This is important when using brew to install dependencies of C/C++ projects. I'll still use it for general purpose tools and apps, but not build dependencies.
           homebrew = {
-            enable = true;
+            # Temporarily disabled: `brew bundle` fails with "unknown or
+            # unsupported macOS version: :dunno" on macOS 26 (Tahoe) until the
+            # installed Homebrew adds support. Re-enable after `brew update`.
+            enable = false;
             # Keep Homebrew itself mutable. nix-darwin only writes a Brewfile and
             # runs brew bundle, which avoids nix-homebrew's read-only Ruby bundle.
             taps = [];
