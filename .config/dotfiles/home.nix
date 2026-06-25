@@ -224,6 +224,10 @@ in
       alias co="codex"
       alias oc="opencode"
 
+      # KeePassXC CLI (bundled inside the .app, not on PATH by default)
+      alias keepassxc-cli="/Applications/KeePassXC.app/Contents/MacOS/keepassxc-cli"
+      alias kp="keepassxc-cli"
+
       # nix-darwin
       alias nix-rebuild='sudo NIX_DARWIN_HOST="$(scutil --get LocalHostName)" NIX_DARWIN_USER="$(whoami)" darwin-rebuild switch --flake ~/.config/dotfiles --impure && exec zsh'
       alias nix-rollback='sudo nix-env -p /nix/var/nix/profiles/system --rollback && sudo /nix/var/nix/profiles/system/activate && exec zsh'

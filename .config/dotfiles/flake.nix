@@ -281,6 +281,7 @@
               # Utilities
               "vlc"
               "yubico-authenticator"
+              "keepassxc"
               # Quick Look Plugins
               "qlmarkdown"
               "qlstephen"
