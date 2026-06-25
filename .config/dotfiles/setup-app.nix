@@ -6,7 +6,7 @@
     browser = "brave browser";
     app = pkgs.writeShellApplication {
       name = "setup";
-      runtimeInputs = with pkgs; [ git openssh coreutils ];
+      runtimeInputs = with pkgs; [ git openssh coreutils tmux ];
       text = ''
         # Detect if we're running over SSH (no GUI available)
         is_ssh() { [ -n "''${SSH_CLIENT:-}" ] || [ -n "''${SSH_TTY:-}" ]; }
@@ -36,8 +36,15 @@
           echo "skip: TPM already installed"
         else
           git clone https://github.com/tmux-plugins/tpm "${userHome}/.tmux/plugins/tpm"
-          echo "TPM installed. Run 'prefix + I' inside tmux to install plugins."
+          echo "TPM installed."
         fi
+
+        # Install/refresh the tmux plugins declared in ~/.tmux.conf (resurrect,
+        # continuum, sensible). Idempotent: skips ones already present. This is
+        # what 'prefix + I' does inside tmux, run headlessly so a fresh machine
+        # needs no manual step.
+        echo "set up: tmux plugins (via TPM)"
+        "${userHome}/.tmux/plugins/tpm/bin/install_plugins"
 
         echo "set up: mise (runtime version manager)"
         if test -f "${userHome}/.local/bin/mise"; then
