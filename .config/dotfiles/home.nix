@@ -92,7 +92,7 @@ in
       # To make changes, edit ~/.config/dotfiles/home.nix
 
       # Auto-launch tmux over SSH (attach to existing "ssh" session or create one)
-      if [[ -n "$SSH_CONNECTION" && -z "$TMUX" && -z "$VSCODE_INJECTION" ]]; then
+      if [[ -n "$SSH_CONNECTION" && -z "$TMUX" && -z "$VSCODE_INJECTION" && -t 0 && -t 1 ]]; then
         exec tmux new-session -A -s ssh
       fi
 
