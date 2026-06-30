@@ -1,6 +1,7 @@
 {
   "env": {
-    "USE_BUILTIN_RIPGREP": "1"
+    "USE_BUILTIN_RIPGREP": "1",
+    "CLAUDE_CODE_DISABLE_MOUSE_CLICKS": "1"
   },
   "permissions": {
     "defaultMode": "auto"
@@ -46,5 +47,6 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "light",
   "verbose": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "editorMode": "vim"
 }
