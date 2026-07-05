@@ -46,7 +46,9 @@
   "showClearContextOnPlanAccept": true,
   "skipDangerousModePermissionPrompt": true,
   "theme": "light",
+  "editorMode": "vim",
   "verbose": true,
-  "skipAutoPermissionPrompt": true,
-  "editorMode": "vim"
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true
 }
