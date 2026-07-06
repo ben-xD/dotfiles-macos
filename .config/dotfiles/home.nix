@@ -124,6 +124,12 @@ in
         fi
       }
 
+      # Previous approach (kept for reference): read from the macOS login Keychain at
+      # shell start. Simpler, but the value is readable with no prompt by any process
+      # running as your user, and it re-reads on every shell. Switched to KeePass above.
+      # Stored with: security add-generic-password -s forgejo-token -a "$USER" -w "<token>"
+      # export FORGEJO_TOKEN="$(security find-generic-password -s forgejo-token -w 2>/dev/null)"
+
       # Git
       alias lg="lazygit"
 
