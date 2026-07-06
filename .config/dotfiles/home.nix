@@ -106,29 +106,11 @@ in
       # (Debian 13 defaults to 002, macOS to 022 - both allow group/other read access)
       umask 077
 
-      # Secrets / private tokens live in KeePassXC (~/.keepassXC/bb.kdbx), never in a
-      # plaintext file. They are loaded on demand (not at shell start) so opening a
-      # terminal never triggers a master-password prompt.
-      #
-      # forgejo-token: load the tlduck Forgejo npm registry token into THIS shell.
-      # Prompts for the KeePass master password, then exports ''${FORGEJO_TOKEN} (referenced
-      # in .npmrc). Run it once per shell before `pnpm install` against the tlduck registry.
-      forgejo-token() {
-        local db="$HOME/.keepassXC/bb.kdbx"
-        if FORGEJO_TOKEN="$(keepassxc-cli show -a Password "$db" 'forgejo-token')"; then
-          export FORGEJO_TOKEN
-          echo "FORGEJO_TOKEN loaded into this shell."
-        else
-          echo "Failed to load FORGEJO_TOKEN from KeePass ($db)." >&2
-          return 1
-        fi
-      }
-
-      # Previous approach (kept for reference): read from the macOS login Keychain at
-      # shell start. Simpler, but the value is readable with no prompt by any process
-      # running as your user, and it re-reads on every shell. Switched to KeePass above.
+      # Secrets / private tokens (values stored in macOS Keychain, never on disk)
+      # FORGEJO_TOKEN: auth for the tlduck Forgejo npm registry (referenced as ''${FORGEJO_TOKEN} in .npmrc).
       # Stored with: security add-generic-password -s forgejo-token -a "$USER" -w "<token>"
-      # export FORGEJO_TOKEN="$(security find-generic-password -s forgejo-token -w 2>/dev/null)"
+      # TODO: migrate to age + age-plugin-se (Secure Enclave, Touch ID on decrypt).
+      export FORGEJO_TOKEN="$(security find-generic-password -s forgejo-token -w 2>/dev/null)"
 
       # Git
       alias lg="lazygit"
